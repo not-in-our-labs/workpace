@@ -30,8 +30,7 @@ The density functions are as follows, with male distribution in blue and female 
 
 The gender of each author is *approximated* and might be incorrect. The approximation is based on a French database of names, each being associated to its majority gender representation. This is of course incorrect, and further name does not have to be linked with gender. Yet, in the current society, this enables to get an overall valid estimation. To note, there is also a bias, as some foreign names not contained in the database where excluded from the analysis (2078 entries).
 
-However, for french authors, the estimation should be rather accurate.
-
+However, for french authors, the estimation should be rather accurate. One question is: are the results biased by some sub-disciplines, which would have a very different gender distribution and thesis length?
 
 The python script was implemented as a one shot thing, to get quick results. 
 
