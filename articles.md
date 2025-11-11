@@ -89,3 +89,51 @@ apparent among female students. Concerning males, the lack of same-sex
 harassment prevention mechanisms results in male students’ fear of experi-
 encing mistrust and attribution, increasing their tolerance for sexual harass-
 ment (Kumar & Verma, 2020; Shechory-Bitton & Zvi, 2020)
+
+
+## Diversity leads to better science? 
+Gender-Heterogeneous Working Groups Produce Higher Quality Science
+https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0079147
+"
+While women continue to be underrepresented as working group participants, peer-reviewed publications with gender-heterogeneous authorship teams received 34% more citations than publications produced by gender-uniform authorship teams" 
+
+Gender-diverse teams produce more novel and higher-impact   (medical science)
+https://www.pnas.org/doi/pdf/10.1073/pnas.2200841119
+
+
+
+## The gender citation gap: Approaches, explanations, and implications
+https://compass.onlinelibrary.wiley.com/doi/pdfdirect/10.1111/soc4.13189
+" I show that articles written
+by women receive comparable or even higher rates of cita-
+tions than articles written by men. However, women tend
+to accumulate fewer citations over time and at the career
+level. Contrary to the notion that women are cited less per
+article due to gender-based bias in research evaluation or
+citing behaviors, this study suggests that the primary reason
+for the lower citation rates at the author level is women
+publishing fewer articles over their careers."
+
+
+## workshop on diversity/bias training are somewhat efficient
+
+ Minimizing the Influence of Gender Bias on the Faculty Search Process Available to Purchase 
+ https://www.emerald.com/books/edited-volume/13627/chapter-abstract/84330305/Minimizing-the-Influence-of-Gender-Bias-on-the?redirectedFrom=fulltext
+ "In departments where women are underrepresented, workshop participation is associated with a significant increase in the odds of making a job offer to a woman candidate, and with a non-significant increase in the odds of hiring a woman."
+
+
+##  Data results from UC berkleyr diversity hiring project
+https://ofew.berkeley.edu/sites/default/files/searching_for_a_diverse_faculty-_data-driven_recommendations.pdf
+https://www.emich.edu/facdev/documents/peer-review-faculty-dev-self-renewal.pdf#page=28
+
+Best:  shaping job description,  departemental priorities, committes composition (but put in place teaching hour diminution for women!), targetted outreach
+Unclear if rubrics are relevant, or effort to counter implicit bias.
+
+
+## Underrepresented minority faculty in the USA face a double standard in promotion and tenure decisions
+https://www.nature.com/articles/s41562-024-01977-7
+(older versions)
+https://www.academia.edu/126946386/Promotion_Rejected_Your_Record_May_Not_Be_the_Problem
+https://www.chronicle.com/article/promotion-rejected-your-record-may-not-be-the-problem
+
+"Data from five US universities on 1,571 faculty members’ P&T decisions show that URM faculty received 7% more negative votes and were 44% less likely to receive unanimous votes from P&T committees. A double standard in how scholarly productivity is rewarded is also observed, with below-average h-indexes being judged more harshly for URM faculty than for non-URM faculty."
