@@ -1,6 +1,6 @@
 # thesis file extracted from 
-# https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=domain_t:info&fq=submittedDateY_i:[2015%20TO%202020]&fl=defenseDateY_i&fl=files_s&fl=authLastName_s&fl=authFirstName_s&rows=20000
-# https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=domain_t:info&fq=submittedDateY_i:[2021%20TO%20*]&fl=defenseDateY_i&fl=files_s&fl=authLastName_s&fl=authFirstName_s&rows=20000
+# https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=domain_t:info&fq=submittedDateY_i:[2015%20TO%202020]&fl=defenseDateY_i&fl=files_s&fl=authLastName_s&fl=authFirstName_s&fl=primaryDomain_s&rows=20000
+# https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=domain_t:info&fq=submittedDateY_i:[2021%20TO%20*]&fl=defenseDateY_i&fl=files_s&fl=authLastName_s&fl=authFirstName_s&fl=primaryDomain_s&rows=20000
 
 # importing PyPDF2 library
 
@@ -120,7 +120,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
         
-def print_res(cond):
+def print_res_full(cond):
 
   H_pages = []
   F_pages = []
@@ -129,20 +129,23 @@ def print_res(cond):
   
   for result in results:
     result=results[result]
-    if result["gender"] == "H" and cond(int(result['year'])) :
+    if result["gender"] == "H" and cond(result) :
         H_pages += [int(result["pages"])]
-    elif result["gender"] == "F"  and cond(int(result['year'])):
+    elif result["gender"] == "F"  and cond(result):
         F_pages += [int(result["pages"])]
     else:
         None_pages += [int(result["pages"])]
 
-            
+  if H_pages==[] or F_pages==[]:
+    return None
   
   counter_H = len(H_pages)
   counter_H_pages = sum(H_pages)
   
   counter_F = len(F_pages)
   counter_F_pages = sum(F_pages)
+
+  
   
   median_H =  statistics.median(H_pages)
   median_F = statistics.median(F_pages)
@@ -165,10 +168,13 @@ def print_res(cond):
   print(stats.ks_2samp(H_pages, F_pages))
 
   return(H_pages, F_pages)
+        
 
 
 
 count=0
+domains = set()
+
 print("Checking entries: "+str(len(data1['response']['docs']+data2['response']['docs'])))
 for entry in data1['response']['docs']+data2['response']['docs']:
     # we only keep entries with a single file
@@ -179,13 +185,18 @@ for entry in data1['response']['docs']+data2['response']['docs']:
         url=entry['files_s'][0]
         date=entry['defenseDateY_i']           
         fullname = prenom+" "+nom
+        domain = entry['primaryDomain_s']
+        domains.add(domain)
         if not fullname in results:
-            pages=get_pages(url)
+            pages=None # get_pages(url)
             if pages:
                 outfile = open('results.csv', 'a')                   
                 outfile.write(';'.join(str(i) for i in [fullname, get_gender(prenom), date, url, pages])+"\n")
             else:
-              count +=1                
+              count +=1
+        else:
+         # domain was added a posteriori, so we hack it into the results by hand
+         results[fullname]['domain'] = domain                           
     else:
       count +=1
 
@@ -203,19 +214,57 @@ for result in results:
 print("Unknown gender (mostly due to non French surnameS) :"+str(len(None_pages)))
 
 
+print(" Stats for all thesis that contain the domain info")
+print("")
 print("Stats for 2015 - 2019")
-print_res( (lambda x : x < 2020))
+print_res_full( (lambda x : int(x['year']) < 2020))
 print(" ")
 print("Stats for 2020 - 2025")
-print_res( (lambda x :  2020 <= x))
+print_res_full( (lambda x :  2020 <= int(x['year'])))
 print(" ")
 print("Stats for 2015 - 2025")
-H,F = print_res( (lambda x : True))
+print_res_full( (lambda x : True))
+
+
+
+
+
+print("")
+print("Stats for all thesis that have info as primary domain info")
+print("")
+
+info_domains = [d for d in domains if "info." in d]
+
+H,F = print_res_full( (lambda x : 'domain' in x and x['domain'] in info_domains))
+
 
 plt.hist(H,bins=50,density=True,histtype="step")
 plt.hist(F,bins=50,density=True,histtype="step")  
 
-
 plt.show()
+
+
+# prim_domains = set([d.split(".")[0] for d in domains])
+# print(prim_domains)
+
+# for d in prim_domains:
+#   print("")
+#   print("Stats for all thesis that have info as primary domain "+d)
+#   print("")
+  
+#   print_res_full( (lambda x : 'domain' in x and x['domain'].split(".")[0]==d))
+
+  
+
+
+# print("")
+# print("by domain")
+# print("")
+
+# for d in info_domains:
+#   print("Stats for domain "+d)
+
+
+
 
 

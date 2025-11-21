@@ -2,6 +2,7 @@
 
 TLDR: probably, on average, women writes a 10% longer thesis. (but this gap disappears at the HDR level, see ![hdr-length-results](../hdr-length/README.md)
 
+UPDATE: plot twist, the data set was biased by thesis with non primary domain as computer science, for thesis with primary domain computer science, the gap is only 5%. We need to look at other fields to understand where the bigger gap comes from.
 
 The script in this folder automatically found the length of the French PhDs in computer science from 2015 to 2025. The two distrubtions are as follows.
 
