@@ -92,7 +92,7 @@ def get_full_name(dom):
         return(domains_fullnames[dom])
     else:
         print("Need to fetch full domain name for" + dom)
-        url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=primaryDomain_s:%s&fl=en_domainAllCodeLabel_fs&row=1" % dom
+        url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:HDRE&fq=primaryDomain_s:%s&fl=en_domainAllCodeLabel_fs&row=1" % dom
         api_response = json.load(BytesIO(requests.get(url).content))
         entry = api_response['response']['docs'][0]
         return(entry['en_domainAllCodeLabel_fs'][0].split("_")[2])
@@ -159,7 +159,7 @@ def print_domain(dom):
 
         plt.suptitle("Density function for thesis length in pages\n %s" % (dom_fullname))
 
-        plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female PhD authors, in France, between 2015 and 2025\n \
+        plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female HDR authors, in France, between 2000 and 2025\n \
 Kolmogorov-Smirnov test with pvalue {ks_test.pvalue:.5f} \n \
 Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized difference : {abs_diff:.1%} \
 ", size="small")

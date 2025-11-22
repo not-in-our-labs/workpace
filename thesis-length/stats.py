@@ -97,6 +97,7 @@ def get_full_name(dom):
         entry = api_response['response']['docs'][0]
         return(entry['en_domainAllCodeLabel_fs'][0].split("_")[2])
 
+    
 # print(len(domains_fullnames))
 # get_main_domains()
 
@@ -187,5 +188,5 @@ Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized differen
 #     print_domain(dom)
     
 
-for dom in get_full_domains():
-    print_domain(dom)
+# for dom in get_full_domains():
+#     print_domain(dom)
