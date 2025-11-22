@@ -83,14 +83,15 @@ def get_main_domains():
     print(len(domains_fullnames))
 
     
-
-domains_fullnames = {'sdu': 'Sciences of the Universe [physics]', 'sde': 'Environmental Sciences', 'phys': 'Physics [physics]', 'scco': 'Cognitive science', 'math': 'Mathematics [math]', 'chim': 'Chemical Sciences', 'nlin': 'Nonlinear Sciences [physics]', 'shs': 'Humanities and Social Sciences', 'sdv': 'Life Sciences [q-bio]', 'stat': 'Statistics [stat]', 'info': 'Computer Science [cs]', 'spi': 'Engineering Sciences [physics]', 'qfin': 'Quantitative Finance [q-fin]'}
+with open('domains.json', 'r') as file:
+    domains_fullnames = json.load(file)
 
 
 def get_full_name(dom):
     if dom in domains_fullnames:
         return(domains_fullnames[dom])
     else:
+        print("Need to fetch full domain name for" + dom)
         url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=primaryDomain_s:%s&fl=en_domainAllCodeLabel_fs&row=1" % dom
         api_response = json.load(BytesIO(requests.get(url).content))
         entry = api_response['response']['docs'][0]
@@ -101,6 +102,11 @@ def get_full_name(dom):
 
 def get_full_domains():
     domains =  [i[0] for i in cur.execute("SELECT DISTINCT(domain) from author").fetchall()]
+
+    # mdomains =  [i[0].split(".")[0] for i in cur.execute("SELECT DISTINCT(domain) from author").fetchall()]
+    # for d in mdomains:
+    #     if d not in domains:
+    #         print(d)
     return(set(domains))
 
 
@@ -170,7 +176,7 @@ Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized differen
         
         plt.legend()
         plt.tight_layout()
-        plt.savefig(result_folder + dom+".png")
+        plt.savefig(result_folder + dom+".png", dpi=300)
         plt.clf()        
         # plt.show()            
 
