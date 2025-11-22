@@ -111,7 +111,7 @@ def get_full_domains():
     return(set(domains))
 
 
-def print_domain(dom):
+def print_domain(dom, force_pic):
     print("")    
 
     # h_valid= cur.execute("SELECT COUNT(*) from author \
@@ -154,11 +154,11 @@ def print_domain(dom):
     # print(ks_test)
     # if p < 0.05, we reject the null hypothesis, that is, the hypothesis that the distributions are the same.
     # We generate corresponding figures
-    if ks_test.pvalue < 0.05:
+    if force_pic or ks_test.pvalue < 0.05:
         dom_fullname=get_full_name(dom)
         print(dom_fullname)
 
-        plt.suptitle("Density function for thesis length in pages\n %s" % (dom_fullname))
+        plt.suptitle("Density function for PhD thesis length in pages\n %s" % (dom_fullname))
 
         plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female PhD authors, in France, between 2015 and 2025\n \
 Kolmogorov-Smirnov test with pvalue {ks_test.pvalue:.5f} \n \
@@ -188,5 +188,7 @@ Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized differen
 #     print_domain(dom)
     
 
-# for dom in get_full_domains():
-#     print_domain(dom)
+for dom in get_full_domains():
+    print_domain(dom, False)
+
+
