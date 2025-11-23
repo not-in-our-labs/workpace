@@ -30,6 +30,7 @@ step=1000
 def mk_api_url(start,rows):
     base_url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=defenseDateY_i:[2015%20TO%202025]&fl=defenseDateY_i&fl=files_s&fl=authLastName_s&fl=authFirstName_s&fl=primaryDomain_s&fl=docid&sort=docid asc"
     return(base_url+"&start="+str(start)+"&rows="+str(rows))
+    # remark: we use HAL, but note that theses.fr returns a similar number of thesis that are accessible online for the same time period.
 
 
 def load_response(api_response):
@@ -148,7 +149,7 @@ def fetch_pages(docid):
     else:
         print("Document %i has %i pages." % (docid, current_pages[0][1]))
         
-
+        
 
 
 def test(test):
@@ -159,9 +160,10 @@ def test(test):
 
 
 def print_total_users():
+    full=cur.execute("SELECT COUNT(author.docid) from author").fetchall()[0][0]
     h=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='H'").fetchall()[0][0]
     f=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='F'").fetchall()[0][0]
-    print("We have in store (assumed) %i female and %i male phd authors, for a total of %i." % (f, h, f+h))
+    print("We have in store (assumed) %i female and %i male phd authors, for a total of %i usable thesis. (out of %i total thesis)" % (f, h, f+h, full))
 
 
 
