@@ -124,7 +124,7 @@ def get_pages(docid):
       totalPages = len(pdfReader.pages)
       # print number of pages
       return(totalPages)
-    except PyPDF2.errors.PdfReadError:
+    except (PyPDF2.errors.PdfReadError, requests.exceptions.SSLError):
         cur.execute("INSERT OR IGNORE INTO invalidurls(docid) VALUES (%i)" % (docid))
         con.commit()
         return None
