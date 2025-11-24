@@ -111,7 +111,7 @@ def get_full_domains():
     return(set(domains))
 
 
-def make_graph(h_list, f_list, force_pic, long_name, short_name):    
+def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range):    
     f_av = statistics.mean(f_list)
     h_av = statistics.mean(h_list)
     total_av = statistics.mean(h_list+f_list)
@@ -142,11 +142,9 @@ Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized differen
         
         plt.xlabel("Page length")
         plt.ylabel("Density")
-        
         plt.hist(h_list,bins="auto",color="tab:purple",
-                 # range=(0,800),
-                 density=True,histtype="step", label="male")
-
+                 range=with_range,
+                 density=True,histtype="step", label="male")            
                 # add vertical line at median
         median = statistics.median(h_list)
         last_decile = np.percentile(h_list, 90)
@@ -155,7 +153,7 @@ Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized differen
 
         
         plt.hist(f_list,bins="auto",color="tab:red",
-                 # range=(0,800),
+                 range=with_range,
                  density=True,histtype="step", label="female")
 
         # add vertical line at median
@@ -169,7 +167,7 @@ Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized differen
         plt.savefig(result_folder + short_name+".png", dpi=300)
         plt.clf()        
 
-def print_domain(sql_cond, short_name, long_name, force_pic):
+def print_domain(sql_cond, short_name, long_name, force_pic, with_range):
     print("")    
 
     # h_valid= cur.execute("SELECT COUNT(*) from author \
@@ -200,7 +198,7 @@ def print_domain(sql_cond, short_name, long_name, force_pic):
         return
 
 
-    make_graph(h_list, f_list, force_pic, long_name, short_name)
+    make_graph(h_list, f_list, force_pic, long_name, short_name, with_range)
 
     # first_decile = np.percentile(h_list+f_list, 15)
     # last_decile =  np.percentile(h_list+f_list, 85)
@@ -226,23 +224,24 @@ def print_domain(sql_cond, short_name, long_name, force_pic):
 
 # print_domain("shs")
 
-# print subset of fulldomains 
-for dom in domains_fullnames:
-     dom_fullname=get_full_name(dom)
-     sql_cond = "AND author.domain LIKE '" + dom + "%'"
-     print_domain(sql_cond, dom, dom_fullname, False)
+# print subset of fulldomains
 
-
-# cutoff=400
-     
-# for dom in domains_fullnames:
-#      dom_fullname=get_full_name(dom)
-#      sql_cond = ("AND pages.length >= %i AND author.domain LIKE '" % cutoff) + dom + "%'"
-#      print_domain(sql_cond, ("2-bigger-%i." % cutoff)+dom, dom_fullname + ("- subset of Thesis longer than %i pages" % cutoff), False)
 
 # for dom in domains_fullnames:
 #      dom_fullname=get_full_name(dom)
-#      sql_cond = ("AND pages.length <= %i AND author.domain LIKE '" % cutoff) + dom + "%'"
-#      print_domain(sql_cond, ("3-smaller-%i." % cutoff) +dom, dom_fullname + ("- subset of Thesis shorter than %i pages" % cutoff), False)
+#      sql_cond = "AND author.domain LIKE '" + dom + "%'"
+#      print_domain(sql_cond, dom, dom_fullname, False,None)
+
+
+# for dom in domains_fullnames:
+#      if dom.split('.')[0] != 'info':
+#          continue
+#      dom_fullname=get_full_name(dom)
+#      sql_cond = "AND author.domain LIKE '" + dom + "%'"
+#      print_domain(sql_cond, dom, dom_fullname, True,None)
+
      
-     
+dom='info'     
+dom_fullname=get_full_name(dom)
+sql_cond = "AND author.domain LIKE '" + dom + "%'"
+print_domain(sql_cond, dom+".zoom", dom_fullname, False,(0,400))
