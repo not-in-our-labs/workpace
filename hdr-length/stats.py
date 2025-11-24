@@ -23,7 +23,7 @@ result_folder = "plots/"
 def print_total_users():
     h=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='H'").fetchall()[0][0]
     f=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='F'").fetchall()[0][0]
-    print("We have in store (assumed) %i female and %i male phd authors, for a total of %i." % (f, h, f+h))
+    print("We have in store (assumed) %i female and %i male HDR authors, for a total of %i." % (f, h, f+h))
 
 
 
@@ -92,11 +92,12 @@ def get_full_name(dom):
         return(domains_fullnames[dom])
     else:
         print("Need to fetch full domain name for" + dom)
-        url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:HDRE&fq=primaryDomain_s:%s&fl=en_domainAllCodeLabel_fs&row=1" % dom
+        url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=primaryDomain_s:%s&fl=en_domainAllCodeLabel_fs&row=1" % dom
         api_response = json.load(BytesIO(requests.get(url).content))
         entry = api_response['response']['docs'][0]
         return(entry['en_domainAllCodeLabel_fs'][0].split("_")[2])
 
+    
 # print(len(domains_fullnames))
 # get_main_domains()
 
@@ -110,7 +111,65 @@ def get_full_domains():
     return(set(domains))
 
 
-def print_domain(dom, force_pic):
+def make_graph(h_list, f_list, force_pic, long_name, short_name):    
+    f_av = statistics.mean(f_list)
+    h_av = statistics.mean(h_list)
+    total_av = statistics.mean(h_list+f_list)
+    abs_diff = (f_av-h_av)/total_av
+    print(abs_diff)
+
+    # print("Successfully loaded %i female page counts and %i male page counts" % (len(f_list),len(h_list)))    
+    # print("Average of %i female page counts and %i male page counts" % (f_av,h_av))
+    ks_test = stats.ks_2samp(h_list, f_list)
+    # print(ks_test)
+    # if p < 0.05, we reject the null hypothesis, that is, the hypothesis that the distributions are the same.
+    # we only keep domains/subdomains with enough data point
+    # We generate corresponding figures
+    if force_pic or (ks_test.pvalue < 0.05 and len(h_list + f_list) > 150):
+
+        print(long_name)
+
+        plt.suptitle("Density function for HDR thesis length in pages\n %s" % (long_name))
+
+        plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female HDR authors ({len(f_list)/len(f_list+h_list):.0%} females), France, 2000 to 2025\n \
+Kolmogorov-Smirnov test with pvalue {ks_test.pvalue:.5f} \n \
+Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized difference : {abs_diff:.1%} \
+", size="small")
+
+
+      
+
+        
+        plt.xlabel("Page length")
+        plt.ylabel("Density")
+        
+        plt.hist(h_list,bins="auto",color="tab:purple",
+                 # range=(0,800),
+                 density=True,histtype="step", label="male")
+
+                # add vertical line at median
+        median = statistics.median(h_list)
+        last_decile = np.percentile(h_list, 90)
+        plt.axvline(median, color='tab:purple', linestyle='--',label="median")
+        plt.axvline(last_decile, color='tab:purple', linestyle='--',label="last decile")
+
+        
+        plt.hist(f_list,bins="auto",color="tab:red",
+                 # range=(0,800),
+                 density=True,histtype="step", label="female")
+
+        # add vertical line at median
+        median = statistics.median(f_list)
+        last_decile = np.percentile(f_list, 90)        
+        plt.axvline(median, color='tab:red', linestyle='--')
+        plt.axvline(last_decile, color='tab:red', linestyle='--')        
+        
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig(result_folder + short_name+".png", dpi=300)
+        plt.clf()        
+
+def print_domain(sql_cond, short_name, long_name, force_pic):
     print("")    
 
     # h_valid= cur.execute("SELECT COUNT(*) from author \
@@ -129,65 +188,61 @@ def print_domain(dom, force_pic):
     h_list= [ p[0] for p in cur.execute("SELECT pages.length from author \
     JOIN genders ON author.firstname=genders.firstname \
     JOIN pages ON author.docid=pages.docid \
-    where genders.gender='H' \
-    and author.domain LIKE '" + dom + "%'").fetchall()]
+    where genders.gender='H'" + sql_cond).fetchall()]
 
     f_list= [ p[0] for p in cur.execute("SELECT pages.length from author \
     JOIN genders ON author.firstname=genders.firstname \
     JOIN pages ON author.docid=pages.docid \
-    where genders.gender='F' \
-    and author.domain LIKE '" + dom + "%'").fetchall()]
+    where genders.gender='F'" + sql_cond).fetchall()]
 
     if h_list==[] or f_list==[]:
+        print("empty")
         return
+
+
+    make_graph(h_list, f_list, force_pic, long_name, short_name)
+
+    # first_decile = np.percentile(h_list+f_list, 15)
+    # last_decile =  np.percentile(h_list+f_list, 85)
+
+    # h_list_first = [i for i in h_list if i <= first_decile]
+    # h_list_middle = [i for i in h_list if  first_decile <= i and i <= last_decile]
+    # h_list_end = [i for i in h_list if  last_decile <= i]
+
+    # f_list_first = [i for i in f_list if i <= first_decile]
+    # f_list_middle = [i for i in f_list if  first_decile <= i and i <= last_decile]
+    # f_list_end = [i for i in f_list if  last_decile <= i]
+
+    # if h_list_first!=[] and f_list_first!=[]:        
+    #     make_graph(h_list_first, f_list_first, force_pic, long_name + " (only first decile of lengths)", "1-first-decile."+ short_name)
+        
+    # if h_list_end!=[] and f_list_end!=[]:        
+    #     make_graph(h_list_end, f_list_end, force_pic, long_name + " (only last decile of lengths)", "2-last-decile."+ short_name)
     
-    f_av = statistics.mean(f_list)
-    h_av = statistics.mean(h_list)
-    total_av = statistics.mean(h_list+f_list)
-    abs_diff = (f_av-h_av)/total_av
-    print(abs_diff)
-
-    # print("Successfully loaded %i female page counts and %i male page counts" % (len(f_list),len(h_list)))    
-    # print("Average of %i female page counts and %i male page counts" % (f_av,h_av))
-    ks_test = stats.ks_2samp(h_list, f_list)
-    # print(ks_test)
-    # if p < 0.05, we reject the null hypothesis, that is, the hypothesis that the distributions are the same.
-    # We generate corresponding figures
-    if force_pic or ks_test.pvalue < 0.05:
-        dom_fullname=get_full_name(dom)
-        print(dom_fullname)
-
-        plt.suptitle("Density function for HDR length in pages\n %s" % (dom_fullname))
-
-        plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female HDR authors, in France, between 2000 and 2025\n \
-Kolmogorov-Smirnov test with pvalue {ks_test.pvalue:.5f} \n \
-Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized difference : {abs_diff:.1%} \
-", size="small")
-        
-        plt.xlabel("Page length")
-        plt.ylabel("Density")
-        
-        plt.hist(h_list,bins="auto",color="tab:purple",
-                 # range=(0,800),
-                 density=True,histtype="step", label="male")
-        plt.hist(f_list,bins="auto",color="tab:red",
-                 # range=(0,800),
-                 density=True,histtype="step", label="female")
-        
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig(result_folder + dom+".png", dpi=300)
-        plt.clf()        
+    # if h_list_middle!=[] and f_list_middle!=[]:            
+    #     make_graph(h_list_middle, f_list_middle, force_pic, long_name + " (without first and last decile of lengths)", "3-without-extrem-deciles."+ short_name)    
+    
         # plt.show()            
 
 # print_domain("shs")
 
 # print subset of fulldomains 
-# for dom in domains_fullnames:        
-#     print_domain(dom)
-    
-
-for dom in get_full_domains():
-    print_domain(dom, False)
+for dom in domains_fullnames:
+     dom_fullname=get_full_name(dom)
+     sql_cond = "AND author.domain LIKE '" + dom + "%'"
+     print_domain(sql_cond, dom, dom_fullname, False)
 
 
+# cutoff=400
+     
+# for dom in domains_fullnames:
+#      dom_fullname=get_full_name(dom)
+#      sql_cond = ("AND pages.length >= %i AND author.domain LIKE '" % cutoff) + dom + "%'"
+#      print_domain(sql_cond, ("2-bigger-%i." % cutoff)+dom, dom_fullname + ("- subset of Thesis longer than %i pages" % cutoff), False)
+
+# for dom in domains_fullnames:
+#      dom_fullname=get_full_name(dom)
+#      sql_cond = ("AND pages.length <= %i AND author.domain LIKE '" % cutoff) + dom + "%'"
+#      print_domain(sql_cond, ("3-smaller-%i." % cutoff) +dom, dom_fullname + ("- subset of Thesis shorter than %i pages" % cutoff), False)
+     
+     

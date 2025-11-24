@@ -15,13 +15,13 @@ if cur.execute("SELECT name FROM sqlite_master where name='author'").fetchone() 
     cur.execute("CREATE TABLE author(docid INTEGER PRIMARY KEY, fullname, firstname, year, url, domain)")
 
 if cur.execute("SELECT name FROM sqlite_master where name='genders'").fetchone() is None:
-    cur.execute("CREATE TABLE genders(firstname, gender, UNIQUE(firstname))")
+    cur.execute("CREATE TABLE genders(firstname, gender, numbers, UNIQUE(firstname))")
 
 if cur.execute("SELECT name FROM sqlite_master where name='pages'").fetchone() is None:
     cur.execute("CREATE TABLE pages(docid INTEGER PRIMARY KEY, length)")
 
 if cur.execute("SELECT name FROM sqlite_master where name='invalidurls'").fetchone() is None:
-    cur.execute("CREATE TABLE invalidurls(docid INTEGER PRIMARY KEY)")
+    cur.execute("CREATE TABLE invalidurlsg(docid INTEGER PRIMARY KEY)")
 
 
     
@@ -30,6 +30,7 @@ step=1000
 def mk_api_url(start,rows):
     base_url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:HDR&fq=defenseDateY_i:[2000%20TO%202025]&fl=defenseDateY_i&fl=files_s&fl=authLastName_s&fl=authFirstName_s&fl=primaryDomain_s&fl=docid&sort=docid asc"
     return(base_url+"&start="+str(start)+"&rows="+str(rows))
+    # remark: we use HAL, but note that theses.fr returns a similar number of thesis that are accessible online for the same time period.
 
 
 def load_response(api_response):
@@ -82,9 +83,14 @@ def load_probable_genders():
     with open('prenoms-2024-liste.csv', 'r', encoding='utf-8', newline='') as name_file:
         name_reader = csv.reader(name_file, delimiter=';')
         for row in name_reader:
+            if row[2]=='periode': #skip first line
+                continue
             name=row[1].lower()
             g=row[0]
-            number=row[3]
+            year=int(row[2])
+            number=int(row[3])
+            if year != 2020: # we only keep the data from 2020, average year in our dataset
+                continue
             if name in names:
                 # if name is less common for this gender, we ignore and skip
                 if number<numbers[name]:
@@ -97,8 +103,8 @@ def load_probable_genders():
             elif g=='2':
                 names[name]="F"
                 numbers[name]=number         
-    data=[(d, names[d]) for d in names]
-    cur.executemany("INSERT OR IGNORE INTO genders VALUES(?, ?)", data)
+    data=[(d, names[d], numbers[d]) for d in names]
+    cur.executemany("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", data)
     con.commit()
     
 
@@ -124,7 +130,7 @@ def get_pages(docid):
       totalPages = len(pdfReader.pages)
       # print number of pages
       return(totalPages)
-    except PyPDF2.errors.PdfReadError:
+    except (PyPDF2.errors.PdfReadError, requests.exceptions.SSLError):
         cur.execute("INSERT OR IGNORE INTO invalidurls(docid) VALUES (%i)" % (docid))
         con.commit()
         return None
@@ -148,7 +154,7 @@ def fetch_pages(docid):
     else:
         print("Document %i has %i pages." % (docid, current_pages[0][1]))
         
-
+        
 
 
 def test(test):
@@ -159,9 +165,10 @@ def test(test):
 
 
 def print_total_users():
+    full=cur.execute("SELECT COUNT(author.docid) from author").fetchall()[0][0]
     h=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='H'").fetchall()[0][0]
     f=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='F'").fetchall()[0][0]
-    print("We have in store (assumed) %i female and %i male phd authors, for a total of %i." % (f, h, f+h))
+    print("We have in store (assumed) %i female and %i male hdr authors, for a total of %i usable thesis. (out of %i total thesis)" % (f, h, f+h, full))
 
 
 

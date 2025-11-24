@@ -86,8 +86,6 @@ def load_probable_genders():
             if row[2]=='periode': #skip first line
                 continue
             name=row[1].lower()
-            if name=='ariane':
-                print(row)
             g=row[0]
             year=int(row[2])
             number=int(row[3])
@@ -106,7 +104,6 @@ def load_probable_genders():
                 names[name]="F"
                 numbers[name]=number         
     data=[(d, names[d], numbers[d]) for d in names]
-    print(names['ariane'])
     cur.executemany("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", data)
     con.commit()
     
