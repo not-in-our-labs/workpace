@@ -131,7 +131,7 @@ def make_graph(h_list, f_list, force_pic, long_name, short_name):
 
         plt.suptitle("Density function for PhD thesis length in pages\n %s" % (long_name))
 
-        plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female PhD authors, in France, between 2015 and 2025\n \
+        plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female PhD authors ({len(f_list)/len(f_list+h_list):.0%} females), France, 2015 to 2025\n \
 Kolmogorov-Smirnov test with pvalue {ks_test.pvalue:.5f} \n \
 Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized difference : {abs_diff:.1%} \
 ", size="small")

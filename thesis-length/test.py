@@ -15,7 +15,7 @@ if cur.execute("SELECT name FROM sqlite_master where name='author'").fetchone() 
     cur.execute("CREATE TABLE author(docid INTEGER PRIMARY KEY, fullname, firstname, year, url, domain)")
 
 if cur.execute("SELECT name FROM sqlite_master where name='genders'").fetchone() is None:
-    cur.execute("CREATE TABLE genders(firstname, gender, UNIQUE(firstname))")
+    cur.execute("CREATE TABLE genders(firstname, gender, numbers, UNIQUE(firstname))")
 
 if cur.execute("SELECT name FROM sqlite_master where name='pages'").fetchone() is None:
     cur.execute("CREATE TABLE pages(docid INTEGER PRIMARY KEY, length)")
@@ -83,9 +83,16 @@ def load_probable_genders():
     with open('prenoms-2024-liste.csv', 'r', encoding='utf-8', newline='') as name_file:
         name_reader = csv.reader(name_file, delimiter=';')
         for row in name_reader:
+            if row[2]=='periode': #skip first line
+                continue
             name=row[1].lower()
+            if name=='ariane':
+                print(row)
             g=row[0]
-            number=row[3]
+            year=int(row[2])
+            number=int(row[3])
+            if year != 2020: # we only keep the data from 2020, average year in our dataset
+                continue
             if name in names:
                 # if name is less common for this gender, we ignore and skip
                 if number<numbers[name]:
@@ -98,8 +105,9 @@ def load_probable_genders():
             elif g=='2':
                 names[name]="F"
                 numbers[name]=number         
-    data=[(d, names[d]) for d in names]
-    cur.executemany("INSERT OR IGNORE INTO genders VALUES(?, ?)", data)
+    data=[(d, names[d], numbers[d]) for d in names]
+    print(names['ariane'])
+    cur.executemany("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", data)
     con.commit()
     
 
