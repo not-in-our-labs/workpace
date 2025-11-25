@@ -240,8 +240,13 @@ def print_domain(sql_cond, short_name, long_name, force_pic, with_range):
 #      sql_cond = "AND author.domain LIKE '" + dom + "%'"
 #      print_domain(sql_cond, dom, dom_fullname, True,None)
 
-     
-dom='info'     
-dom_fullname=get_full_name(dom)
-sql_cond = "AND author.domain LIKE '" + dom + "%'"
-print_domain(sql_cond, dom+".zoom", dom_fullname, False,(0,400))
+
+
+def print_zoom(dom, rang):
+    dom_fullname=get_full_name(dom)
+    sql_cond = "AND author.domain LIKE '" + dom + "%'"
+    print_domain(sql_cond, dom+".zoom", dom_fullname, False,rang)
+
+print_zoom('info', (0,400))
+print_zoom('shs', (0,1000))
+
