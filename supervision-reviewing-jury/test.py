@@ -169,6 +169,42 @@ def init_db():
         res = json.load(BytesIO(requests.get(url).content))
         load_response(res)                
 
+
+def print_total_users():
+    h=cur.execute("SELECT COUNT(fullname) from persons JOIN genders ON LOWER(persons.firstname)=genders.firstname  where genders.gender='H'").fetchall()[0][0]
+    f=cur.execute("SELECT COUNT(fullname) from persons JOIN genders ON LOWER(persons.firstname)=genders.firstname  where genders.gender='F'").fetchall()[0][0]
+    tot = cur.execute("SELECT COUNT(fullname) from persons").fetchall()[0][0]
+    print("We have in store (assumed) %i female and %i male persons, for a total of %i. (out of %i persons)" % (f, h, f+h, tot))
+
+
+
+    
+print_total_users()    
+
+import gender_guesser.detector as gender
+
+missing =[(p[0],p[1]) for p in cur.execute("SELECT persons.firstname, persons.fullname from persons LEFT JOIN genders ON LOWER(persons.firstname)=genders.firstname where genders.gender is Null LIMIT 10").fetchall()]
+
+new = []
+for (fname,fullname) in missing:
+    d = gender.Detector()
+    name = fname.split(" ")[0]
+    guess=d.get_gender(name)
+    if guess=='male':
+        res='H'
+    elif guess=='female':
+        res='F'
+    else:
+       continue
+    print(fname)
+    cur.execute("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", (fname.lower(), res, 1))
+    con.commit()
+    
+print_total_users()    
+        
+print(missing)
+
+    
 # init_db()
 
 
