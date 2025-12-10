@@ -183,7 +183,7 @@ print_total_users()
 
 import gender_guesser.detector as gender
 
-missing =[(p[0],p[1]) for p in cur.execute("SELECT persons.firstname, persons.fullname from persons LEFT JOIN genders ON LOWER(persons.firstname)=genders.firstname where genders.gender is Null LIMIT 10").fetchall()]
+missing =[(p[0],p[1]) for p in cur.execute("SELECT persons.firstname, persons.fullname from persons LEFT JOIN genders ON LOWER(persons.firstname)=genders.firstname where genders.gender is Null").fetchall()]
 
 new = []
 for (fname,fullname) in missing:
