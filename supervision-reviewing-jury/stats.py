@@ -11,6 +11,7 @@ import statistics
 from scipy import stats
 import matplotlib.pyplot as plt
 import numpy as np
+import re
 
 
 import sqlite3
@@ -112,7 +113,7 @@ def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range, acti
     h_av = statistics.mean(h_list)
     total_av = statistics.mean(h_list+f_list)
     abs_diff = (f_av-h_av)/total_av
-    print(abs_diff)
+
 
     # print("Successfully loaded %i female page counts and %i male page counts" % (len(f_list),len(h_list)))    
     # print("Average of %i female page counts and %i male page counts" % (f_av,h_av))
@@ -121,6 +122,7 @@ def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range, acti
     # if p < 0.05, we reject the null hypothesis, that is, the hypothesis that the distributions are the same.
     # we only keep domains/subdomains with enough data point
     # We generate corresponding figures
+    print(ks_test.pvalue)
     if force_pic or (ks_test.pvalue < 0.05 and len(h_list + f_list) > 500):
 
         print(long_name)
@@ -164,101 +166,6 @@ Female average {f_av:.2f}, male average {h_av:.2f}, f-h normalized difference : 
         plt.savefig(result_folder + short_name+".png", dpi=300)
         plt.clf()        
 
-def print_domain():
-    print("")    
-
-    # h_valid= cur.execute("SELECT COUNT(*) from author \
-    # JOIN genders ON author.firstname=genders.firstname \
-    # JOIN pages ON author.docid=pages.docid \
-    # where genders.gender='H' \
-    # and author.domain LIKE '" + dom + "%'").fetchall()[0][0]
-
-    # f_valid= cur.execute("SELECT COUNT(*) from author \
-    # JOIN genders ON author.firstname=genders.firstname \
-    # JOIN pages ON author.docid=pages.docid \
-    # where genders.gender='F' \
-    # and author.domain LIKE '" + dom + "%'").fetchall()[0][0]  
-    # print("Successfully loaded %i female page counts and %i male page counts" % (f_valid,h_valid))
-
-
-    h_directed= [ p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
-    RIGHT JOIN persons ON persons.fullname=directed.fullname \
-    RIGHT JOIN thesis ON thesis.id=directed.id \
-    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
-    where genders.gender='H' \
-    AND LOWER(thesis.domain) LIKE '%informatique%' \
-    GROUP BY  directed.fullname").fetchall()]
-    
-    f_directed= [ p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
-    RIGHT JOIN persons ON persons.fullname=directed.fullname \
-    RIGHT JOIN thesis ON thesis.id=directed.id \
-    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
-    where genders.gender='F' \
-    AND LOWER(thesis.domain) LIKE '%informatique%' \
-    GROUP BY  directed.fullname").fetchall()]
-    
-    # if h_list==[] or f_list==[]:
-    #     print("empty")
-    #     return
-    print(sum(h_directed))
-    print(sum(f_directed))
-
-    
-    make_graph(h_directed, f_directed, True, "Informatique", "cs.supervised", None, "thesis supervision")
-
-
-
-    h_jury= [ p[1] for p in cur.execute("SELECT jury.fullname, COUNT(*) from jury \
-    RIGHT JOIN persons ON persons.fullname=jury.fullname \
-    RIGHT JOIN thesis ON thesis.id=jury.id \
-    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
-    where genders.gender='H' \
-    AND LOWER(thesis.domain) LIKE '%informatique%' \
-    GROUP BY  jury.fullname").fetchall()]
-    
-    f_jury= [ p[1] for p in cur.execute("SELECT jury.fullname, COUNT(*) from jury \
-    RIGHT JOIN persons ON persons.fullname=jury.fullname \
-    RIGHT JOIN thesis ON thesis.id=jury.id \
-    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
-    where genders.gender='F' \
-    AND LOWER(thesis.domain) LIKE '%informatique%' \
-    GROUP BY  jury.fullname").fetchall()]
-    
-    # if h_list==[] or f_list==[]:
-    #     print("empty")
-    #     return
-
-
-    
-    make_graph(h_jury, f_jury, True, "Informatique", "cs.examiner", None, "thesis examination")
-
-
-
-
-    h_reviewed= [ p[1] for p in cur.execute("SELECT reviewed.fullname, COUNT(*) from reviewed \
-    RIGHT JOIN persons ON persons.fullname=reviewed.fullname \
-    RIGHT JOIN thesis ON thesis.id=reviewed.id \
-    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
-    where genders.gender='H' \
-    AND LOWER(thesis.domain) LIKE '%informatique%' \
-    GROUP BY  reviewed.fullname").fetchall()]
-    
-    f_reviewed= [ p[1] for p in cur.execute("SELECT reviewed.fullname, COUNT(*) from reviewed \
-    RIGHT JOIN persons ON persons.fullname=reviewed.fullname \
-    RIGHT JOIN thesis ON thesis.id=reviewed.id \
-    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
-    where genders.gender='F' \
-    AND LOWER(thesis.domain) LIKE '%informatique%' \
-    GROUP BY  reviewed.fullname").fetchall()]
-    
-    # if h_list==[] or f_list==[]:
-    #     print("empty")
-    #     return
-
-
-    
-    make_graph(h_reviewed, f_reviewed, True, "Informatique", "cs.review", None, "thesis review")        
-
     # first_decile = np.percentile(h_list+f_list, 15)
     # last_decile =  np.percentile(h_list+f_list, 85)
 
@@ -281,7 +188,7 @@ def print_domain():
     
         # plt.show()            
 
-print_domain()
+# print_domain()
 
 # # print subset of fulldomains
 
@@ -308,4 +215,205 @@ print_domain()
 
 # print_zoom('info', (0,400))
 # print_zoom('shs', (0,1000))
+
+
+
+
+def print_all():
+    print("")    
+
+    # h_valid= cur.execute("SELECT COUNT(*) from author \
+    # JOIN genders ON author.firstname=genders.firstname \
+    # JOIN pages ON author.docid=pages.docid \
+    # where genders.gender='H' \
+    # and author.domain LIKE '" + dom + "%'").fetchall()[0][0]
+
+    # f_valid= cur.execute("SELECT COUNT(*) from author \
+    # JOIN genders ON author.firstname=genders.firstname \
+    # JOIN pages ON author.docid=pages.docid \
+    # where genders.gender='F' \
+    # and author.domain LIKE '" + dom + "%'").fetchall()[0][0]  
+    # print("Successfully loaded %i female page counts and %i male page counts" % (f_valid,h_valid))
+
+
+    h_directed= [p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
+    RIGHT JOIN persons ON persons.fullname=directed.fullname \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='H' \
+    and directed.fullname is not Null\
+    GROUP BY  directed.fullname").fetchall()]
+    
+    f_directed= [ p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
+    RIGHT JOIN persons ON persons.fullname=directed.fullname \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='F' \
+    and directed.fullname is not Null \
+    GROUP BY  directed.fullname").fetchall()]
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+    
+    make_graph(h_directed, f_directed, True, "All domains", "all.supervised", None, "thesis supervision")
+
+
+
+    h_jury= [ p[1] for p in cur.execute("SELECT jury.fullname, COUNT(*) from jury \
+    RIGHT JOIN persons ON persons.fullname=jury.fullname \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='H' \
+    and jury.fullname is not Null \
+    GROUP BY  jury.fullname").fetchall()]
+    
+    f_jury= [ p[1] for p in cur.execute("SELECT jury.fullname, COUNT(*) from jury \
+    RIGHT JOIN persons ON persons.fullname=jury.fullname \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='F' \
+    and jury.fullname is not Null \
+    GROUP BY  jury.fullname").fetchall()]
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+
+
+    
+    make_graph(h_jury, f_jury, True, "All domains", "all.examiner", None, "thesis examination")
+
+
+
+
+    h_reviewed= [ p[1] for p in cur.execute("SELECT reviewed.fullname, COUNT(*) from reviewed \
+    RIGHT JOIN persons ON persons.fullname=reviewed.fullname \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='H' \
+    and reviewed.fullname is not Null \
+    GROUP BY  reviewed.fullname").fetchall()]
+    
+    f_reviewed= [ p[1] for p in cur.execute("SELECT reviewed.fullname, COUNT(*) from reviewed \
+    RIGHT JOIN persons ON persons.fullname=reviewed.fullname \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='F' \
+    and reviewed.fullname is not Null \
+    GROUP BY  reviewed.fullname").fetchall()]
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+
+
+    
+    make_graph(h_reviewed, f_reviewed, True, "All domains", "all.review", None, "thesis review")
+
+# print_all()    
+
+
+
+def print_domain(dom):
+    sdom= " ".join(re.findall("[a-zA-Z]+", dom))
+    ldom= dom.replace("'", "''")
+    print("Managing "+dom)
+
+    # h_valid= cur.execute("SELECT COUNT(*) from author \
+    # JOIN genders ON author.firstname=genders.firstname \
+    # JOIN pages ON author.docid=pages.docid \
+    # where genders.gender='H' \
+    # and author.domain LIKE '" + dom + "%'").fetchall()[0][0]
+
+    # f_valid= cur.execute("SELECT COUNT(*) from author \
+    # JOIN genders ON author.firstname=genders.firstname \
+    # JOIN pages ON author.docid=pages.docid \
+    # where genders.gender='F' \
+    # and author.domain LIKE '" + dom + "%'").fetchall()[0][0]  
+    # print("Successfully loaded %i female page counts and %i male page counts" % (f_valid,h_valid))
+
+
+    h_directed= [ p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
+    RIGHT JOIN persons ON persons.fullname=directed.fullname \
+    RIGHT JOIN thesis ON thesis.id=directed.id \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='H' \
+    and directed.fullname is not Null\
+    AND LOWER(thesis.domain) LIKE '%"+ldom.lower()+"%' \
+    GROUP BY directed.fullname").fetchall()]
+    
+    f_directed= [ p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
+    RIGHT JOIN persons ON persons.fullname=directed.fullname \
+    RIGHT JOIN thesis ON thesis.id=directed.id \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='F' \
+    and directed.fullname is not Null\
+    AND LOWER(thesis.domain) LIKE '%"+ldom.lower()+"%' \
+    GROUP BY  directed.fullname").fetchall()]
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+
+    
+    make_graph(h_directed, f_directed, False, dom, sdom+".supervised", None, "thesis supervision")
+
+
+
+    h_jury= [ p[1] for p in cur.execute("SELECT jury.fullname, COUNT(*) from jury \
+    RIGHT JOIN persons ON persons.fullname=jury.fullname \
+    RIGHT JOIN thesis ON thesis.id=jury.id \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='H' \
+    and jury.fullname is not Null \
+    AND LOWER(thesis.domain) LIKE '%"+ldom.lower()+"%' \
+    GROUP BY  jury.fullname").fetchall()]
+    
+    f_jury= [ p[1] for p in cur.execute("SELECT jury.fullname, COUNT(*) from jury \
+    RIGHT JOIN persons ON persons.fullname=jury.fullname \
+    RIGHT JOIN thesis ON thesis.id=jury.id \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='F' \
+    and jury.fullname is not Null \
+    AND LOWER(thesis.domain) LIKE '%"+ldom.lower()+"%' \
+    GROUP BY  jury.fullname").fetchall()]
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+
+
+    
+    make_graph(h_jury, f_jury, False, dom, sdom+".examiner", None, "thesis examination")
+
+
+
+
+    h_reviewed= [ p[1] for p in cur.execute("SELECT reviewed.fullname, COUNT(*) from reviewed \
+    RIGHT JOIN persons ON persons.fullname=reviewed.fullname \
+    RIGHT JOIN thesis ON thesis.id=reviewed.id \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='H' \
+    and reviewed.fullname is not Null \
+    AND LOWER(thesis.domain) LIKE '%"+ldom.lower()+"%' \
+    GROUP BY  reviewed.fullname").fetchall()]
+    
+    f_reviewed= [ p[1] for p in cur.execute("SELECT reviewed.fullname, COUNT(*) from reviewed \
+    RIGHT JOIN persons ON persons.fullname=reviewed.fullname \
+    RIGHT JOIN thesis ON thesis.id=reviewed.id \
+    RIGHT JOIN genders ON LOWER(persons.firstname)=genders.firstname \
+    where genders.gender='F' \
+    and reviewed.fullname is not Null \
+    AND LOWER(thesis.domain) LIKE '%"+ldom.lower()+"%' \
+    GROUP BY  reviewed.fullname").fetchall()]
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+
+
+    
+    make_graph(h_reviewed, f_reviewed, None, dom, sdom+".review", None, "thesis review")        
+
+
+domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t ASC ").fetchall() if p[1] > 200]
+
+for domain in domains:
+    print_domain(domain)
+
 
