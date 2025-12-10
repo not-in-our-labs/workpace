@@ -34,8 +34,9 @@ The length distributions are compared using Kolmogorov-Smirnov test, with distri
 
 Possible bias:
  * thesis non available online might introduce a bias in some specific domains.
- * gender is only approximated
- * the formatting of them thesis makes them spuriously longer, or some files might be corrupted. 
+ * gender is only approximated.
+ * using the french database of names makes it so that we are more likely to not be able to gender foreigners.
+ * the pdf formatting of some thesis might makes them spuriously longer, or some files might be corrupted. 
 
 
 
