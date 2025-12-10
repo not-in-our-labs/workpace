@@ -89,7 +89,7 @@ def load_probable_genders():
 
 
 
-# load_probable_genders()    
+load_probable_genders()    
 
 
 
@@ -169,7 +169,7 @@ def init_db():
         res = json.load(BytesIO(requests.get(url).content))
         load_response(res)                
 
-init_db()
+# init_db()
 
 
 # def get_pages(docid):  
