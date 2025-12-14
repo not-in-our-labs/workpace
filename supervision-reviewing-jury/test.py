@@ -8,6 +8,7 @@ import json
 import csv
 import PyPDF2
 import sqlite3
+from unidecode import unidecode
 con = sqlite3.connect("test.db")
 cur = con.cursor()
 
@@ -31,11 +32,39 @@ if cur.execute("SELECT name FROM sqlite_master where name='jury'").fetchone() is
 
 if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone() is None:
     cur.execute("CREATE TABLE reviewed(id, fullname, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
+
+
+if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is None:
+    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, year, college, section)")
+
+
+
+def clean_up():
+    distincts = cur.execute("SELECT DISTINCT id, fullname FROM reviewed").fetchall()
+    cur.execute("DELETE FROM reviewed")
+    cur.executemany("INSERT OR IGNORE INTO reviewed VALUES(?, ?)", distincts)
+    con.commit()
+
+    distincts = cur.execute("SELECT DISTINCT id, fullname FROM jury").fetchall()
+    cur.execute("DELETE FROM jury")
+    cur.executemany("INSERT OR IGNORE INTO jury VALUES(?, ?)", distincts)
+    con.commit()
+
+    distincts = cur.execute("SELECT DISTINCT id, fullname FROM directed").fetchall()
+    cur.execute("DELETE FROM directed")
+    cur.executemany("INSERT OR IGNORE INTO directed VALUES(?, ?)", distincts)
+    con.commit()
+
+    # 
+
+    # persons = cur.execute("SELECT DISTINCT fullname FROM persons").fetchall()
+    # for p in persons:
+    #     fullname=p[0]
+    #     nf = unidecode(fullname).lower()
+    #     if "'" not in nf and "'" not in fullname:
+    #         cur.execute("UPDATE OR IGNORE persons SET fullname='"+nf+"' where fullname='"+fullname+"'")        
     
-
-# if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone() is None:
-#     cur.execute("CREATE TABLE reviewed(docid, fullname, UNIQUE(fullname))")
-
+    
 
 # if cur.execute("SELECT name FROM sqlite_master where name='juried'").fetchone() is None:
 #     cur.execute("CREATE TABLE juried(docid, fullname, UNIQUE(fullname))")
@@ -102,9 +131,13 @@ def mk_api_url(start,rows):
 
 
 def mk_person(entry):
-    surname = entry['nom']
-    firstname = entry['prenom']
-    fullname = firstname+" "+surname 
+    surname = unidecode(entry['nom']).lower()
+    firstname = unidecode(entry['prenom']).lower()
+    ppn = entry['ppn']
+    if ppn:
+        fullname = firstname+" "+surname + " " + ppn
+    else:
+        fullname = firstname+" "+surname        
     return (fullname, firstname , surname )
 
 def load_response(api_response):
@@ -208,115 +241,9 @@ def improve_gender():
 init_db()
 
 
-# def get_pages(docid):  
-#     try:
-#       url = cur.execute("SELECT  url from author WHERE docid=%i" % int(docid)).fetchall()[0][0]        
-#       print(url)
-#       file = BytesIO(requests.get(url).content)
-#       # opened file as reading (r) in binary (b) mode
-#       # file = open('https://theses.hal.science/tel-00321615/file/Nguyen.Gia-Toan_1986_these.pdf',            'rb')
-#       # store data in pdfReader
-#       pdfReader = PyPDF2.PdfReader(file)
-#       # count number of pages
-#       totalPages = len(pdfReader.pages)
-#       # print number of pages
-#       return(totalPages)
-#     except (PyPDF2.errors.PdfReadError, requests.exceptions.SSLError):
-#         cur.execute("INSERT OR IGNORE INTO invalidurls(docid) VALUES (%i)" % (docid))
-#         con.commit()
-#         return None
-
-# def has_invalid_url(docid):
-#     res=cur.execute("SELECT  * from invalidurls WHERE docid=%i" % (docid)).fetchall()
-#     return(res != [])
+improve_gender()    
     
 
-
-# def fetch_pages(docid):
-#     current_pages = cur.execute("SELECT * from pages WHERE docid=%i" % (docid)).fetchall()
-#     if current_pages == []:
-#         if has_invalid_url(docid):
-#             print("Ignoring doc %i due to invalid url" % docid)
-#         else:
-#             length=get_pages(docid)
-#             if length:
-#                 cur.execute("INSERT OR IGNORE INTO pages(docid,length) VALUES (%i, %i)" % (docid, length))
-#                 con.commit()
-#     else:
-#         print("Document %i has %i pages." % (docid, current_pages[0][1]))
-        
-        
-
-
-# def test(test):
-#     user=cur.execute("SELECT  * from author WHERE url='%s'"%test).fetchall()
-#     docid= int(user[0][0])
-#     fetch_pages(docid)
-    
-
-
-# def print_total_users():
-#     full=cur.execute("SELECT COUNT(author.docid) from author").fetchall()[0][0]
-#     h=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='H'").fetchall()[0][0]
-#     f=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='F'").fetchall()[0][0]
-#     print("We have in store (assumed) %i female and %i male phd authors, for a total of %i usable thesis. (out of %i total thesis)" % (f, h, f+h, full))
-
-
-
-
-#     h_valid=cur.execute("SELECT COUNT(*) from author \
-#     JOIN genders ON author.firstname=genders.firstname \
-#     JOIN pages ON author.docid=pages.docid \
-#     where genders.gender='H'").fetchall()[0][0]
-#     f_valid=cur.execute("SELECT COUNT(*) from author \
-#     JOIN genders ON author.firstname=genders.firstname \
-#     JOIN pages ON author.docid=pages.docid \
-#     where genders.gender='F'").fetchall()[0][0]
-#     print("Successfully loaded %i female page counts and %i male page counts" % (f_valid,h_valid))
-
-#     h_sum=cur.execute("SELECT SUM(pages.length) from author \
-#     JOIN genders ON author.firstname=genders.firstname \
-#     JOIN pages ON author.docid=pages.docid \
-#     where genders.gender='H'").fetchall()[0][0]
-#     f_sum=cur.execute("SELECT SUM(pages.length) from author \
-#     JOIN genders ON author.firstname=genders.firstname \
-#     JOIN pages ON author.docid=pages.docid \
-#     where genders.gender='F'").fetchall()[0][0]
-#     print("Average of %i female page counts and %i male page counts" % (f_sum/f_valid,h_sum/h_valid))
-
-    
-
-#     found_pages = cur.execute("SELECT COUNT(*) from author \
-#     JOIN pages ON author.docid=pages.docid").fetchall()[0][0]
-
-#     # boom = cur.execute("SELECT * from author \
-#     # LEFT JOIN pages ON author.docid=pages.docid").fetchall()
-#     # print(boom)
-    
-#     missing_pages = cur.execute("SELECT COUNT(*) from author \
-#     JOIN genders ON author.firstname=genders.firstname \
-#     LEFT JOIN pages ON author.docid=pages.docid \
-#     where pages.length is null").fetchall()[0][0]
-
-#     print("Fetched %i thesis length, missing %i" % (found_pages, missing_pages))
-
-
-    
-    
-# print_total_users()
-
-# docid_missing_pages = cur.execute("SELECT author.docid from author \
-#     JOIN genders ON author.firstname=genders.firstname \
-#     LEFT JOIN pages ON author.docid=pages.docid \
-#     where pages.length is null").fetchall()
-
-# for d in docid_missing_pages:
-#     docid = d[0]
-#     fetch_pages(docid)    
-
-
-
-    
 # step=1000
 
 # def mk_theses_id_api_url(start,rows):
@@ -359,3 +286,36 @@ init_db()
 #         print(url)
 #         res = json.load(BytesIO(requests.get(url).content))
 #         load_response(res)                
+
+
+        
+def load_cnu():
+    data = []
+    persons = set()
+ 
+    # name list from INSEE
+    with open('cnu_27.csv', 'r', encoding='utf-8', newline='') as name_file:
+        name_reader = csv.reader(name_file, delimiter=',')
+        for row in name_reader:
+            if len(row) < 12:
+                continue
+            if row[1] == 'Civilité':
+                continue
+            if row[1]=='M.':
+                gender='H'
+            elif row[1]=='Mme':
+                gender='F'
+            surname=row[5].lower()
+            firstname=row[7].lower()
+            year=2023
+            college=row[11]
+            section=27
+            fullname=firstname + " " + surname
+            data.append( (gender,firstname + " " + surname,firstname,year,college,section))
+
+    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?, ?, ?)", data)
+    con.commit()
+    
+
+
+load_cnu()
