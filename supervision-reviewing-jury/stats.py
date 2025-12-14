@@ -412,11 +412,10 @@ def print_domain(dom):
 
 domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t DESC ").fetchall() if p[1] > 400]
 
-print(domains)
-# for domain in domains:
-#     # if domain != 'Informatique':
-#     #     continue
-#     print_domain(domain)
+for domain in domains:
+    # if domain != 'Informatique':
+    #     continue
+    print_domain(domain)
 
 
 
