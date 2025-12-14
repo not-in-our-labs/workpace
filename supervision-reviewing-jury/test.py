@@ -140,9 +140,8 @@ def load_response(api_response):
 
             for person in entry['examinateurs']:
                 ppn, surname, firstname = mk_person(person)
-                persons.add((ppn, surname, firstname))
-                
-            jury += [(docid, ppn)]                
+                persons.add((ppn, surname, firstname))                
+                jury.append((docid, ppn))
 
     data=list(persons)
     print("saving")
@@ -181,28 +180,26 @@ def print_total_users():
     
 print_total_users()    
 
-import gender_guesser.detector as gender
+def improve_gender():
+    import gender_guesser.detector as gender
 
-missing =[(p[0],p[1]) for p in cur.execute("SELECT persons.firstname, persons.fullname from persons LEFT JOIN genders ON LOWER(persons.firstname)=genders.firstname where genders.gender is Null").fetchall()]
+    missing =[(p[0],p[1]) for p in cur.execute("SELECT persons.firstname, persons.fullname from persons LEFT JOIN genders ON LOWER(persons.firstname)=genders.firstname where genders.gender is Null").fetchall()]
 
-new = []
-for (fname,fullname) in missing:
-    d = gender.Detector()
-    name = fname.split(" ")[0]
-    guess=d.get_gender(name)
-    if guess=='male':
-        res='H'
-    elif guess=='female':
-        res='F'
-    else:
-       continue
-    print(fname)
-    cur.execute("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", (fname.lower(), res, 1))
-    con.commit()
+    new = []
+    for (fname,fullname) in missing:
+        d = gender.Detector()
+        name = fname.split(" ")[0]
+        guess=d.get_gender(name)
+        if guess=='male':
+            res='H'
+        elif guess=='female':
+            res='F'
+        else:
+            continue
+        print(fname)
+        cur.execute("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", (fname.lower(), res, 1))
+        con.commit()
     
-print_total_users()    
-        
-print(missing)
 
     
 # init_db()
