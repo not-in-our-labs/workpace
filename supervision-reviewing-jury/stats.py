@@ -127,7 +127,7 @@ def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range, acti
 
         print(long_name)
 
-        plt.suptitle("Density function for  number of %s per person\n %s" % (action, long_name))
+        plt.suptitle("Density function for number of %s per person\n %s" % (action, long_name))
 
         plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female ({len(f_list)/len(f_list+h_list):.0%} females), France, 2015 to 2025\n \
 Total of {sum(h_list)} male {action} vs {sum(f_list)} female ({sum(f_list)/sum(f_list+h_list):.0%} females)\n \
@@ -254,7 +254,7 @@ def print_all():
     #     print("empty")
     #     return
     
-    make_graph(h_directed, f_directed, True, "All domains", "all.supervised", None, "thesis supervision")
+    make_graph(h_directed, f_directed, False, "All domains", "supervised.all", None, "thesis supervision")
 
 
 
@@ -278,7 +278,7 @@ def print_all():
 
 
     
-    make_graph(h_jury, f_jury, True, "All domains", "all.examiner", None, "thesis examination")
+    make_graph(h_jury, f_jury, False, "All domains", "examiner.all", None, "thesis examination")
 
 
 
@@ -303,7 +303,7 @@ def print_all():
 
 
     
-    make_graph(h_reviewed, f_reviewed, True, "All domains", "all.review", None, "thesis review")
+    make_graph(h_reviewed, f_reviewed, False, "All domains", "review.all", None, "thesis review")
 
 # print_all()    
 
@@ -351,7 +351,7 @@ def print_domain(dom):
     #     return
 
     
-    make_graph(h_directed, f_directed, False, dom, sdom+".supervised", None, "thesis supervision")
+    make_graph(h_directed, f_directed, False, dom, "supervised."+sdom, None, "thesis supervision")
 
 
 
@@ -378,8 +378,7 @@ def print_domain(dom):
     #     return
 
 
-    
-    make_graph(h_jury, f_jury, False, dom, sdom+".examiner", None, "thesis examination")
+    make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
 
 
 
@@ -408,12 +407,36 @@ def print_domain(dom):
 
 
     
-    make_graph(h_reviewed, f_reviewed, None, dom, sdom+".review", None, "thesis review")        
+    make_graph(h_reviewed, f_reviewed, None, dom, "review."+sdom, None, "thesis review")        
 
 
-domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t ASC ").fetchall() if p[1] > 200]
+domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t DESC ").fetchall() if p[1] > 400]
 
-for domain in domains:
-    print_domain(domain)
+print(domains)
+# for domain in domains:
+#     # if domain != 'Informatique':
+#     #     continue
+#     print_domain(domain)
+
+
+
+
+# f_jury=cur.execute("SELECT * from jury \
+# RIGHT JOIN persons ON persons.fullname=jury.fullname \
+# RIGHT JOIN thesis ON thesis.id=jury.id \
+# where jury.fullname is not Null \
+# AND LOWER(thesis.domain) LIKE '%informatique%' \
+# AND persons.surname LIKE '%minier%'").fetchall()
+# print(f_jury)
+
+
+
+        
+# f_jury=cur.execute("SELECT * from jury \
+# RIGHT JOIN persons ON persons.fullname=jury.fullname \
+# RIGHT JOIN thesis ON thesis.id=jury.id \
+# where jury.fullname is not Null \
+# AND thesis.id = '2023UPASG099'").fetchall()
+# print(f_jury)
 
 
