@@ -175,6 +175,9 @@ def print_total_users():
     tot = cur.execute("SELECT COUNT(fullname) from persons").fetchall()[0][0]
     print("We have in store (assumed) %i female and %i male persons, for a total of %i. (out of %i persons)" % (f, h, f+h, tot))
 
+    reviews=cur.execute("SELECT COUNT(*) from jury").fetchall()[0][0]
+    print(f"We have {reviews}")
+
 
 
     
@@ -202,7 +205,7 @@ def improve_gender():
     
 
     
-# init_db()
+init_db()
 
 
 # def get_pages(docid):  
