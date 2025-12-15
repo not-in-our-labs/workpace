@@ -358,7 +358,7 @@ def print_domain(dom):
     #     return
 
     
-    make_graph(h_directed, f_directed, False, dom, "supervised."+sdom, None, "thesis supervision")
+    make_graph(h_directed, f_directed, True, dom, "supervised."+sdom, None, "thesis supervision")
 
 
 
@@ -385,7 +385,7 @@ def print_domain(dom):
     #     return
 
 
-    make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
+    make_graph(h_jury, f_jury, True, dom, "examiner."+sdom, None, "thesis examination")
 
 
 
@@ -419,10 +419,10 @@ def print_domain(dom):
 
 domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t DESC ").fetchall() if p[1] > 400]
 
-# for domain in domains:
-#     # if domain != 'Informatique':
-#     #     continue
-#     print_domain(domain)
+for domain in domains:
+    if domain != 'Informatique':
+        continue
+    print_domain(domain)
 
 
 
@@ -505,10 +505,15 @@ def print_cnu():
     h_jury += [0 for i in range(0,len(h_cnu) - len(h_jury))]
     f_jury += [0 for i in range(0,len(f_cnu) - len(f_jury))]        
 
-
+    h_over_tw = len([p for p in f_jury if 20 <= p])
+    f_over_tw = len([p for p in h_jury if 20 <= p])
+    print(f"Women over twenty: {f_over_tw}, {f_over_tw/len(f_jury):.0%} ")
+    print(f"Men over twenty: {h_over_tw}, {h_over_tw/len(h_jury):.0%}")
+    
     make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
 
-    make_graph(h_jury, f_jury, False, dom, "examiner.zoom."+sdom, (0,25), "thesis examination")
+    make_graph(h_jury, f_jury, False, dom, "examiner.zoom1."+sdom, (0,25), "thesis examination")
+    make_graph(h_jury, f_jury, False, dom, "examiner.zoom2."+sdom, (25,60), "thesis examination")    
 
 
     h_reviewed=  [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
@@ -541,6 +546,45 @@ def eval_gender_guessing():
 
 eval_gender_guessing()
 
-print_cnu()
+# print_cnu()
+
+
+
+def print_info_per_year():
+    for i in range(2014,2026):
+        h=cur.execute(f"SELECT COUNT(thesis.id) from thesis JOIN persons ON persons.fullname=thesis.fullname \
+        JOIN genders ON persons.firstname=genders.firstname \
+        JOIN years on thesis.id=years.id \
+        where genders.gender='H' AND thesis.domain LIKE '%informatique%' AND years.year='{i}'").fetchall()[0][0]
+        
+        f=cur.execute(f"SELECT COUNT(thesis.id) from thesis JOIN persons ON persons.fullname=thesis.fullname \
+        JOIN genders ON persons.firstname=genders.firstname \
+        JOIN years on thesis.id=years.id \
+        where genders.gender='F' AND thesis.domain LIKE '%informatique%' AND years.year='{i}'").fetchall()[0][0]
+        if f != 0 and h != 0:
+            print(f"For {i}, we have in store (assumed) {f}  female and {h} male phd authors, for a total of {f/(f+h):.1%}.")
+    
+# print_info_per_year() 
+
+def print_info_per_year_cnu():
+    
+    for i in range(2014,2026):
+        h=cur.execute(f"SELECT COUNT(thesis.id) from thesis JOIN persons ON persons.fullname=thesis.fullname \
+        JOIN genders ON persons.firstname=genders.firstname \
+        JOIN years on thesis.id=years.id \
+        JOIN directed on directed.id=thesis.id \
+        JOIN cnu on cnu.fullname=directed.fullname \
+        where genders.gender='H' and years.year='{i}'").fetchall()[0][0]
+        
+        f=cur.execute(f"SELECT COUNT(thesis.id) from thesis JOIN persons ON persons.fullname=thesis.fullname \
+        JOIN genders ON persons.firstname=genders.firstname \
+        JOIN years on thesis.id=years.id \
+        JOIN directed on directed.id=thesis.id \
+        JOIN cnu on cnu.fullname=directed.fullname \
+        where genders.gender='F' AND years.year='{i}'").fetchall()[0][0]
+        if f != 0 and h != 0:
+            print(f"For {i}, we have in store (assumed) {f}  female and {h} male phd authors, for a total of {f/(f+h):.1%}.")
+    
+# print_info_per_year_cnu()
 
 

@@ -224,13 +224,14 @@ def print_domain(sql_cond, short_name, long_name, force_pic):
     
         # plt.show()            
 
-# print_domain("shs")
+
 
 # print subset of fulldomains 
-for dom in domains_fullnames:
-     dom_fullname=get_full_name(dom)
-     sql_cond = "AND author.domain LIKE '" + dom + "%'"
-     print_domain(sql_cond, dom, dom_fullname, False)
+# for dom in domains_fullnames:
+dom='info'
+dom_fullname=get_full_name(dom)
+sql_cond = "AND author.domain LIKE '" + dom + "%'"
+print_domain(sql_cond, dom, dom_fullname, True)
 
 
 # cutoff=400

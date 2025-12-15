@@ -31,6 +31,7 @@ def mk_api_url(start,rows):
     base_url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=defenseDateY_i:[2015%20TO%202025]&fl=defenseDateY_i&fl=files_s&fl=authLastName_s&fl=authFirstName_s&fl=primaryDomain_s&fl=docid&sort=docid asc"
     return(base_url+"&start="+str(start)+"&rows="+str(rows))
     # remark: we use HAL, but note that theses.fr returns a similar number of thesis that are accessible online for the same time period.
+    # ( 97683 total hal thesis) vs 102703 theses.fr thesis (https://theses.fr/api/v1/theses/recherche/?q=*%20AND%20dateSoutenance:(%5B2015-01-01%20TO%202025-11-20%5D)%20AND%20accessible:oui)
 
 
 def load_response(api_response):
@@ -214,11 +215,32 @@ def print_total_users():
     
 print_total_users()
 
-docid_missing_pages = cur.execute("SELECT author.docid from author \
-    JOIN genders ON author.firstname=genders.firstname \
-    LEFT JOIN pages ON author.docid=pages.docid \
-    where pages.length is null").fetchall()
+# docid_missing_pages = cur.execute("SELECT author.docid from author \
+#     JOIN genders ON author.firstname=genders.firstname \
+#     LEFT JOIN pages ON author.docid=pages.docid \
+#     where pages.length is null").fetchall()
 
-for d in docid_missing_pages:
-    docid = d[0]
-    fetch_pages(docid)    
+# for d in docid_missing_pages:
+#     docid = d[0]
+#     fetch_pages(docid)    
+
+
+
+def improve_gender_bis():
+
+
+    missing =[p[0] for p in cur.execute("SELECT author.firstname from author LEFT JOIN genders ON author.firstname=genders.firstname where genders.gender is Null").fetchall()]
+
+    new = []
+    for fname in missing:
+        name = fname.split(" ")[0]
+        name = name.split("-")[0].replace("'","''")
+        print(name)        
+        gender  = cur.execute(f"SELECT genders.gender from genders where genders.firstname='{name}'").fetchall()
+        if gender:
+            print(gender[0][0])
+            
+            cur.execute("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", (fname.lower(), gender[0][0], 1))
+            con.commit()
+
+# improve_gender_bis()            

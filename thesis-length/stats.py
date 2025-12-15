@@ -227,10 +227,10 @@ def print_domain(sql_cond, short_name, long_name, force_pic, with_range):
 # print subset of fulldomains
 
 
-# for dom in domains_fullnames:
-#      dom_fullname=get_full_name(dom)
-#      sql_cond = "AND author.domain LIKE '" + dom + "%'"
-#      print_domain(sql_cond, dom, dom_fullname, False,None)
+for dom in domains_fullnames:
+     dom_fullname=get_full_name(dom)
+     sql_cond = "AND author.domain LIKE '" + dom + "%'"
+     print_domain(sql_cond, dom, dom_fullname, False,None)
 
 
 # for dom in domains_fullnames:
@@ -249,4 +249,14 @@ def print_zoom(dom, rang):
 
 print_zoom('info', (0,400))
 print_zoom('shs', (0,1000))
+
+def print_info_per_year():
+    for i in range(2015,2026):
+        h=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='H' AND author.domain LIKE '%info%' AND author.year="+str(i)).fetchall()[0][0]
+        f=cur.execute("SELECT COUNT(author.docid) from author JOIN genders ON author.firstname=genders.firstname  where genders.gender='F' AND author.domain LIKE '%info%' AND author.year="+str(i)).fetchall()[0][0]
+        print(f"For {i}, we have in store (assumed) {f}  female and {h} male phd authors, for a total of {f/(f+h):.1%}.")
+    
+print_info_per_year()
+
+
 

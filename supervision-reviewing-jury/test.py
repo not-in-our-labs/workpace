@@ -38,6 +38,9 @@ if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone(
 if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is None:
     cur.execute("CREATE TABLE cnu(gender, fullname, firstname, section)")
 
+if cur.execute("SELECT name FROM sqlite_master where name='years'").fetchone() is None:
+    cur.execute("CREATE TABLE years(id, year, FOREIGN KEY (id) REFERENCES thesis(id))")
+    
 
 
 def clean_up():
@@ -453,6 +456,8 @@ def link_cnu():
     
 
 
+
+    
 # link_cnu()
 
 
@@ -464,3 +469,40 @@ def link_cnu():
 
 
 
+
+def load_year(api_response):
+    data=[]
+    for entry in api_response['theses']:
+            docid=entry['id']
+
+            year=entry['dateSoutenance'].split("/")[2]
+            data.append((docid,year))
+    cur.executemany("INSERT OR IGNORE INTO years VALUES(?, ?)", data)
+    con.commit()
+    
+def init_year():
+    url=mk_api_url(0,5)
+    print(url)
+    init = json.load(BytesIO(requests.get(url).content))
+    total_results = init["totalHits"]
+    print(total_results)
+    load_year(init)
+    for i in range(0,int(total_results/step+1)):        
+        start=i*step
+        url=mk_api_url(start,step)
+        print(url)
+        res = json.load(BytesIO(requests.get(url).content))
+        load_year(res)                
+
+
+init_year()            
+    # data=list(persons)
+
+    # cur.executemany("INSERT OR IGNORE INTO persons VALUES(?, ?, ?)", data)
+
+    # cur.executemany("INSERT OR IGNORE INTO thesis VALUES(?, ?, ?)", thesis)
+    
+    # cur.executemany("INSERT OR IGNORE INTO directed VALUES(?, ?)", directed)
+    # cur.executemany("INSERT OR IGNORE INTO jury VALUES(?, ?)", jury)
+    # cur.executemany("INSERT OR IGNORE INTO reviewed VALUES(?, ?)", reviewed)        
+    # con.commit()
