@@ -508,7 +508,7 @@ def print_cnu():
 
     make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
 
-    make_graph(h_jury, f_jury, False, dom, "examiner.zoom."+sdom, (5,50), "thesis examination")
+    make_graph(h_jury, f_jury, False, dom, "examiner.zoom."+sdom, (0,25), "thesis examination")
 
 
     h_reviewed=  [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
@@ -541,6 +541,6 @@ def eval_gender_guessing():
 
 eval_gender_guessing()
 
-# print_cnu()
+print_cnu()
 
 

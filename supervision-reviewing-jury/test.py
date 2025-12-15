@@ -34,7 +34,7 @@ if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone(
     cur.execute("CREATE TABLE reviewed(id, fullname, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
 
 
-
+# cur.execute("DROP TABLE cnu")
 if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is None:
     cur.execute("CREATE TABLE cnu(gender, fullname, firstname, section)")
 
@@ -377,8 +377,8 @@ def load_cnu(f, allow_dup):
                 gender='H'
             elif row[1]=='Mme':
                 gender='F'
-            surname=row[5].lower()
-            firstname=row[7].lower()
+            surname=unidecode(row[5].lower())
+            firstname=unidecode(row[7].lower())
             year=2023
             college=row[11]
             section=27
@@ -461,5 +461,6 @@ def link_cnu():
 #     JOIN reviewed ON persons.fullname=reviewed.fullname \
 #     JOIN directed ON directed.fullname=reviewed.fullname \
 #     WHERE persons.fullname=").fetchall()
+
 
 
