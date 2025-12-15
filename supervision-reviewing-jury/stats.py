@@ -17,7 +17,13 @@ import re
 import sqlite3
 con = sqlite3.connect('file:test.db?mode=ro', uri=True)
 cur = con.cursor()
-    
+from unidecode import unidecode    
+
+ 
+def like(a, b) :
+    return unidecode(a).lower()==unidecode(b).lower()
+
+con.create_function("likenoaccent", 2, like)        
 
 result_folder = "plots/"
 
@@ -45,6 +51,7 @@ def print_total_users():
     # print("Average of %i female page counts and %i male page counts" % (f_sum/f_valid,h_sum/h_valid))
 
     
+
 
     # found_pages = cur.execute("SELECT COUNT(*) from author \
     # JOIN pages ON author.docid=pages.docid").fetchall()[0][0]
@@ -139,7 +146,7 @@ Female average {f_av:.2f}, male average {h_av:.2f}, f-h normalized difference : 
       
 
         
-        plt.xlabel("Page length")
+        plt.xlabel(f"Number of {action}")
         plt.ylabel("Density")
         plt.hist(h_list,bins="auto",color="tab:purple",
                  range=with_range,
@@ -407,15 +414,15 @@ def print_domain(dom):
 
 
     
-    make_graph(h_reviewed, f_reviewed, None, dom, "review."+sdom, None, "thesis review")        
+    make_graph(h_reviewed, f_reviewed, False, dom, "review."+sdom, None, "thesis review")        
 
 
 domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t DESC ").fetchall() if p[1] > 400]
 
-for domain in domains:
-    # if domain != 'Informatique':
-    #     continue
-    print_domain(domain)
+# for domain in domains:
+#     # if domain != 'Informatique':
+#     #     continue
+#     print_domain(domain)
 
 
 
@@ -425,7 +432,7 @@ for domain in domains:
 # RIGHT JOIN thesis ON thesis.id=jury.id \
 # where jury.fullname is not Null \
 # AND LOWER(thesis.domain) LIKE '%informatique%' \
-# AND persons.surname LIKE '%minier%'").fetchall()
+# AND persons.surname LIKE '%%'").fetchall()
 # print(f_jury)
 
 
@@ -435,7 +442,105 @@ for domain in domains:
 # RIGHT JOIN persons ON persons.fullname=jury.fullname \
 # RIGHT JOIN thesis ON thesis.id=jury.id \
 # where jury.fullname is not Null \
-# AND thesis.id = '2023UPASG099'").fetchall()
+# AND thesis.id = ''").fetchall()
 # print(f_jury)
+
+
+
+
+# Limitations:
+# some homonyms are present on theses.fr, + theses.fr not always link person with its ppn
+
+def print_cnu():
+    sdom= "sec27"
+    ldom= "Informatique (section 27)"
+    dom=ldom
+    print("Managing "+ldom)
+
+
+    h_cnu = cur.execute("SELECT cnu.fullname from cnu \
+    where cnu.gender='H'").fetchall()
+    print(len(h_cnu))
+
+    f_cnu = cur.execute("SELECT cnu.fullname from cnu \
+    where cnu.gender='F'").fetchall()
+    print(len(f_cnu))
+
+
+    h_directed= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
+    JOIN directed ON cnu.fullname=directed.fullname \
+    where cnu.gender='H' \
+    GROUP BY directed.fullname").fetchall()]
+    
+    f_directed= [ p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
+    JOIN cnu ON cnu.fullname=directed.fullname \
+    where cnu.gender='F' \
+    GROUP BY directed.fullname").fetchall()]
+    
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+    h_directed += [0 for i in range(0,len(h_cnu) - len(h_directed))]
+    f_directed += [0 for i in range(0,len(f_cnu) - len(f_directed))]        
+
+    
+    make_graph(h_directed, f_directed, False, dom, "supervised."+sdom, None, "thesis supervision")
+
+
+
+    h_jury= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
+    JOIN jury ON cnu.fullname=jury.fullname \
+    where cnu.gender='H' \
+    GROUP BY jury.fullname").fetchall()]
+    
+    f_jury= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
+    JOIN jury ON cnu.fullname=jury.fullname \
+    where cnu.gender='F' \
+    GROUP BY jury.fullname").fetchall()]
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+    h_jury += [0 for i in range(0,len(h_cnu) - len(h_jury))]
+    f_jury += [0 for i in range(0,len(f_cnu) - len(f_jury))]        
+
+
+    make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
+
+    make_graph(h_jury, f_jury, False, dom, "examiner.zoom."+sdom, (5,50), "thesis examination")
+
+
+    h_reviewed=  [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
+    JOIN reviewed ON cnu.fullname=reviewed.fullname \
+    where cnu.gender='H' \
+    GROUP BY reviewed.fullname").fetchall()]
+    
+    f_reviewed= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
+    JOIN reviewed ON cnu.fullname=reviewed.fullname \
+    where cnu.gender='F' \
+    GROUP BY reviewed.fullname").fetchall()]
+
+    h_reviewed += [0 for i in range(0,len(h_cnu) - len(h_reviewed))]
+    f_reviewed += [0 for i in range(0,len(f_cnu) - len(f_reviewed))]            
+
+    
+    make_graph(h_reviewed, f_reviewed, False, dom, "review."+sdom, None, "thesis review")        
+
+def eval_gender_guessing():
+    f_cnu =  [p[0] for p in cur.execute("SELECT cnu.firstname from cnu WHERE cnu.gender='F'").fetchall()]
+
+    f_guessed = [p[0] for p in cur.execute("SELECT cnu.firstname from cnu JOIN genders ON LOWER(cnu.firstname)=genders.firstname WHERE genders.gender='F'").fetchall()]
+
+
+    h_cnu =  [p[0] for p in cur.execute("SELECT cnu.firstname from cnu WHERE cnu.gender='H'").fetchall()]
+
+    h_guessed = [p[0] for p in cur.execute("SELECT cnu.firstname from cnu JOIN genders ON LOWER(cnu.firstname)=genders.firstname WHERE genders.gender='H'").fetchall()]
+    
+    print(f"Comparing with the official cnu section 27 data, we are guessing correctly {len(f_guessed)/len(f_cnu):.3%} of females and {len(h_guessed)/len(h_cnu):.3%} of males")
+
+eval_gender_guessing()
+
+# print_cnu()
 
 

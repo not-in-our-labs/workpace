@@ -34,8 +34,9 @@ if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone(
     cur.execute("CREATE TABLE reviewed(id, fullname, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
 
 
+
 if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is None:
-    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, year, college, section)")
+    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, section)")
 
 
 
@@ -55,6 +56,7 @@ def clean_up():
     cur.executemany("INSERT OR IGNORE INTO directed VALUES(?, ?)", distincts)
     con.commit()
 
+    
     # 
 
     # persons = cur.execute("SELECT DISTINCT fullname FROM persons").fetchall()
@@ -82,8 +84,7 @@ def get_gender(name,names):
     return None
 
 
-        
-def load_probable_genders():
+def load_probable_genders_no_accent():
     names = {}
 
     numbers = {}    
@@ -114,12 +115,45 @@ def load_probable_genders():
     data=[(d, names[d], numbers[d]) for d in names]
     cur.executemany("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", data)
     con.commit()
+
+def load_probable_genders_no_accent():
+    names = {}
+
+    numbers = {}    
+    # name list from INSEE
+    with open('prenoms-2024-liste.csv', 'r', encoding='utf-8', newline='') as name_file:
+        name_reader = csv.reader(name_file, delimiter=';')
+        for row in name_reader:
+            if row[2]=='periode': #skip first line
+                continue
+            name=row[1].lower()
+            g=row[0]
+            year=int(row[2])
+            number=int(row[3])
+            if year < 1960: # we don't keep overly old data
+                continue
+            if name in names:
+                # if name is less common for this gender, we ignore and skip
+                if number<numbers[name]:
+                    continue
+                
+                # we initialize values for a new name    
+            if g=='1':
+                names[name]="H"
+                numbers[name]=number
+            elif g=='2':
+                names[name]="F"
+                numbers[name]=number         
+    data=[(unidecode(d), names[d], numbers[d]) for d in names]
+    cur.executemany("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", data)
+    con.commit()
     
 
 
 
-load_probable_genders()    
+# load_probable_genders()    
 
+# load_probable_genders_no_accent()    
 
 
     
@@ -235,13 +269,51 @@ def improve_gender():
         print(fname)
         cur.execute("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", (fname.lower(), res, 1))
         con.commit()
-    
+
+
+def improve_gender_cnu():
+    import gender_guesser.detector as gender
+
+    missing =[(p[0],p[1]) for p in cur.execute("SELECT cnu.firstname, cnu.fullname from cnu LEFT JOIN genders ON LOWER(cnu.firstname)=genders.firstname where genders.gender is Null").fetchall()]
+
+    new = []
+    for (fname,fullname) in missing:
+        name = fname.split(" ")[0]
+        name = name.split("-")[0]
+        print(name)        
+        gender  = cur.execute(f"SELECT genders.gender from genders where genders.firstname='{name}'").fetchall()
+        if gender:
+            print(gender[0][0])
+            
+            cur.execute("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", (fname.lower(), gender[0][0], 1))
+            con.commit()
+
+def improve_gender_bis():
+    import gender_guesser.detector as gender
+
+
+    missing =[(p[0],p[1]) for p in cur.execute("SELECT persons.firstname, persons.fullname from persons LEFT JOIN genders ON LOWER(persons.firstname)=genders.firstname where genders.gender is Null").fetchall()]
+
+    new = []
+    for (fname,fullname) in missing:
+        name = fname.split(" ")[0]
+        name = name.split("-")[0].replace("'","''")
+        print(name)        
+        gender  = cur.execute(f"SELECT genders.gender from genders where genders.firstname='{name}'").fetchall()
+        if gender:
+            print(gender[0][0])
+            
+            cur.execute("INSERT OR IGNORE INTO genders VALUES(?, ?, ?)", (fname.lower(), gender[0][0], 1))
+            con.commit()
+                    
 
     
-init_db()
+# init_db()
 
 
-improve_gender()    
+# improve_gender()
+
+# improve_gender_bis()     
     
 
 # step=1000
@@ -289,12 +361,12 @@ improve_gender()
 
 
         
-def load_cnu():
+def load_cnu(f, allow_dup):
     data = []
     persons = set()
  
     # name list from INSEE
-    with open('cnu_27.csv', 'r', encoding='utf-8', newline='') as name_file:
+    with open(f, 'r', encoding='utf-8', newline='') as name_file:
         name_reader = csv.reader(name_file, delimiter=',')
         for row in name_reader:
             if len(row) < 12:
@@ -311,11 +383,83 @@ def load_cnu():
             college=row[11]
             section=27
             fullname=firstname + " " + surname
-            data.append( (gender,firstname + " " + surname,firstname,year,college,section))
+            fn = fullname.replace("'","''")
+            if allow_dup or (not cur.execute(f"SELECT * from cnu where cnu.fullname='{fn}'").fetchall()):
+                data.append( (gender,firstname + " " + surname,firstname,section))
 
-    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?, ?, ?)", data)
+    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?)", data)
     con.commit()
     
 
+# load_cnu('cnu_27_2019.csv', True)
+# load_cnu('cnu_27_2023.csv', False)
 
-load_cnu()
+
+def link_cnu():
+    # after running load cnu, cnu.fullname jsut contains the full name, while persons.fullname might contain in addition the thesis.fr ppn identifier
+    cnu = [p[0] for p in cur.execute("SELECT cnu.fullname from cnu").fetchall()]
+
+    info_jury= cur.execute("SELECT persons.fullname, COUNT(jury.fullname) as jnum from persons \
+    JOIN jury ON persons.fullname=jury.fullname \
+    RIGHT JOIN thesis ON thesis.id=jury.id \
+    WHERE LOWER(thesis.domain) LIKE '%informatique%' \
+    GROUP BY persons.fullname ORDER BY jnum ").fetchall()
+
+
+    rev_jury= cur.execute("SELECT persons.fullname, COUNT(reviewed.fullname) as jnum from persons \
+    JOIN reviewed ON persons.fullname=reviewed.fullname \
+    RIGHT JOIN thesis ON thesis.id=reviewed.id \
+    WHERE LOWER(thesis.domain) LIKE '%informatique%' \
+    GROUP BY persons.fullname ORDER BY jnum ").fetchall()
+
+
+    dir_jury= cur.execute("SELECT persons.fullname, COUNT(directed.fullname) as jnum from persons \
+    JOIN directed ON persons.fullname=directed.fullname \
+    RIGHT JOIN thesis ON thesis.id=directed.id \
+    WHERE LOWER(thesis.domain) LIKE '%informatique%' \
+    GROUP BY persons.fullname ORDER BY jnum ").fetchall()
+    
+    cs_pers = {}
+
+    for p in info_jury+rev_jury+dir_jury:
+        name = p[0]
+        score = p[1]
+        if name in cs_pers:
+            cs_pers[name] += score
+        else:
+            cs_pers[name] = score                
+
+    cs_pers.pop(None)
+
+    data = []
+    for person in cnu:
+        options = [p for p in cs_pers if person==p or person+" " in p]
+        if options:
+            cur_opt = options[0]
+            for opt in options[1::]:
+                if cs_pers[opt] > cs_pers[cur_opt]:
+                    cur_opt=opt
+            data.append((person, cur_opt))
+            cs_pers.pop(cur_opt)
+
+    for pers in data:
+        old = pers[0].replace("'", "''")
+        target = pers[1].replace("'", "''")
+        print(old)
+        print(target)
+        cur.execute(f"UPDATE cnu set fullname='{target}' where cnu.fullname='{old}'")
+
+    con.commit()    
+    
+
+
+# link_cnu()
+
+
+# get_all_pers= cur.execute("SELECT * from persons \
+#     JOIN jury ON persons.fullname=jury.fullname \
+#     JOIN reviewed ON persons.fullname=reviewed.fullname \
+#     JOIN directed ON directed.fullname=reviewed.fullname \
+#     WHERE persons.fullname=").fetchall()
+
+
