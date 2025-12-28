@@ -134,6 +134,7 @@ https://www.youtube.com/watch?v=ZFhzX1VVd4Q
 		 
 ##  LGBTQIA Student Engagement & Intersectionality in Higher Education (50m research like presentation)
 https://www.youtube.com/watch?v=PFxNVa3ub2A
+
    "Build a culture that is inclusive, affirming, equitable and accessible for all" 
     define DEI (equity requires an understanding of the root causes of dispariteis in society)
     LGBTQ working definitions, glossary
@@ -155,7 +156,8 @@ https://www.youtube.com/watch?v=PFxNVa3ub2A
 				  
 
 ## Beyond Bias Fair and Inclusive Hiring Strategies for University Search Committees (19:13m from uni, but ted like)
-https://www.youtube.com/watch?v=9IgcGhCYcYY&list=PLEXnTZ61J9cDoAuQdd_hQAtz_CBufqA7n&index=18&pp=gAQBiAQB
+https://www.youtube.com/watch?v=9IgcGhCYcYY
+
 "small wins" approach
 barriers? ~70/80, 5% of musician in orchestra in USA. made the first round blind, women success rates widly went up
 bias is an error in judgment -> perceived gender implied a lower estimate of abilities
@@ -270,6 +272,7 @@ consent does not come in every days discussion, a training would allow it to com
 	
 ## Susanne Täuber - Bullying as a career tool in academia (28:34m talk)
 https://www.youtube.com/watch?v=9UU11E_SKn8
+
 harrassment and inequality are in a vicious circle
 Historical intervention and anti-harassment policy have had little discernible effect over the last 30 years.
 
@@ -345,6 +348,7 @@ invite applicatans to submit a diversity statement describing their past contrib
 
 
 ##  Identifying & Reducing Potential Sources of Bias in Promotion & Tenure Process of University Faculty  (50m
+https://www.youtube.com/watch?v=4vbvejnRWvs
 
 Four illustrations of tenure track denials, with often, let's say surprising decisions and reports (e.g. errors on citation count or impact factor journals, or denied based on probably mysoginist reports from students)
 
@@ -380,6 +384,8 @@ Zare 2012 "Some rough correlations do exist, but juding researchers early in the
 
 
 ## Forum 55 | Dr. Frazier Benya | Sexual Harassment within Higher Education (50m prez + 30m questions)
+https://www.youtube.com/watch?v=4exZre_0zlU
+
 start at ~8m30
 
 on the report of  https://nap.nationalacademies.org/catalog/24994/sexual-harassment-of-women-climate-culture-and-consequences-in-academic
@@ -432,8 +438,8 @@ environments can create sexual harassment (even from people who did not have str
 anonymous sytem: https://www.projectcallisto.org/
 interest of standardized systems (sometimes, old report are lost, and people reput into position of responsabilities)
 
-# Sexual Harassment in Sciences (from 6m to 22m, summary of the same report as previous video, by different person) 
-
+## Sexual Harassment in Sciences (from 6m to 22m, summary of the same report as previous video, by different person) 
+https://www.youtube.com/watch?v=wy7aDhm4AcI
 
 gender harassment, "conduct that convey hostility, exclusion or second class status about women" contempt
 consider law as a floor, not a ceiling
@@ -516,7 +522,7 @@ we can't just have a checklist of todos to take to the dean, we need people push
 bystandard intervention: many steps, be able to identify the behaviour, be able to interpret it is a problem, decide to intervene, take responsability, the act.
 there are witness for most gender harassment
 
-in hiring, we don't really need to have a tool to check if people are willing to participate in a building a good culture. We sometimes already know, but the quality of the work overwrite this.
+in hiring, we don't really need to have a tool to check if people are willing to participate in a building a good culture. We sometimes already know, but the quality of the scientific work overwrite this.
   clarify the rules for hiring! OoO take inspiration from questions from CAPES for MCF interviews? 
   
 how to shutdown a conversation? Natural response, to hide. Learn ways to press conversation. People in power position can force discussions on this.
@@ -527,3 +533,408 @@ pb: affraid of losing recommendations letters, pb bystander vulnerability
 
 focus on graduate students
 to graduate students: reminders, unions were the first organizations to develop harassment issues reporting. Think about the organization of your work. There are things you can do because you are still part of the power structure.
+
+
+##  Dénoncer ou ne pas dénoncer les violences sexuelles en milieu universitaire ?  (44m10, chair VSS MES, Ihssane Fethi, candidate au Ph.D. en psychologie à l'Université de Montréal, Manon Bergeron, Sexologue et professeure à l'UQAM)
+https://www.youtube.com/watch?v=dfFfHAlv8O8
+
+ESSIMU: grosse enquête en 2016 sur les VSS, 6 uni Quebéquois, >9000 réponses.
+https://constellation.uqac.ca/id/eprint/4098/1/Rapport_ESSIMU_FINAL.pdf
+
+2000 récits de victime. 230 mentionne la notion de signalement (non) dénonciation. 33 exclus car trop court, ou signalement exterieur à la police.
+
+197 corpus, 55% signal, 45% non signal. (sur 2000, **90% de non dénonciation**)
+            86% femmes. 
+            21% 1er cycle, 29% deuxième/troisième cycle, 21% prof, 24% employé.
+            Moins de signalements dans le 1er cycle/chez les plus jeunes. 
+
+Motifs de signalement: 
+1) mettre fin au comportement 
+2) peur, malaise extremene, menace 
+3) incitation de l'entourage 
+4) prise de conscience de l'experience de victimisation
+
+Non-signalement:
+1) crainte de récpercussion négatives
+   sociales "craintes de rumeurs, de jugements"
+   professionelle, perdre mon emploi
+   parcours académique "peur d'échouer à un cours"
+   peur des conséquences pour l'agresseur "je ne voulais pas lui nuire"
+   peur de représailles physiques "j'avais peur qu'il s'en prenne à moi"
+2) recours à des stratégies de défense et de mode de protection
+   stratégie d'évitement
+   confrontation/menace de dénoncer "je l'ai menacé de porter plaine pour qu'il arrête"
+   
+3) croyance que les gestes sont pas suffisament grave
+   "ce n'était pas du harcélement grave"   "une situation grise"
+   "c'était anecdotique, banal, bénin, ordinaire"
+   "ça n'est arrivé qu'une fois, je n'allais plus jamais le revoir"
+
+4) perception négative de la réponse institutionnel
+   la necessité d'avoir des preuves "c'était parole contre parole"
+   manque d'impartialité et de fiabilité "j'ai entendu des histoires d'horreur sur le traitement des plaintes d'agessions sexuelles"
+   manque d'information "à qui signaler à l'université ?"   
+   compliqué et exigeantes 
+   
+
+-> les rapports de pouvoir ajoutent des obstacles à la dénonciation (jeunes, statuts + précaire)
+-> enjeux indiv et collectif : tension entre la préservation de soi et la prévention d'autres situations
+-> ne pas dénoncer, c'est aussi prendre action (ne pas sur estimer la valeur de la dénonciaiton, vs sécurité physique, émotionelle, cadémique)
+-> normalisation des violences sexuelles (influence de la culture du viol)
+
+
+
+ccl, très important de rendre les informations disponibles, apporter plus de transparences. Centrer les efforts sur les personnes victimes.
+
+
+
+
+##  Harcèlement sexuel et doctorat avec le CLASCHES (56m18, podcast, 2021)
+https://www.youtube.com/watch?v=rM-hXQD4ZmA
+
+CLASCHES - Collectif de Lutte contre le harcélement sexuel dans l'enseignement supérieur - since 2002...
+
+diffusion d'infos, playdoyé, formation, orientation/accompagnement des victimes (non juridique)
+
+
+- Def légal harcélement sexuel - code pénal + code du travail + statut des fonctionnaires.
+Loi 2012, avec une def basée sur le ressenti de la victime. (et pas sur l'intention, un agresseur peut pas dire "ah mais c'est pas ce que j'avais en tête)
+y faut au moins deux faits, sans limite de temps
+impact sur conditions de vie ou de travail
+inclu aussi le chantage sexuel, même avec un unique fait
+
+les blaques lourdes (sur le physique, la tenue, ) sont du harcélement. à partir du moment où une personne se sent mal à cause de propos, même indirect/globaux.
+
+- spécificité de l'ESR
+La culture ne fait pas échapper magiquement au patriarcat. Une évolution grace à des enquêtes dans la presse ou des campagnes sur les réseaux.
+Faible nombre d'étude précise et d'ampleur national.
+Après 20 ans de clashes, y a pas d'établissement qui y échappe.
+Position de pouvoir maj homme, proportion de fenne diminue dans la hiérarchie
+Fort réseau de connaissance, effet de corporatisme, rendant difficle la dénonciation ou le soutien au victime
+peur de pas être suivi par l'institution
+
+enseignant jugé que par leur pair, pas d'étudiant
+relation spécifique direction de thèse, privilégié, sur le long terme, rdv souvent individuel, (+ en science humaine petite univ sans bureau), asymmétrie de pouvoir (pas de soutien pour publication, ou recommendation, ou envoi conférence, pas intégré dans la sociabilité du labo, pas intégrer dans tel projet), potentiel d'admiration
+Asymmétrie de pouvoir entre homme blanc bien installé et pŕecaire qui font tourner la machine, souvent des femmes.
+
+relation de domination et pouvoir
+
+- évolution de leur prise en compte
+pas évolution clair, très variable selon discipline/établissement. 
+Les demandes viennent le plus de SHS, peu de STEM.
+Tournant avec MeeToo, qui a aussi augmenté les témoignages reçu par l'asso
+affaires récentes, SciencePorc, université et ministere forcé à agir.
+Amélioration législative, chargé de mission égalité devenu obligatoire depuis qq années, cellule de vieille obligatoire depuis 2020. 
+Mais quelles moyens et quelles ambitions pour ces dispositifs ? 
+
+Dans plein d'etab, il y a encore l'envie de préserver l'image, de "l'excellence", et donc intérêt de faire taire les victimes, ou à ne pas publier les résultats des affaires.
+Recours à l'enquete administrative permet de faire jouer la montre, et de pouvoir faire disparaitre le problème via une enquete opaque, et pour éviter la saisine du conseil disciplinaire.
+Même si procédure abouti avec sanction, on a tendance à minimiser les aspects sexuels du harcélements.
+
+
+clasches gère plein de cas différents, etudiant/étudiante, enseignant/enseignante, direction/thésarde.
+Agresseur qui souvent mète en avant une impression de malêtre et se confie, pour donner l'impression à la cible qu'elle est privilégié/intimité.
+Agresseur travail à isoler les victimes, faut pas trop en parler autour.
+Insidieux.
+Fort risque de représailles si la victime refuse/veut mettre fin à la relation. 
+
+
+
+
+- quelques conseils, pour les victimes ou témoins
+
+
+Pour agir, on demande et respecte toujours ce que veulent les victimes. Beaucoup disent, là je veux rien faire, je veux finir mes études.
+
+écrire des récits circonstancié, reprendre tous les évènements, dès le début où tout était normal. Aide à comprendre où ça a basculé. 
+ déjà une forme de preuve, avec description précise des faits et des conséquences. SMS, journal d'appel, mails. Certificat médicale sur état de la personne aussi preuve
+ possibilité de faire appel à des témoins, à la fois sur les situations d'agressions, mais aussi sur la dégradation de la santé des personnes.
+ 
+ se protéger, s'écouter. Reconnaitre que la situation est pas normale. Essayer de ne plus se retrouver seule avec l'agresseur.  Accepter de demander un arrêt de travail si nécessaire. Rassembler les pièces pouvant potentiellement mener à des procédures, même si on veut pas forcément le faire de suite. Rompre l'isolement dans lequel la situation nous a surement plongé.
+ 
+
+Responsabilité collective de surveiller cela, rôle du comité de suivi, si une personne avance plus dans sa recherche, a pris ou perdu beaucoup de poids. Créer du lien, entre doctorantes, ou à l'échelle du labo. 
+Pour les témoins indirect: 1) croire la victime, pour redonner du soutien et pour créer un environnement  2) ne pas remettre en question les paroles et le ressenti de la victime ("t'es sûr que", "je trouve ça fou que...", "mais il est si gentils", ...) car c'est remettre la victime dans une position de doute 3) être là, selon ce que la personne souhaite faire et en respectant son accord (sinon, on la dépossède encore de son vécu, de sa liberté d'action), 
+témoins directs: ne pas se mettre en danger, venir en soutien de la cible, interrompre l'interaction de un à un, ne pas mettre la victime en difficulté (elle pourrait subir les représailles de votre intervention)
+
+
+- bilans des sanctions mitigés contre agresseurs
+
+exemples de deux dernier cas intéressant:
+Univ Paris est Créteil, sanction de trois ans sans enseignements, il en a profité pour trouver un poste ailleurs, la sanction efface la portion VSS. Sanction importante par rapport à d'habitude, mais au final, il en profite presque.
+Lyon 2, sanction au niveau de l'uni, appel au CNESER qui a annulé la sanction, situation de harcélement sexuel avec de nombreuses preuves dont enregistrement téléphonique.
+
+Trouver des exemples de sanctions est pas si évident -> procédure très longue, avec appel, déqualification des faits et invisibilisation de la part de harcélement sexuel, et le cneser casse souvent les décisions e.g. sur des vis de procédures (car dossier parfois mené par des gens non suffisament formés ou pas avec assez de temps).
+
+
+- comment faire bouger les lignes
+
+sans trop se mouiller, écrire à clashes pour demander du matos de com' (affiche stickers guide)
+
+inviter clashes à faire des formations (facturé selon les lieux), adapté aux public cible
+
+
+reco ressources : docu "The Hunting Ground" (terrain de chasse), université américaine
+
+
+
+##  Prof Celeste Kidd speaks on How Sexual Harassment Creates Inequality in Academia (academic lke presentation, 1h18m, 2019)
+https://www.youtube.com/watch?v=leQ2SlkASbg
+
+Intro by Senator Ivana Bacik:
+
+suvery from univ in Ireland, 11% of students reveice unwanted sexual contact, 5% survivors of rape.
+
+https://www.sfi.ie/research-news/news/irish-funding-bodies-to-require-athena-swan-gender-equality-accreditation-for-higher-education-institutions/
+In Ireland, Science Foundation Ireland, the Irish Research Council and the Health Research Board will Require Higher Education Institutions to Have Athena SWAN Gender Equality Accreditation in Order to be Eligible for Research Funding.
+-- bronze levels require climate survey
+as everywhere else, SH underreported
+most prevalent kind of SH might not be criminalizable, but it is still a very big point of focus.
+
+any relection must focus on intersectionnality and power relations. Those in power have more opportunties to harass.
+
+Chairing by Clare Kelly. Celeste Kidd, whistleblower and harassment survivor University or Rochester
+
+17m42 Celest Kidd state
+
+
+SH = gender harassment + unwanted sexual attention + sexual coercion
+From university Rochester, filed with 8 other faculty (who all left the uni because of this) a lawsuit for the university misshandling harassment case
+Celeste lived through as a graduate student unrelenting and demoralizing sexual harrassment  from a professor  Florian Jaeger, still employed by university. -> https://academic-sexual-misconduct-database.org/person/t-florian-jaeger
+The professor, based on the official inquiry of the university:
+	talked about his lust for some students, + calling them dumbs.
+	sent dickpicked, 4 sexual relationships with students
+	mentored and wrote  recommandation for a student while having sex
+	
+non exhaustive list, use threats to keep silent, and sometimes did destroy reputation
+
+"Harassment is targeted at those who lack the power to stop it" NASEM report 2018, Clancy, Nelson, Rutherford  & Hind, PLOS ONE, 2014
+
+fieldwork increase risk, and trainees are the most widly targeted
+Worst place is medicine (NASEM)
+
+
+Celeste personal solution: drop all projects with Florian, and was able completely changed subject (a luxury many people don't have). 
+
+Says she was very lucky to be able to change field like that.
+
+US EEOC (equal employement opportunity commision) report on workplace harassment, 2016 -> reporting SHtriggers retaliation 75% of the time.  
+  - probably worse in academia because of more opportunities to destroy the carreer of somebody compared to companies (a professor can ban you from all universities)
+  
+Professors controls what trainees work on, where, who gets credits for the workm who get access to expensive lab equipment/grant money. Professors entirely and anonymously control if a student gets their degree. Word of mouth carries a lot of weight. Established professors can even control  who gets job or grants.
+Anonymous feedback from professors makes it easier to retaliate, and victims can't even know it is happening ... !!!
+
+The less powerful the victim, the stronger the retaliation.
+
+Lack of data in academia, but newspaper journey are worrysome -> dramatic need for more reserach
+
+University investagtions have bias toward finding nothing (otherwise, they have legal liability)
+
+ - Rochester univ  called Florian comments "colorfull" instead of SH, did not accept to hear some witnesses or victims, did not look at some mails and other. "Why would you assume the accused would lie?"
+ 
+ External  firms have the same issue, who would pay a firm a lot of money to create a liability
+
+
+Faced with eleven women making complaints, university first reflex was to mention a single false accusation story (which was at first an anonymous online report, and had nothing to do with the situation https://en.wikipedia.org/wiki/A_Rape_on_Campus)
+
+Then, investigation confirm a lot of the claims. So, change of tactic, now say that such behaviours were not SH.
+ UR statement: "We cannot unravel the degree to which women avoided Jaeger because of the sexual elements in his conduct,as opposed to other simply offensive or unappealing aspects of his personality"
+ UR promoted Florian Jaeger in the middle of the first investigation
+ 
+ UR Investigation deanonymized unwilling complainers
+ 
+ 
+ More generally, Celeste Kidd heard many testimonies of undergruate student that were crushed and betrayed by uni investigators.  The systems are not there to protect people, but to protect the uni from prosecutions. e.g. "Case dismissed because a classmate defined her as a slute"
+ 
+ Schneider, Swan & Fitzgerald, J of Applied Pshy, 1997 - 2 out of 3 women faculty experience SH
+ 
+ Cascading effects beyond victims, we lose valuable contributions.
+ 
+ SH causes women and minorities leave domains where they are already under represented.
+ 
+ What do we do ?
+ 
+  - we are missing a lot of data, so we need to try some things, collect more data, iterate
+  
+1. People who report need support
+   Need for allies in faculty
+
+
+2. People who report need options for how and when   
+   not always possible to come forward right away (need to protect oneselves first)
+   side comment, many cases have in fact a lot of evidence (email, text messages), so there are not that many "he said, she said" things.
+
+
+3. Institutions can't police themselves
+   they face a conflict of interest!
+   mechanisms need to provide powerless with actual independent investigations options
+   
+
+4. Entities without liability and Conflict Of Interst issues need to step up
+   e.g  funding bodies, publishers, ...
+
+
+5. Power abusers need to lose that power
+
+
+6. We need to keep talking.
+  things have been horrible for a long time, but all people did not know it. 
+    
+  
+
+To conclude, many examples of student protests at UR, that recognized their own stories in Celeste Kidd and the other stories.
+
+
+55m -> Chair and questions
+
+- SH harassment is invisible unless you experience it, it can be unbelievable sometimes that such things did occur. How can we adress to reduce this overall scepticism?
+
+	+ estimated rates of false reports are around 5% (though it is a mess of science https://en.wikipedia.org/wiki/False_accusation_of_rape)
+   report processes are hard and in fact risky, most report come with evidence.
+    + many men were truthfully not aware of the scale of the issue before the MeToo thing.
+      there is good data available now
+	  We can speak about it now in public forums. 
+
+- talking about it can put pressure on victims. How did you find the courage to talk about it?
+  + I would have liked not to bring it to light, and not to relive the trauma. But, it was clear it was not an isolated story, need to talk to support others.   For her first complaint, she was told her name would be kept secret, then the uni outed here (as a mechanism to threaten others). I would love to be courageous. I was not courageous, the uni outed me...
+  
+- a lot people think that such behaviours are normal, and if you want to stay in academia, you have to put your heads down. What do you think on this?
+ + Yes, but Celeste stories also illustrate it is not normal. And it is not. we don't talk enough about the top down duty of employers to protect workers.
+ + Many colleagues tell me, I'm happy you survived. But all women should have equal oppportunities to make it out
+ 
+- would you encourage women to speak out about more subtle issues than SH ?
+ + we need more research to understand such problems. And everybody can be an ally, important to make your stance clear on this.
+
+
+
+ 
+##  Violence sexuelle en milieu d’enseignement supérieur et diversité sexuelle et de genre  (55m38 Geneviève Paquette, P.h.D., 2020)
+https://www.youtube.com/watch?v=yVsDDRV2JYY
+
+https://www.couragetoact.ca/
+https://possibilityseeds.ca/experiential-learning-project/
+
+Canada -> violence sur le genre aussi outils de colonisation
+Rappel attention malêtre pendant la conférence.
+
+1. Intro
+2. Def Violence sexuel "acte sexuel commis par une personne envers une autre sans le consentement libre et éclairé ...".  similar to SH\
+  minorités de genre "pers s'idnetifiant à un genre qui ne correspond par à celui qui leur a été assigné à la naissance".
+  minorités sexuel "personnes avec orientation sexuel diff d'hétéro"
+  
+3.  Enjeu LGBTQ+ en matière de VS dans l'enseignement supérieur
+
+  + prévalence de VS + élevé, populations significativement plus à risques.
+  
+  exemples de récits.
+  
+  pourquoi plus ciblé ? 
+  théorie féministe
+    -> la fonction de la VS est d'établir et de maintenir les rapports de pouvoir en regard du genre, de l'expression de genre et du comportement sexuel.
+	-> moins on a de pouvoir plus on est à risque
+	-> les hommes sont plus souvents auteurs et les femmes vitcitmes
+   
+ théorie objectification sexuelle
+   objectification: la valeur d'une personne est réduite à son utilié pour les autres
+   sexualisation : réduite à ses comportements sexuels.
+      pers issu de minorité sexuelle/de genre sont plus objectivé
+  
+  + conséquence plus grave, + de PTSD et + dépression, - d'estime de soi.
+  
+  
+  les réactions des personnes confidente pas toujours aidante. Pourtant, large consensus, les reáctions influe les conséquences, dont PTSD (constation sans soutien, et accusation/exclusion augment PTSTD, et aussi surprenament les réactions positives "m'ont fournit de línformation et ont discuté des options avec moi" sont associé à plus de PTSD que juste celle qui offrent strictement du réconfort.
+  
+  comment expliquer les conséquences ? 
+  théorie du stress minoritaire: être minoritaite => + de victimisation, + d'observation de la victimisation, interiorisation des discriminsations, + anticipation de la victimisation => conséquence négative sur la santé mentale
+  
+  théorie de la médiation psychologique: 
+  modèle de sensibilité au rejet: plus on est exposé tôt au rejet, plus on va y devenir sensible.
+    peu expliquer pq réaction dáidant qui pousse à láction peut augmeneter le PTSD, car les personnes pourraient anticipé les difficultés dans les étapes futurs
+  
+    
+4. enjeu relativ à láccompagnement des victimes + préventation
+
+  + pb du double/triple outings pendant le processuus d'aide -> en plus de devoir révélé la VS, doit aussi révélé être dans une/des minorités -> moins de plaintes pur les minorités.
+  + trahison instituionnel
+  + acceptation plus grand à cause d'une vie marqué par la discrimination. Forte tendance à banaliser, expliquer ou excuser la VS, par exemple sous lángle les gens connaissent pas bien, sont pas vraiment méchant. 
+
+ + service peu adaptés aux réalités LGBTQ+, organismes de lutte contre VS plutot dévelopé dans le contexte classique :  prévention qui table trop souvent sur le modèle classique de l'homme cisgenre hétéro qui agresse la femme cisgenre hétéro 
+ + prévention aussi peu adapté car communauté élargie, e.g. en STEM, adhère a l'hétérosexisme et au cisgenrisme. (il faut expliquer ce que c'est que d'être queer, ou bisexuel)
+ 
+ 
+5. recension pratiques existantes au quebec
+sur les questions spécifiques LGBTQ+
+    prévention et sensibiliation  26/33 univs  (33 = la moitié des milieux univ)
+	action concrète pour env inclusif (e.g. toilette, utilisation du  prénom choisi) 22/33
+	éducation de la population en milieu académique 18/33
+    groupe de soutien dans 16/33 univs 
+	formation des interventaes et intervenants spécialisé sur les plans VS ET LGTBQ  9/33
+	programmes ou interventions pour les victimes 4/33
+	
+	
+	
+6. recommentations pratiques	
+
+  utilisation de matériel pedago avec   langage épicène et images inclusifs
+  accès à des services psychosociaux internes et externes adaptés à la div sex/genre
+  
+  impliquer et former tous les membres (etud, ens, BIATSS) de la communauté de l'établissement	
+  bystander training
+   
+
+   mise en place d'une approche d'intervention sensible au trama (e.g la personne présente probablement déjà des traumas passés, dans le doute, on en prend compte)
+
+	examples de prorgamme: 
+	Know your power ->  campagne de sensibilisation, avec images inclusives.  Efficacité démontré sur la sensibilisation et le bystander action
+	
+	
+	ThinkLuv: formation de 30 minutes sur la prév VS, mais adapté au caractéristiques des personnes. Juste prometteur.
+	
+	(BERA) Bonifé évalié reconnaitre agir, 12h formation en petit groupe ciblant les nouvelles étudiantes au 1er cycleu universitaire. Vise à augmenter le pouvoir dágir. Diminue le risque de subir un viol ou autre VS dans la 1 ere anné d'étude
+	
+	plateforme ALIX, soutien spécialisé, permet de dénoncer de manière anonyme
+	
+Conc: stigma spécitifuqes, 	qui doit être pris en compte dans toutes les actions de prév/intervention
+
+
+Q: comment intervenir?
+on peut commencer sur les trucs pratiques et simples:
+* ne pas avoir accès à des toilette non géré crée des pbs pour les minorités.
+* Pareille sur l'utilisation des pronoms, c'est bien de déclarer ses pronoms, pour rompre le cisgenre centrisme
+
+Q: pour se former, quelles ressources ?
+le mieux c'les organismes qui interviennent dans les milieux concernées. Victimes sont notamment plus à l'aise pour leur parler (pas besoin d'expliquer milles trucs)
+
+q: faut-il plus intégrer dans les pres existantes les aspects LGBTQ+, ou crée des formations ciblés ?
+
+il faut faire les deux, de la prévention universelle qui parle des réalités des communautés LGBTQ+, mais également de la prévention ciblé, e.g. groupe de soutien (cf BERA).
+
+
+
+	
+	
+##  Discriminations systémiques et universités 
+https://www.youtube.com/watch?v=ThubIS0JU_k
+
+
+##  Round Table Discussion: “Sexual Violence and Harassment in Higher Education Institutions” 
+https://www.youtube.com/watch?v=YwAKqMPFu2A
+
+##  Combattre la violence à caractère sexuel en milieu universitaire - Chaire publique 2017-18 2/5 
+https://www.youtube.com/watch?v=AHGGGaDG1Jw
+
+
+##  VSST 1/3 - Culture sexiste : de l’enseignement supérieur à l’entreprise, un continuum des violences 
+https://www.youtube.com/watch?v=ZVH7xRdW-Zc
+
+##  Keynote: Dr. Susanne Täuber 
+https://www.youtube.com/watch?v=VYgdfnFXUXE
+
+
+## Isabelle Vauglin Egalité femme / homme dans l'Enseignement Supérieur et la Recherche : a-t-on vraiment évolué ?
+https://www.canal-u.tv/chaines/inria/egalite-femme-homme-dans-l-enseignement-superieur-et-la-recherche-a-t-on-vraiment
+
+
+## GENDER BIAS: SCIENCES & PRACTICES
+
+https://www.youtube.com/playlist?list=PLpupy7iBJC31Uuv_oPtKgpImnSVBb0WA3
