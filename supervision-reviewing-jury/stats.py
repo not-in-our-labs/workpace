@@ -452,29 +452,32 @@ domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from th
 # some homonyms are present on theses.fr, + theses.fr not always link person with its ppn
 
 def print_cnu(section):
-    sdom= f"sec{section}"
+    sectiontext=section
+    section=section.replace("'","")
+    secstripped = section.replace("(","").replace(")","").replace(",","")
+    sdom= f"sec{secstripped}"
     ldom= f"Section cnu {section}"
     dom=ldom
     print("Managing "+ldom)
 
 
     h_cnu = cur.execute(f"SELECT cnu.fullname from cnu \
-    where cnu.gender='H' and cnu.section={section} ").fetchall()
+    where cnu.gender='H' and cnu.section IN {section} ").fetchall()
     print(len(h_cnu))
 
     f_cnu = cur.execute(f"SELECT cnu.fullname from cnu \
-    where cnu.gender='F' and cnu.section={section}").fetchall()
+    where cnu.gender='F' and cnu.section IN {section}").fetchall()
     print(len(f_cnu))
 
 
     h_directed= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
     JOIN directed ON cnu.fullname=directed.fullname \
-    where cnu.gender='H'  and cnu.section={section}\
+    where cnu.gender='H'  and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
     f_directed= [ p[1] for p in cur.execute(f"SELECT directed.fullname, COUNT(*) from directed \
     JOIN cnu ON cnu.fullname=directed.fullname \
-    where cnu.gender='F' and cnu.section={section}\
+    where cnu.gender='F' and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
     
@@ -491,12 +494,12 @@ def print_cnu(section):
 
     h_jury= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
     JOIN jury ON cnu.fullname=jury.fullname \
-    where cnu.gender='H'  and cnu.section={section} \
+    where cnu.gender='H'  and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
     
     f_jury= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
     JOIN jury ON cnu.fullname=jury.fullname \
-    where cnu.gender='F' and cnu.section={section}\
+    where cnu.gender='F' and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
     
     # if h_list==[] or f_list==[]:
@@ -505,10 +508,10 @@ def print_cnu(section):
     h_jury += [0 for i in range(0,len(h_cnu) - len(h_jury))]
     f_jury += [0 for i in range(0,len(f_cnu) - len(f_jury))]        
 
-    h_over_tw = len([p for p in f_jury if 20 <= p])
-    f_over_tw = len([p for p in h_jury if 20 <= p])
-    print(f"Women over twenty: {f_over_tw}, {f_over_tw/len(f_jury):.0%} ")
-    print(f"Men over twenty: {h_over_tw}, {h_over_tw/len(h_jury):.0%}")
+    h_over_tw = len([p for p in h_jury if 20 <= p])
+    f_over_tw = len([p for p in f_jury if 20 <= p])
+    print(f"Women over twenty jury: {f_over_tw}, {f_over_tw/len(f_jury):.0%} ")
+    print(f"Men over twenty jury: {h_over_tw}, {h_over_tw/len(h_jury):.0%}")
     
     make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
 
@@ -518,19 +521,45 @@ def print_cnu(section):
 
     h_reviewed=  [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
     JOIN reviewed ON cnu.fullname=reviewed.fullname \
-    where cnu.gender='H'  and cnu.section={section}\
+    where cnu.gender='H'  and cnu.section IN {section} \
     GROUP BY reviewed.fullname").fetchall()]
     
     f_reviewed= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
     JOIN reviewed ON cnu.fullname=reviewed.fullname \
-    where cnu.gender='F'  and cnu.section={section}\
+    where cnu.gender='F'  and cnu.section IN {section} \
     GROUP BY reviewed.fullname").fetchall()]
 
     h_reviewed += [0 for i in range(0,len(h_cnu) - len(h_reviewed))]
     f_reviewed += [0 for i in range(0,len(f_cnu) - len(f_reviewed))]            
 
     
-    make_graph(h_reviewed, f_reviewed, False, dom, "review."+sdom, None, "thesis review")        
+    make_graph(h_reviewed, f_reviewed, False, dom, "review."+sdom, None, "thesis review")
+
+
+    h_jury_poste=  [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(is_in_jury_poste.fullname) from cnu \
+    JOIN is_in_jury_poste ON cnu.fullname=is_in_jury_poste.fullname \
+    where cnu.gender='H'  and cnu.section IN {section} \
+    GROUP BY is_in_jury_poste.fullname").fetchall()]
+    
+    f_jury_poste= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(is_in_jury_poste.fullname) from cnu \
+    JOIN is_in_jury_poste ON cnu.fullname=is_in_jury_poste.fullname \
+    where cnu.gender='F'  and cnu.section IN {section} \
+    GROUP BY is_in_jury_poste.fullname").fetchall()]
+
+    h_jury_poste += [0 for i in range(0,len(h_cnu) - len(h_jury_poste))]
+    f_jury_poste += [0 for i in range(0,len(f_cnu) - len(f_jury_poste))]            
+
+    h_over_tw = len([p for p in h_jury_poste if 5 <= p])
+    f_over_tw = len([p for p in f_jury_poste if 5 <= p])
+
+    total=cur.execute(f"SELECT COUNT(*) from jury_poste where section IN {sectiontext}").fetchall()[0][0]
+    empty=cur.execute(f"SELECT COUNT(*) from jury_poste where section IN {sectiontext} and committee='\\n'").fetchall()[0][0]
+    
+    print(f"Proportion of unregistered committees {empty/total:.0%}")
+    print(f"Women over five committee: {f_over_tw}, {f_over_tw/len(f_jury_poste):.0%} ")
+    print(f"Men over five committee: {h_over_tw}, {h_over_tw/len(h_jury_poste):.0%}")
+    
+    make_graph(h_jury_poste, f_jury_poste, False, dom, "jury_poste."+sdom, None, "hiring committee participation")        
 
 def eval_gender_guessing():
     f_cnu =  [p[0] for p in cur.execute("SELECT cnu.firstname from cnu WHERE cnu.gender='F'").fetchall()]
@@ -546,9 +575,10 @@ def eval_gender_guessing():
 
 # eval_gender_guessing() 
 
-print_cnu(27)
-print_cnu(26)
-print_cnu(25)
+print_cnu("('27')")
+print_cnu("('26')")
+print_cnu("('25')")
+print_cnu("('25','26','27')")
 
 def print_info_per_year():
     for i in range(2014,2026):

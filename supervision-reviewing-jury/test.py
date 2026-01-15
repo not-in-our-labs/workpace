@@ -40,8 +40,17 @@ if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is 
 
 if cur.execute("SELECT name FROM sqlite_master where name='years'").fetchone() is None:
     cur.execute("CREATE TABLE years(id, year, FOREIGN KEY (id) REFERENCES thesis(id))")
+
+# cur.execute("DROP TABLE jury_poste")         
+if cur.execute("SELECT name FROM sqlite_master where name='jury_poste'").fetchone() is None:
+    cur.execute("CREATE TABLE jury_poste(rank, section, year, committee)")
+
+# cur.execute("DROP TABLE is_in_jury_poste")     
+if cur.execute("SELECT name FROM sqlite_master where name='is_in_jury_poste'").fetchone() is None:
+    cur.execute("CREATE TABLE is_in_jury_poste(fullname, committee, FOREIGN KEY (fullname) REFERENCES cnu(fullname), FOREIGN KEY (committee) REFERENCES jury_poste(committee),   CONSTRAINT UC_in_jury UNIQUE (fullname,committee))")
     
 
+    
 
 def clean_up():
     distincts = cur.execute("SELECT DISTINCT id, fullname FROM reviewed").fetchall()
@@ -394,9 +403,9 @@ def load_cnu(f, allow_dup, year, section):
     con.commit()
     
 
-# load_cnu('cnu_27_2019.csv', True, 2019, 27)
-# load_cnu('cnu_26_2019.csv', True, 2019, 26)
-# load_cnu('cnu_25_2019.csv', True, 2019, 25)
+# load_cnu('cnu_27_2019.csv', False, 2019, 27)
+# load_cnu('cnu_26_2019.csv', False, 2019, 26)
+# load_cnu('cnu_25_2019.csv', False, 2019, 25)
 
 # load_cnu('cnu_27_2023.csv', False, 2023, 27)
 # load_cnu('cnu_26_2023.csv', False, 2023, 26)
@@ -502,14 +511,57 @@ def init_year():
         load_year(res)                
 
 
+        
+
 # init_year()            
-    # data=list(persons)
 
-    # cur.executemany("INSERT OR IGNORE INTO persons VALUES(?, ?, ?)", data)
+def load_op_poste():
+    data = []
+    for year in range(2015, 2026):
+        f = f"operation_poste/{year}.csv"
+        # name list from INSEE
+        with open(f, 'r', encoding='utf-8', newline='') as name_file:
+            poste_reader = csv.reader(name_file, delimiter=',')
+            for row in poste_reader:
+                if row[0] != "nature":
+                    rank=row[0]
+                    section=row[1]
+                    committee=unidecode(row[4].lower())
+                    print(committee)
 
-    # cur.executemany("INSERT OR IGNORE INTO thesis VALUES(?, ?, ?)", thesis)
+                    data.append((rank,section,year,committee))
+    cur.executemany("INSERT OR IGNORE INTO jury_poste VALUES(?, ?, ?, ?)", data)
+    con.commit()
+
+load_op_poste()    
+
+def link_op_poste_cnu():
+    cnu_names = cur.execute("SELECT cnu.fullname, cnu.surname, cnu.firstname from cnu").fetchall()
     
-    # cur.executemany("INSERT OR IGNORE INTO directed VALUES(?, ?)", directed)
-    # cur.executemany("INSERT OR IGNORE INTO jury VALUES(?, ?)", jury)
-    # cur.executemany("INSERT OR IGNORE INTO reviewed VALUES(?, ?)", reviewed)        
-    # con.commit()
+    fullnames = [c[0] for c in cnu_names]    
+    surnames = [c[1] for c in cnu_names]
+    
+    # duplicate_surnames = [i for i in set(surnames) if surnames.count(i) > 1]
+    duplicate_fullnames = [i for i in set(fullnames) if fullnames.count(i) > 1]
+
+    unique_fullnames = [c for c in cnu_names if c[0] not in duplicate_fullnames]
+    
+    committees = cur.execute("SELECT committee from jury_poste").fetchall()
+
+    for c in unique_fullnames:
+        fn1 = c[1] + " " + c[2]
+        fn2 = c[2] + " " + c[1]
+        # is_unique_surname = c[1] not in duplicate_surnames
+        for com in committees:
+            if fn1 in com[0] or fn2 in com[0]:
+                print("found match")
+                cur.execute("INSERT OR IGNORE INTO is_in_jury_poste VALUES(?, ?)", (c[0],com[0]))
+                con.commit()                
+            # elif (is_unique_surname and (" "+c[1]+" " in com[0])):
+            #     print(f"{c} is in {com[0]}")
+            
+
+link_op_poste_cnu()    
+    
+
+
