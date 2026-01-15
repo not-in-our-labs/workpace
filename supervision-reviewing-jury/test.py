@@ -34,9 +34,9 @@ if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone(
     cur.execute("CREATE TABLE reviewed(id, fullname, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
 
 
-# cur.execute("DROP TABLE cnu")
+# cur.execute("DROP TABLE cnu") 
 if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is None:
-    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, section)")
+    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, surname, section)")
 
 if cur.execute("SELECT name FROM sqlite_master where name='years'").fetchone() is None:
     cur.execute("CREATE TABLE years(id, year, FOREIGN KEY (id) REFERENCES thesis(id))")
@@ -364,7 +364,7 @@ def improve_gender_bis():
 
 
         
-def load_cnu(f, allow_dup):
+def load_cnu(f, allow_dup, year, section):
     data = []
     persons = set()
  
@@ -380,46 +380,51 @@ def load_cnu(f, allow_dup):
                 gender='H'
             elif row[1]=='Mme':
                 gender='F'
+            else :
+                print(row[1])
             surname=unidecode(row[5].lower())
             firstname=unidecode(row[7].lower())
-            year=2023
             college=row[11]
-            section=27
             fullname=firstname + " " + surname
             fn = fullname.replace("'","''")
             if allow_dup or (not cur.execute(f"SELECT * from cnu where cnu.fullname='{fn}'").fetchall()):
-                data.append( (gender,firstname + " " + surname,firstname,section))
+                data.append( (gender,firstname + " " + surname,firstname,surname, section))
 
-    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?)", data)
+    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?, ?)", data)
     con.commit()
     
 
-# load_cnu('cnu_27_2019.csv', True)
-# load_cnu('cnu_27_2023.csv', False)
+# load_cnu('cnu_27_2019.csv', True, 2019, 27)
+# load_cnu('cnu_26_2019.csv', True, 2019, 26)
+# load_cnu('cnu_25_2019.csv', True, 2019, 25)
+
+# load_cnu('cnu_27_2023.csv', False, 2023, 27)
+# load_cnu('cnu_26_2023.csv', False, 2023, 26)
+# load_cnu('cnu_25_2023.csv', False, 2023, 25)
 
 
-def link_cnu():
+def link_cnu(domain):
     # after running load cnu, cnu.fullname jsut contains the full name, while persons.fullname might contain in addition the thesis.fr ppn identifier
     cnu = [p[0] for p in cur.execute("SELECT cnu.fullname from cnu").fetchall()]
 
-    info_jury= cur.execute("SELECT persons.fullname, COUNT(jury.fullname) as jnum from persons \
+    info_jury= cur.execute(f"SELECT persons.fullname, COUNT(jury.fullname) as jnum from persons \
     JOIN jury ON persons.fullname=jury.fullname \
     RIGHT JOIN thesis ON thesis.id=jury.id \
-    WHERE LOWER(thesis.domain) LIKE '%informatique%' \
+    WHERE LOWER(thesis.domain) LIKE '%{domain}%' \
     GROUP BY persons.fullname ORDER BY jnum ").fetchall()
 
 
-    rev_jury= cur.execute("SELECT persons.fullname, COUNT(reviewed.fullname) as jnum from persons \
+    rev_jury= cur.execute(f"SELECT persons.fullname, COUNT(reviewed.fullname) as jnum from persons \
     JOIN reviewed ON persons.fullname=reviewed.fullname \
     RIGHT JOIN thesis ON thesis.id=reviewed.id \
-    WHERE LOWER(thesis.domain) LIKE '%informatique%' \
+    WHERE LOWER(thesis.domain) LIKE '%{domain}%' \
     GROUP BY persons.fullname ORDER BY jnum ").fetchall()
 
 
-    dir_jury= cur.execute("SELECT persons.fullname, COUNT(directed.fullname) as jnum from persons \
+    dir_jury= cur.execute(f"SELECT persons.fullname, COUNT(directed.fullname) as jnum from persons \
     JOIN directed ON persons.fullname=directed.fullname \
     RIGHT JOIN thesis ON thesis.id=directed.id \
-    WHERE LOWER(thesis.domain) LIKE '%informatique%' \
+    WHERE LOWER(thesis.domain) LIKE '%{domain}%' \
     GROUP BY persons.fullname ORDER BY jnum ").fetchall()
     
     cs_pers = {}
@@ -453,12 +458,14 @@ def link_cnu():
         cur.execute(f"UPDATE cnu set fullname='{target}' where cnu.fullname='{old}'")
 
     con.commit()    
-    
-
-
 
     
-# link_cnu()
+
+
+
+    
+# link_cnu("informatique")
+# link_cnu("mathématiques")
 
 
 # get_all_pers= cur.execute("SELECT * from persons \
@@ -495,7 +502,7 @@ def init_year():
         load_year(res)                
 
 
-init_year()            
+# init_year()            
     # data=list(persons)
 
     # cur.executemany("INSERT OR IGNORE INTO persons VALUES(?, ?, ?)", data)

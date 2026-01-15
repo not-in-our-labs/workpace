@@ -419,10 +419,10 @@ def print_domain(dom):
 
 domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t DESC ").fetchall() if p[1] > 400]
 
-for domain in domains:
-    if domain != 'Informatique':
-        continue
-    print_domain(domain)
+# for domain in domains:
+#     if domain != 'Informatique':
+#         continue
+#     print_domain(domain)
 
 
 
@@ -451,30 +451,30 @@ for domain in domains:
 # Limitations:
 # some homonyms are present on theses.fr, + theses.fr not always link person with its ppn
 
-def print_cnu():
-    sdom= "sec27"
-    ldom= "Informatique (section 27)"
+def print_cnu(section):
+    sdom= f"sec{section}"
+    ldom= f"Section cnu {section}"
     dom=ldom
     print("Managing "+ldom)
 
 
-    h_cnu = cur.execute("SELECT cnu.fullname from cnu \
-    where cnu.gender='H'").fetchall()
+    h_cnu = cur.execute(f"SELECT cnu.fullname from cnu \
+    where cnu.gender='H' and cnu.section={section} ").fetchall()
     print(len(h_cnu))
 
-    f_cnu = cur.execute("SELECT cnu.fullname from cnu \
-    where cnu.gender='F'").fetchall()
+    f_cnu = cur.execute(f"SELECT cnu.fullname from cnu \
+    where cnu.gender='F' and cnu.section={section}").fetchall()
     print(len(f_cnu))
 
 
-    h_directed= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
+    h_directed= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
     JOIN directed ON cnu.fullname=directed.fullname \
-    where cnu.gender='H' \
+    where cnu.gender='H'  and cnu.section={section}\
     GROUP BY directed.fullname").fetchall()]
     
-    f_directed= [ p[1] for p in cur.execute("SELECT directed.fullname, COUNT(*) from directed \
+    f_directed= [ p[1] for p in cur.execute(f"SELECT directed.fullname, COUNT(*) from directed \
     JOIN cnu ON cnu.fullname=directed.fullname \
-    where cnu.gender='F' \
+    where cnu.gender='F' and cnu.section={section}\
     GROUP BY directed.fullname").fetchall()]
     
     
@@ -489,14 +489,14 @@ def print_cnu():
 
 
 
-    h_jury= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
+    h_jury= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
     JOIN jury ON cnu.fullname=jury.fullname \
-    where cnu.gender='H' \
+    where cnu.gender='H'  and cnu.section={section} \
     GROUP BY jury.fullname").fetchall()]
     
-    f_jury= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
+    f_jury= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
     JOIN jury ON cnu.fullname=jury.fullname \
-    where cnu.gender='F' \
+    where cnu.gender='F' and cnu.section={section}\
     GROUP BY jury.fullname").fetchall()]
     
     # if h_list==[] or f_list==[]:
@@ -516,14 +516,14 @@ def print_cnu():
     make_graph(h_jury, f_jury, False, dom, "examiner.zoom2."+sdom, (25,60), "thesis examination")    
 
 
-    h_reviewed=  [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
+    h_reviewed=  [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
     JOIN reviewed ON cnu.fullname=reviewed.fullname \
-    where cnu.gender='H' \
+    where cnu.gender='H'  and cnu.section={section}\
     GROUP BY reviewed.fullname").fetchall()]
     
-    f_reviewed= [ p[1] for p in cur.execute("SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
+    f_reviewed= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
     JOIN reviewed ON cnu.fullname=reviewed.fullname \
-    where cnu.gender='F' \
+    where cnu.gender='F'  and cnu.section={section}\
     GROUP BY reviewed.fullname").fetchall()]
 
     h_reviewed += [0 for i in range(0,len(h_cnu) - len(h_reviewed))]
@@ -542,13 +542,13 @@ def eval_gender_guessing():
 
     h_guessed = [p[0] for p in cur.execute("SELECT cnu.firstname from cnu JOIN genders ON LOWER(cnu.firstname)=genders.firstname WHERE genders.gender='H'").fetchall()]
     
-    print(f"Comparing with the official cnu section 27 data, we are guessing correctly {len(f_guessed)/len(f_cnu):.3%} of females and {len(h_guessed)/len(h_cnu):.3%} of males")
+    print(f"Comparing with the official cnu section 25,26 and 27 data, we are guessing correctly {len(f_guessed)/len(f_cnu):.3%} of females and {len(h_guessed)/len(h_cnu):.3%} of males")
 
-eval_gender_guessing()
+# eval_gender_guessing() 
 
-# print_cnu()
-
-
+print_cnu(27)
+print_cnu(26)
+print_cnu(25)
 
 def print_info_per_year():
     for i in range(2014,2026):
@@ -566,7 +566,7 @@ def print_info_per_year():
     
 # print_info_per_year() 
 
-def print_info_per_year_cnu():
+def print_info_per_year_cnu(section):
     
     for i in range(2014,2026):
         h=cur.execute(f"SELECT COUNT(thesis.id) from thesis JOIN persons ON persons.fullname=thesis.fullname \
@@ -574,17 +574,17 @@ def print_info_per_year_cnu():
         JOIN years on thesis.id=years.id \
         JOIN directed on directed.id=thesis.id \
         JOIN cnu on cnu.fullname=directed.fullname \
-        where genders.gender='H' and years.year='{i}'").fetchall()[0][0]
+        where genders.gender='H' and years.year='{i}' and cnu.section={section}").fetchall()[0][0]
         
         f=cur.execute(f"SELECT COUNT(thesis.id) from thesis JOIN persons ON persons.fullname=thesis.fullname \
         JOIN genders ON persons.firstname=genders.firstname \
         JOIN years on thesis.id=years.id \
         JOIN directed on directed.id=thesis.id \
         JOIN cnu on cnu.fullname=directed.fullname \
-        where genders.gender='F' AND years.year='{i}'").fetchall()[0][0]
+        where genders.gender='F' AND years.year='{i}' and cnu.section={section}").fetchall()[0][0]
         if f != 0 and h != 0:
-            print(f"For {i}, we have in store (assumed) {f}  female and {h} male phd authors, for a total of {f/(f+h):.1%}.")
+            print(f"For {i}, we have in store (assumed) {f}  female and {h} male phd authors for thesis in cnu section {section}, for a total of {f/(f+h):.1%}.")
     
-# print_info_per_year_cnu()
-
-
+# print_info_per_year_cnu(27)
+# print_info_per_year_cnu(26)
+# print_info_per_year_cnu(25)
