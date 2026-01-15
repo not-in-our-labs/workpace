@@ -137,3 +137,106 @@ https://www.academia.edu/126946386/Promotion_Rejected_Your_Record_May_Not_Be_the
 https://www.chronicle.com/article/promotion-rejected-your-record-may-not-be-the-problem
 
 "Data from five US universities on 1,571 faculty members’ P&T decisions show that URM faculty received 7% more negative votes and were 44% less likely to receive unanimous votes from P&T committees. A double standard in how scholarly productivity is rewarded is also observed, with below-average h-indexes being judged more harshly for URM faculty than for non-URM faculty."
+
+
+## Can I Say “No”? How Power Dynamics Hinder Consent in University Settings
+https://journals.sagepub.com/doi/pdf/10.1177/10778012251338485
+
+" Restricting the notion of sexual consent to its communicative
+dimension risks perpetuating rape myths and victim-blaming, placing undue blame on
+victims who have “failed to properly communicate.” Additionally, the influence of
+unequal power dynamics and gendered and social norms need to be addressed when dis-
+cussing consent and sexual violence. Consent education, including affirmative consent
+and grey area trainings, remains important (Setty, 2023) and should incorporate chal-
+lenges to social norms (e.g., heteronormative standards, gender-based power imbalances
+such as expectations of male assertiveness and female compliance) and support the iden-
+tification of conditions that render consent invalid (e.g., intoxication, coercion, position
+of authority). The normalization of misconduct in supposedly safe environments and the
+issue of institutional betrayal highlight the need for institutional change and courage.
+Universities must promote cultural change, challenge social norms, and ensure transpar-
+ency and accountability to rebuild trust"
+
+
+## Weight bias in graduate school admissions
+https://onlinelibrary.wiley.com/doi/full/10.1002/oby.20171
+Higher BMI significantly predicted fewer post-interview offers of admission into psychology graduate programs. Results also suggest this relationship is stronger for female applicants. BMI was not related to overall quality or the number of stereotypically weight-related adjectives in letters of recommendation. Surprisingly, higher BMI was related to more positive adjectives in letters.
+
+
+
+## Weight bias among students and employees in university settings: an exploratory study
+https://pmc.ncbi.nlm.nih.gov/articles/PMC11841011/
+"Approximately half of the respondents reported experiencing weight-related stigma (44.7%), and half indicated holding prejudice towards overweight people (51.1%), with a moderate rate of bias according to the FPS (3.25). "
+
+
+## « L'unif ne veut pas de moi ! » La grossophobie en milieu académique au prisme du genre
+https://thesis.dial.uclouvain.be/server/api/core/bitstreams/f58a65fa-64dd-4687-82a2-11c1fac4f0ae/content
+'En France, 17% de la population est classée « obèse » et 27-37% « en surpoids », selon l’indice
+de masse corporelle (IMC) (Carof 2021a, pp 59-60).'
+"Fondée sur des seuils d’IMC contestés, cette pathologisation privilégie la responsabilisation individuelle au détriment d’une lecture structurelle des inégalités sociales de santé (Carof 2019 ; 2021a, p 29). "
+'Ces discriminations se traduisent vraisemblablement
+par une sous-représentation des personnes grosses dans les carrières scientifiques, bien qu’il
+n’y ait pas de statistiques disponibles à ce sujet en Belgique ou en France.'
+
+
+## La gestion du stress chez les doctorants : la surconsommation de certains produits qui pourraient nuire à leur santé
+https://hal.science/hal-00857751v1/document
+
+
+##  Ireland  COSHARE North-South survey report
+https://www.ulster.ac.uk/news/2024/december/north-south-research-examines-higher-education-consent,-sexual-violence,-harassment-and-equality
+
+The research found that, of the 364 staff who opted to respond to questions on their experiences of sexual violence and harassment, 43% have experienced some form of this behaviour in their work or personal lives in the last year and 66% in the last five years. In the context of this research, SVH is a collective term that includes physical contact or non-physical conduct of a sexual nature that occurs in the absence of clear, knowing and voluntary consent.
+
+
+
+## Ireland HEA survey
+https://hea.ie/policy/gender/national-survey-of-the-experiences-of-students-in-relation-to-sexual-violence-and-harassment/
+
+11, 417 responses were received (7,901 students and 3,516 staff).
+
+
+
+## The achievement of gender parity in a large astrophysics research centre
+
+cf online-videos.md
++ https://www.science.org/content/article/how-astrophysics-center-achieved-gender-parity
+
+## Increasing diversity in STEM academia: a scoping review of intervention evaluations
+
+https://astro3d.org.au/we-achieved-gender-parity-in-astronomy-in-just-five-years/
+
+" First, over 80% of the articles in this review were based in the US. While this does not mean
+that interventions are not conducted elsewhere, it does suggest that the current evidence base is
+predominantly shaped by a particular national context. "
+
+"despite this caveat, the low numbers of
+evaluated interventions targeting areas of diversity beyond gender and racial/ethnic minorities is
+concerning as it may signal low priorit"
+
+"Moreover, our findings point to the popularity of
+support-based and diversity training interventions with a disproportionate focus on early career
+in comparison to, for example, policy changes or interventions that address retention or equity
+beyond the initial phases of the ‘pipeline’. As will be discussed further below, this pattern appears
+to speak to an ‘individual responsibility’ approach that prioritises changing the individual over chan-
+ging the system that disadvantages them"
+
+
+"Third, the interventions we looked at overwhelmingly reflected ‘master’s tools’, that is they were
+implemented or endorsed by the institutional contexts that perpetuate the inequalities that are
+addressed (Morimoto and Zajicek 2014). This is perhaps unsurprising as we were focussing on
+(largely) top-down intervention rather than grassroots action, but it does raise the question of the
+extent to which sustainable change is possible. "
+
+## Looking Deathworthy: Perceived Stereotypicality of Black Defendants Predicts Capital-Sentencing Outcomes
+https://scholarship.law.cornell.edu/cgi/viewcontent.cgi?article=1040&context=lsrp_papers
+(https://en.wikipedia.org/wiki/Jennifer_Eberhardt#Implicit_bias)
+
+The more somebody "looks like a black person", the likelier they are to get death penalty.
+
+## Women are underrepresented in fields where success is believed to require brilliance
+Meredith Meyer 1 * , Andrei Cimpian 2 and Sarah-Jane Leslie
+
+Field-specific ability belief picture, "brillance"-focused field lead to less women in them. (figure 2)
+
+
+"If the practitioners of fields with gender gaps made a concerted effort to highlight the role of sustained, long-term effort in achievement, the gender gaps in these fields may correspondingly be diminished."

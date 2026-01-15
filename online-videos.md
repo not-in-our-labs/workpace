@@ -911,6 +911,341 @@ il faut faire les deux, de la prévention universelle qui parle des réalités d
 
 
 
+## Isabelle Vauglin Egalité femme / homme dans l'Enseignement Supérieur et la Recherche : a-t-on vraiment évolué ?
+https://www.canal-u.tv/chaines/inria/egalite-femme-homme-dans-l-enseignement-superieur-et-la-recherche-a-t-on-vraiment
+
+
+bilan social CNRS 2021, fier d'annoncer 43% de femme, mais permanent.es 34.4% et doctorant.es 36,4%. 
+Femmes + présentes dans les rangs les plus bas. (61% des C vs 34,3% des A+)
+split par domaine, technique vs gestion
+-> inégalité de salaire partout, e.g. 4,7% pour H dans les chercheurs
+Temps partiel toujours plus de femmes
+
+(cf prez de Laurence Broze)
+Prof section 26, parité atteinte en 2270, et en section 25, plus de femmes prof en section 25
+section 25, la période de bosse de recrutement (1996 à 2006) a favorisé que aux hommes
+
+En astro, confirmation de tous les points précédents (+, + de F en postes temporaires) (55% des chercheuses sont permanentes, vs 66% des chercheurs)
+
+
+Question de volonté :  https://www.nature.com/articles/s41550-023-02079-6 "The achievement of gender parity in a large astrophysics research centre"
+Entre 2017 et 2022, le centre Astro3d a atteint la parité, de 38% à 50%
+
+Mesures: 
+- objectifs claires en matière de diversité
+- selection d'un ensemble diversifié de cheff.es d'équipes
+- une formation (2j) sur la diversité pour les jury pour tlm, tous les ans
+- garantir 50% de femmes dans les comités de selection post-doc
+- garantir 50% de femmes sur les listes restreintes de recrutement post-doc
+
+
+Effet cascades (+ de femme leader -> + de femme postdoc -> + de femme PhD), 
+
+Il faut recruter ET garder -> les femmes restent plus dans des équipes dirigés par des femmes
+
+Mesures:
+- implicit bias training, members also took cultural, LGBTQIA+, and Indigenous awareness training in subsequent annual retreats, and held monthly seminars on diversity and inclusion
+-  The center’s code of conduct clearly established actions against sexism, insults, microaggressions, and behaviors that excluded other members, and the center had multiple ways of filing misconduct complaints.
+
+Des espoirs?
+
+sondage france info 12/01/23~:
+- de moins en moins de jeunes (18-24 ans) pensent que la science apportent plus de bien que de mal (55% en 72, 33% en 2023)
+- 19% des jeunes pensent que les pyramides viennent des pyramides
+
+2022 - les filles réussisent mieux que les garçons dans toutes les filièrs aux bacs
+
+Effet de la réforme 2019 -> En 2022, la part de bachelière scientifique est la plus basse atteinte depuis 1965, alors qu'on arrivait presque à la parité.
+ Chute aussi pour l'info, de 23% en 2019 à  13% en 2020
+ Cf figure
+
+les filles réussisent mieux, mais choisissent des filières moins valorisés, et donc les "choix" d'orientation entretiennent les inégalités.
+
+<!> ce n'est pas de l'autocensure -> c'est le résultat de stéréotype depuis l'enfance. La société censure les filles.
+ -> plusieurs exemples médias, jouet (produit scientifique, en blue pour les garçons, mais déguisé en princesse et rose pour les filles), habit enfant, exercices à l'école. 
+ 
+MAIS Il n'existe aucune diff biologique entre les cerveaux H/F
+
+
+Il y a eu une défiminisation de l'informatique en occident, autour de 1984 (augmentation progressive de la part de femme dans les majors d'informatique depuis 1960, puis soudaine rechute)
+
+
+
+Importance de diversité sciences, exemples de pbs :
+ - système d'airbag historiquement conçu pour corpulence H
+ - médicament dosé pour les H (peu de femmes dans les cohortes, 19% pour les antiviraux, 38% pour les vaccins, 11% pour le remède du sida)
+ - symptomes différents-syndrome de yentl pour maladies cardiaques (10% de changes de plus de mourrir en arrivant à l'hopital)
+ - Les dimensions des smartpgones inadaptés aux mains plus petites.
+
+mais aussi, e.g. design des chaussures de sports, shrink it and pink it, while shapes are different (more triangular foot for women)
+https://www.theguardian.com/society/2025/oct/14/ditch-shrink-it-and-pink-it-womens-trainer-design-say-experts
+
+
+Femmes & sciences, importance des roles models (mais attention aux trop exceptionnel, Marie Curie n'en est pas un), séance en non mixité (et aucunes concernées a jamais dit, c'est dommage que les garçons soient pas là, par contre, on dit, il faudrait que les garçons aient la même chose), stage de 3ème.
+
+## GENDER BIAS: SCIENCES & PRACTICES - one day workshop in neuroscience, ~20 minutes talks
+
+https://www.youtube.com/playlist?list=PLpupy7iBJC31Uuv_oPtKgpImnSVBb0WA3
+
+### welcome
+
+practical tool
+sex = biological differences
+gender = role & responsabilities, social construct
+bias = disproportionate wqieght in favor or against an idea, individual or group, systematic error
+
+The "default male", "invisible women" by Caroline Criado Perez
+-> this is a scientific fact
+article: Based on billions of words on the internet, people=men
+https://www.science.org/doi/10.1126/sciadv.abm2463
+
+appear very early, impact early development of children (for same exercice, presented as geometry, men perform better, vs drawing exercise, women perform better)
+
+
+### 'Why don't we all see the same world' - Albert Moukheiber
+
+our brain can be very convinced, based on limited information
+
+live experiment demonstrating our limited scope attention -> small blinking test between two very similar images, but super hard to find the difference.
+
+
+how do we acquire knowledge?
+c-e of using blood letting in historical medecine
+
+fun with correlation, Nicolas Cage #movies/#drowning
+
+in the 50s, there was a pollio outbreak, correlated with ice cream sales, so they thought it was ice cream and recalled a lot of it. But, it was in fact temperature. (AN: ok, the story is not 100% accurate, see https://eu.poconorecord.com/story/news/crime/2011/08/12/vaccinations-old-ice-cream-scare/49937426007/, it was not as dumb as temperature, because temperature shift had always existed... So they loooked for other things, thought it was suger based on one experiment on mouses, so said no ice cream, but it was in fact flush toilets and the improvment in sanitations, leading to a lack of early immunizing childhood diseases)
+
+Our brain makes map based on our perceptions, incomplete maps. How?
+
+new illusion, rotating dancer -> missing depth, so our brains invents it. Two variant with additional line giving the depth, looking at one gives us a "prior", which carries over to the original one.
+
+"The more a situation is incertain/ambiguous, the more we are likely to interpret it"
+"Our brain is a predictive and approximative story teller" -> heuristics
+
+Stereotyping, social norms, statu quo, anchoring, loss aversion, halo effect, optimism bias, social norms.
+
+Trimming: colgate, made an error in a ads, show ad, what is the error? (tooth, or who does the hand belongs to?)
+framing: on sell, small popcorn, 3€, big one 7€. Nobody buys a 7 one, add a 6,5€ one, people don't buy anymore the small one, but pay 50cts more for the 7 one.
+
+stereotypes: "we reduce complexity to manage the world".
+
+### cognitive bias, fast and slow
+
+Biased judgment? "Who looks "more like a black person"? famous experiment from jennifer eberhardt at stanford, showing pictures and asking this question. (but pictures were from tribunal) Turns out the more somebody "looks like a black person", the likelier they are to get death penalty.
+
+Base rate neglect problem -> https://en.wikipedia.org/wiki/Base_rate_fallacy
+Did psychological research demonstrated that we are stupid? Noop, but even very smart people can sometime do stupid things.
+
+"Dual process theory" fast (intuitive) and slow (logical) 
+Super popular (simple and accessible theory), but criticized see https://en.wikipedia.org/wiki/Dual_process_theory#Issues_with_the_dual-process_account_of_reasoning
+
+Is a bias a detection failure (as argued by dual process theory), or a correction failure? Why do we keep smoking?
+
+Do "biased" reasoners detect error?
+
+-> redo a base rate neglect problem, but also introduce a control version (without a conflict between the intuitive answer and the logicalk answer). If people fully drop (as fast and slow) logical part when answering, answers should be the same.
+Summary of findings: when solving a conflict problem, response time is longer, eye fixate longer on the logically critical problem part, they recall logically critical problem part better, they are less confident their response ic correct, and error detection region in the brain is activated.
+
+-> a lot of evidence for bias detection
+
+Potential de-bias interventions.
+
+### Categorisation bias in social impression formation
+(difficult to watch, double layered audio)
+
+Rapid impression formation: from person perception (visible information) we draw inference to invisble states (emotional states, attention, intentions,...)
+
+This is a complex feat, with at least two networks one very good at visual processing, and one on mentalizing.
+
+Beware, not everying which is rapid is implicit.
+
+Common categorization bias: categorization of other into groups imply that identical behaviour is interpreted/evaluated/attributed differently.
+  Most "visible" categories (allegidly) age (<> of lifespan in years); race (<> biological ancestry); sex (<> gender identity)
+  
+When displaying postivie/negative words with stereotype consistent or inconsisten pictures (work related pictures). Preferential mapping of negative words with stereotype-inconsistent targets, especially when male!  
+
+-> categories matter = identical occupations elicit different evaluative responses for men and women.
+
+With pictures of either same-race or cross-race interactions, people are quicker to associate negative words to cross race interactions
+
+### Stand up to stereotypes! How a gendered world can make a gendered brain
+
+from Gina Rippon, author of "the gendered brain".
+
+Original story: two types of body = two types of brains = two types of skillsets = two types of social roles.
+
+
+are there any consistent difference between the two brains: a broad no, but a cautious no (answer depends on  why are you asking the question, are you asking)
+
+
+Your brain's 3 Ps: they are Predictive texters, they are Plastic, and they are Permeable (negative message impacts task performance, not same regions are activated)
+
+What is your brain for? we are wired to be social, sens of self/others/belonging/norms/scripts/rules
+   newest most evolutionnary recent part of the brain appears to be focused on this.
+   (but older part like fear might make us avoid a social situation in which we experienced once something negative)
+   Bad social experience turns on the same brain part as pain.
+   Bias, and thus bad social experience, also leads to poor self image, high rejection sensitivity, high self criticism, self silencing.
+ And then with high diversity effort, people from discriminated groups will have integrated all this, and will not feel included, and will leave.
+   We integrate stereotypes and act according to them.
+   
+   Diversity is not enough, inclusion is important
+   
+   
+   Very young children behaviors/self beliefs is altered by stereotypes, impact on creativity.
+   What kind of beliefs there are on science? 
+   
+   Field-specific ability belief picture, "brillance"-focused field (math, cs, physics) lead to less women in them. 
+   we are flatlining on diversity recruitment 
+   
+   sexist gender harassment a signifcant predicator of a negative sense of belonging
+   sexist gender harassment a signifcant predicator of imposter phenomenon
+   
+
+### are there cerebral sex differences
+
+gender (socially constructed) vs sex (XX vs XY chromosome)
+
+Why study such differences? there are observanble differences in behaviors, do those come from internal factors or external factors.
+
+(to note, only recent research was with large enough samples to study the small)
+
+= Internal factor:
+sex determination occurs on 7th week, gonads become ovaries or tests, sex differentuatuib keas ti hirmin,
+Hormons distrubution: High peak for males at birth, not for femals,, then juvenil hiatus then stable plateau for males, and up and downs for females
+
+= External factor
+
+Science backgroung estimating the size of the difference: 
+case study with size: Men  are 12 cn taller than women on average at 18 years old in the world. Cohen's d : standardized measure of a group difference. 98% of men will be taller than the average woman. 32% overlap.
+The biggest gender difference is in sexual behaviours (d=6.67), same sex vs different sex partner. 
+Autism is 4/5 times more likely in boys, depression 2 times more likely in women
+
+Cognitive abilites:
+Women and men have similar cognitive abilities.
+men advantage of d=0.57 for spatial rotation (but studies depend on parameter)
+female dadvantage of d-0.18 for verbal fluency.
+
+Big five model: personality divided into 5 dimensions (openness, conscioutsness, neuroticism, agreeablenesse, extraversions).
+Female more neuroticism d=0,39, slighlty more agreeable d=0.17 (over 100 countries, a million people)
+Toy preferences by gender, consistent gender preferences d=1.6
+
+Where does this toy pref diff comes from? 
+  could it be prenal hormonal exposure? use girls with a specific overproduction of androgens (testosterone) (https://en.wikipedia.org/wiki/Congenital_adrenal_hyperplasia)
+  slight evidence that yes.
+  BUT girls with CAH are more encouraged to play with boy toys. 
+  AND girls with CAH play less with boys toys than boys.
+  
+  
+= Sex diff in the brain.
+small effects
+d=0.7 for gender diff in total brain volume. (male advantage)
+at equal brian volumes, are their sex diff in regions.
+  yes, d=0.5 max, but no bimodl no femal vs male brain.
+  
+white matter tracts and microstructurs, also have sex diff (d=1.25)
+sex diff in functional activity at rest, some regions get more blood.
+
+Can't answer yet how those small diff impact large diff in behaviour (e.g toy preference).
+Crucial to look at external factors.
+
+Sex diff in the brain are generally small (d<0,2), no female vs male brain.
+
+### effect of gender bias in organisations
+
+= Denial of discrimination
+   many gendered stereotypes, act differente, are differnet, but also *should be different*.
+   With many examples of impact of stereotype in academic:
+     Creativity is associated with masculinity
+	 Proudfoot et al, 2015, Psychological science
+	 
+	 Women are less talented researchers
+	 Leslie et al, 2015, Science, 347, 262-265
+	 
+	 Gender ias in language use impairs selection of women
+	 Gaucher et al, 2011, JPSP, 101, 109-128
+	 
+	 Men are more likely to be first authors
+	 Broderick & Casadevall, eLIFE, 2019
+	 
+	 Women are less likely to be promoted
+	 Regner, Thinus-Blanc, Netter, Schmader & Hughuet, Nature Human Behaviours, 2019
+	 
+
+Not so easy, even with this evidence, to convince people.
+Responses received when doing such research: male criticize it more, with many more words.
+Male trying to say : "there is no bias against women, there is one against men!"
+
+Male have strong motivation to believe the system is just and fair!
+
+People feel particularly threatened when they are criticized for their moral behaviours (far more strongly than for e.g. competence criticism). Which occurs when saying people are biased.
+
+If we present fairness as an obligation this is very threatening to people, if we present it as an ideal, it becomes a challenge. (Does, Derks, Ellemers & Scheepers, SPPS, 2012)
+
+While old fashioned sexism does not receive so much agreement, modern sexism (beliefs like women have equal chances, men and women are treated equally, discrimination is no longer a problem) stills receives a lot.
+
+This denial of discrimination leads to belief that inequalities come from lack individual competence, ambition, priorities.
+
+= Equal opportunies?
+
+Gender contributes to personal research funding success in the Netherlands (Romy van der lee and Naomi elements).
+
+	Succes rates are lower at every step of the process
+	The only criterion where women are less favoribly judged is "quality of researcher", not "quality of study"
+	
+Reproducible.	
+
+
+The language of success: most positive worlds are masculine gendered wording
+
+What are popular explanations for career gender disparities? 
+	Most popular answer: work life issues, then choices of women, then unrelated to gender, and the least mentionned one "lack of organizational support".
+	
+Do you think men and women are treated equally in this orgnization? (Male say Yes, women say no)  But on personal experience w.r.t ambition, no difference in self perception.
+
+
+In 14 Dutch uni. Women more likely to have temporary/part time contract/more teaching time, have less time for research, less budget for research/traval and less support. 
+If you teach women to act like men in negociation and contract and such, they get perceived badly.
+And further, women makes more attempts to negotiate and discuss contract, but they are less satisfied.
+
+= Fitting in or opting out
+
+Self-perceived masculinity: in Junior academic level, women see themselves as less masculine. In senior academic, they see themselves as similarly masculine.
+ - solid result, wihtout change from 2004 to 2021.
+ 
+ What natters is not the surface/visible level disssimilarity, What matters is whether we feel included.
+
+
+= Practical ways to adress
+
+Make a systematic evaluation of policy and climate survey.
+
+Most policies only focus on getting more diverse people (on the influx). But lack of attention on inclusion/advancement/people leaving.
+
+Anti-bias training programs don't solve everything! (some programs have adverse effects, with false sense of security)
+
+
+
+### gender and power in young children representation
+
+
+### deconstructing gender biases in tv and radio
+
+
+### gender imbalance in editorial process of scientific publishing
+
+
+### gender quotes in hiring committes
+
+
+### fixing the leaky pipeline
+
+
+### behavioral insights & gender equality
+
+
+
+
 	
 	
 ##  Discriminations systémiques et universités 
@@ -929,12 +1264,3 @@ https://www.youtube.com/watch?v=ZVH7xRdW-Zc
 
 ##  Keynote: Dr. Susanne Täuber 
 https://www.youtube.com/watch?v=VYgdfnFXUXE
-
-
-## Isabelle Vauglin Egalité femme / homme dans l'Enseignement Supérieur et la Recherche : a-t-on vraiment évolué ?
-https://www.canal-u.tv/chaines/inria/egalite-femme-homme-dans-l-enseignement-superieur-et-la-recherche-a-t-on-vraiment
-
-
-## GENDER BIAS: SCIENCES & PRACTICES
-
-https://www.youtube.com/playlist?list=PLpupy7iBJC31Uuv_oPtKgpImnSVBb0WA3
