@@ -36,7 +36,7 @@ if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone(
 
 # cur.execute("DROP TABLE cnu") 
 if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is None:
-    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, surname, section)")
+    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, surname, rank, section)")
 
 if cur.execute("SELECT name FROM sqlite_master where name='years'").fetchone() is None:
     cur.execute("CREATE TABLE years(id, year, FOREIGN KEY (id) REFERENCES thesis(id))")
@@ -391,25 +391,32 @@ def load_cnu(f, allow_dup, year, section):
                 gender='F'
             else :
                 print(row[1])
+            if row[9]=='Professeur des Universités':
+                rank='PU'
+            elif row[9]=='Maître de conférences':
+                rank='MCF'
+            else:
+                rank='Other'
             surname=unidecode(row[5].lower())
             firstname=unidecode(row[7].lower())
             college=row[11]
             fullname=firstname + " " + surname
             fn = fullname.replace("'","''")
             if allow_dup or (not cur.execute(f"SELECT * from cnu where cnu.fullname='{fn}'").fetchall()):
-                data.append( (gender,firstname + " " + surname,firstname,surname, section))
+                data.append( (gender,firstname + " " + surname,firstname,surname, rank, section))
 
-    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?, ?)", data)
+    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?, ?, ?)", data)
     con.commit()
-    
 
-# load_cnu('cnu_27_2019.csv', False, 2019, 27)
-# load_cnu('cnu_26_2019.csv', False, 2019, 26)
-# load_cnu('cnu_25_2019.csv', False, 2019, 25)
+load_cnu('cnu_27_2023.csv', False, 2023, 27)
+load_cnu('cnu_26_2023.csv', False, 2023, 26)
+load_cnu('cnu_25_2023.csv', False, 2023, 25)
 
-# load_cnu('cnu_27_2023.csv', False, 2023, 27)
-# load_cnu('cnu_26_2023.csv', False, 2023, 26)
-# load_cnu('cnu_25_2023.csv', False, 2023, 25)
+
+load_cnu('cnu_27_2019.csv', False, 2019, 27)
+load_cnu('cnu_26_2019.csv', False, 2019, 26)
+load_cnu('cnu_25_2019.csv', False, 2019, 25)
+
 
 
 def link_cnu(domain):
@@ -473,8 +480,8 @@ def link_cnu(domain):
 
 
     
-# link_cnu("informatique")
-# link_cnu("mathématiques")
+link_cnu("informatique")
+link_cnu("mathématiques")
 
 
 # get_all_pers= cur.execute("SELECT * from persons \
@@ -533,7 +540,7 @@ def load_op_poste():
     cur.executemany("INSERT OR IGNORE INTO jury_poste VALUES(?, ?, ?, ?)", data)
     con.commit()
 
-load_op_poste()    
+# load_op_poste()    
 
 def link_op_poste_cnu():
     cnu_names = cur.execute("SELECT cnu.fullname, cnu.surname, cnu.firstname from cnu").fetchall()
