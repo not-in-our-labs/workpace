@@ -497,12 +497,12 @@ def print_cnu(section):
 
     
     h_directed= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
-    JOIN directed ON cnu.fullname=directed.fullname \
+    JOIN directed ON cnu.ppn=directed.ppn \
     where cnu.gender='H'  and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
     f_directed= [ p[1] for p in cur.execute(f"SELECT directed.fullname, COUNT(*) from directed \
-    JOIN cnu ON cnu.fullname=directed.fullname \
+    JOIN cnu ON cnu.ppn=directed.ppn \
     where cnu.gender='F' and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
@@ -518,12 +518,12 @@ def print_cnu(section):
 
         
     h_directed_mcf= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
-    JOIN directed ON cnu.fullname=directed.fullname \
+    JOIN directed ON cnu.ppn=directed.ppn \
     where cnu.gender='H'  and cnu.rank='MCF'  and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
     f_directed_mcf= [ p[1] for p in cur.execute(f"SELECT directed.fullname, COUNT(*) from directed \
-    JOIN cnu ON cnu.fullname=directed.fullname \
+    JOIN cnu ON cnu.ppn=directed.ppn \
     where cnu.gender='F' and cnu.rank='MCF'  and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
@@ -539,12 +539,12 @@ def print_cnu(section):
 
 
     h_directed_pu= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
-    JOIN directed ON cnu.fullname=directed.fullname \
+    JOIN directed ON cnu.ppn=directed.ppn \
     where cnu.gender='H'  and cnu.rank='PU'  and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
     f_directed_pu= [ p[1] for p in cur.execute(f"SELECT directed.fullname, COUNT(*) from directed \
-    JOIN cnu ON cnu.fullname=directed.fullname \
+    JOIN cnu ON cnu.ppn=directed.ppn \
     where cnu.gender='F' and cnu.rank='PU'  and cnu.section IN {section} \
     GROUP BY directed.fullname").fetchall()]
     
@@ -560,12 +560,12 @@ def print_cnu(section):
 
 
     h_jury= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
-    JOIN jury ON cnu.fullname=jury.fullname \
+    JOIN jury ON cnu.ppn=jury.ppn \
     where cnu.gender='H'  and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
     
     f_jury= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
-    JOIN jury ON cnu.fullname=jury.fullname \
+    JOIN jury ON cnu.ppn=jury.ppn \
     where cnu.gender='F' and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
     
@@ -587,12 +587,12 @@ def print_cnu(section):
 
 
     h_jury_pu= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
-    JOIN jury ON cnu.fullname=jury.fullname \
+    JOIN jury ON cnu.ppn=jury.ppn \
     where cnu.gender='H' and cnu.rank='PU'  and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
     
     f_jury_pu= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
-    JOIN jury ON cnu.fullname=jury.fullname \
+    JOIN jury ON cnu.ppn=jury.ppn \
     where cnu.gender='F' and cnu.rank='PU' and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
     
@@ -600,12 +600,12 @@ def print_cnu(section):
     f_jury_pu += [0 for i in range(0,len(f_cnu_pu) - len(f_jury_pu))]        
     
     h_jury_mcf= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
-    JOIN jury ON cnu.fullname=jury.fullname \
+    JOIN jury ON cnu.ppn=jury.ppn \
     where cnu.gender='H' and cnu.rank='MCF'  and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
     
     f_jury_mcf= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
-    JOIN jury ON cnu.fullname=jury.fullname \
+    JOIN jury ON cnu.ppn=jury.ppn \
     where cnu.gender='F' and cnu.rank='MCF' and cnu.section IN {section} \
     GROUP BY jury.fullname").fetchall()]
 
@@ -618,12 +618,12 @@ def print_cnu(section):
     make_graph(h_jury_mcf, f_jury_mcf, True, dom, "examiner.mcf."+sdom, None, "thesis examination from MCF")        
     
     h_reviewed=  [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
-    JOIN reviewed ON cnu.fullname=reviewed.fullname \
+    JOIN reviewed ON cnu.ppn=reviewed.ppn \
     where cnu.gender='H'  and cnu.section IN {section} \
     GROUP BY reviewed.fullname").fetchall()]
     
     f_reviewed= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
-    JOIN reviewed ON cnu.fullname=reviewed.fullname \
+    JOIN reviewed ON cnu.ppn=reviewed.ppn \
     where cnu.gender='F'  and cnu.section IN {section} \
     GROUP BY reviewed.fullname").fetchall()]
 
@@ -704,7 +704,7 @@ def eval_gender_guessing():
     
     print(f"Comparing with the official cnu section 25,26 and 27 data, we are guessing correctly {len(f_guessed)/len(f_cnu):.3%} of females and {len(h_guessed)/len(h_cnu):.3%} of males")
 
-# eval_gender_guessing() 
+# eval_gender_guessing()          
 
 print_cnu("('27')")
 print_cnu("('26')")
@@ -734,14 +734,14 @@ def print_info_per_year_cnu(section):
         JOIN genders ON persons.firstname=genders.firstname \
         JOIN years on thesis.id=years.id \
         JOIN directed on directed.id=thesis.id \
-        JOIN cnu on cnu.fullname=directed.fullname \
+        JOIN cnu on cnu.ppn=directed.ppn \
         where genders.gender='H' and years.year='{i}' and cnu.section={section}").fetchall()[0][0]
         
         f=cur.execute(f"SELECT COUNT(thesis.id) from thesis JOIN persons ON persons.fullname=thesis.fullname \
         JOIN genders ON persons.firstname=genders.firstname \
         JOIN years on thesis.id=years.id \
         JOIN directed on directed.id=thesis.id \
-        JOIN cnu on cnu.fullname=directed.fullname \
+        JOIN cnu on cnu.ppn=directed.ppn \
         where genders.gender='F' AND years.year='{i}' and cnu.section={section}").fetchall()[0][0]
         if f != 0 and h != 0:
             print(f"For {i}, we have in store (assumed) {f}  female and {h} male phd authors for thesis in cnu section {section}, for a total of {f/(f+h):.1%}.")
@@ -749,3 +749,27 @@ def print_info_per_year_cnu(section):
 # print_info_per_year_cnu(27)
 # print_info_per_year_cnu(26)
 # print_info_per_year_cnu(25)
+
+def print_info_cnu_ppn(rank, sec):
+
+    f_pu = cur.execute(f"SELECT COUNT(cnu.fullname) from cnu\
+        where cnu.gender='F' and rank='{rank}' and cnu.section={sec}").fetchall()[0][0]
+
+    f_pu_no_ppn= cur.execute(f"SELECT COUNT(cnu.fullname), cnu.ppn from cnu\
+        where cnu.gender='F' and rank='{rank}' and cnu.section={sec} and   (cnu.ppn is null or not cnu.ppn)").fetchall()[0][0]
+
+    h_pu = cur.execute(f"SELECT COUNT(cnu.fullname), cnu.ppn from cnu\
+        where cnu.gender='H' and rank='{rank}' and cnu.section={sec}").fetchall()[0][0]
+
+    
+    h_pu_no_ppn= cur.execute(f"SELECT COUNT(cnu.fullname), cnu.ppn from cnu\
+        where cnu.gender='H' and rank='{rank}' and cnu.section={sec} and   (cnu.ppn is null or not cnu.ppn)").fetchall()[0][0]
+
+    print(f"We have {f_pu_no_ppn/f_pu:.1%} of women {rank} sec {sec} without ppn, vs {h_pu_no_ppn/h_pu:.1%} for men ")
+
+# print_info_cnu_ppn("PU", 27)
+# print_info_cnu_ppn("MCF", 27)
+# print_info_cnu_ppn("PU", 26)
+# print_info_cnu_ppn("MCF", 26)
+# print_info_cnu_ppn("PU", 25)
+# print_info_cnu_ppn("MCF", 25)

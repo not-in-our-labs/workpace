@@ -12,31 +12,36 @@ from unidecode import unidecode
 con = sqlite3.connect("test.db")
 cur = con.cursor()
 
+# cur.execute("DROP TABLE persons")
+# cur.execute("DROP TABLE thesis")
+# cur.execute("DROP TABLE directed")
+# cur.execute("DROP TABLE jury")
+# cur.execute("DROP TABLE reviewed")
+
 if cur.execute("SELECT name FROM sqlite_master where name='persons'").fetchone() is None:
-    cur.execute("CREATE TABLE persons(fullname, firstname, surname, UNIQUE(fullname))")
+    cur.execute("CREATE TABLE persons(fullname, firstname, surname, ppn, UNIQUE(fullname))")
 
 if cur.execute("SELECT name FROM sqlite_master where name='genders'").fetchone() is None:
     cur.execute("CREATE TABLE genders(firstname, gender, numbers, UNIQUE(firstname))")
 
 if cur.execute("SELECT name FROM sqlite_master where name='thesis'").fetchone() is None:
-    cur.execute("CREATE TABLE thesis(id PRIMARY KEY, fullname, domain, FOREIGN KEY (fullname) REFERENCES persons(fullname))")
+    cur.execute("CREATE TABLE thesis(id PRIMARY KEY, fullname, domain, ppn, FOREIGN KEY (fullname) REFERENCES persons(fullname))")
 
     
 if cur.execute("SELECT name FROM sqlite_master where name='directed'").fetchone() is None:
-    cur.execute("CREATE TABLE directed(id, fullname, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
+    cur.execute("CREATE TABLE directed(id, fullname, ppn, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
 
 
 if cur.execute("SELECT name FROM sqlite_master where name='jury'").fetchone() is None:
-    cur.execute("CREATE TABLE jury(id, fullname, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
+    cur.execute("CREATE TABLE jury(id, fullname, ppn, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
 
 
 if cur.execute("SELECT name FROM sqlite_master where name='reviewed'").fetchone() is None:
-    cur.execute("CREATE TABLE reviewed(id, fullname, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
-
+    cur.execute("CREATE TABLE reviewed(id, fullname, ppn, FOREIGN KEY (fullname) REFERENCES persons(fullname), FOREIGN KEY (id) REFERENCES thesis(id))")
 
 # cur.execute("DROP TABLE cnu") 
 if cur.execute("SELECT name FROM sqlite_master where name='cnu'").fetchone() is None:
-    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, surname, rank, section)")
+    cur.execute("CREATE TABLE cnu(gender, fullname, firstname, surname, rank, section, ppn)")
 
 if cur.execute("SELECT name FROM sqlite_master where name='years'").fetchone() is None:
     cur.execute("CREATE TABLE years(id, year, FOREIGN KEY (id) REFERENCES thesis(id))")
@@ -184,7 +189,7 @@ def mk_person(entry):
         fullname = firstname+" "+surname + " " + ppn
     else:
         fullname = firstname+" "+surname        
-    return (fullname, firstname , surname )
+    return (fullname, firstname , surname, ppn)
 
 def load_response(api_response):
     persons = set()
@@ -198,39 +203,39 @@ def load_response(api_response):
 
             if len(entry['auteurs']) != 1:
                 continue
-            ppn, surname, firstname = mk_person(entry['auteurs'][0])
-            persons.add((ppn, surname, firstname))
+            fppn, surname, firstname, ppn = mk_person(entry['auteurs'][0])
+            persons.add((fppn, surname, firstname, ppn))
 
-            thesis.append((docid, ppn, domain))
+            thesis.append((docid, fppn, domain, ppn))
 
             
             for person in entry['directeurs']:
-                ppn, surname, firstname = mk_person(person)
-                persons.add((ppn, surname, firstname))
+                fppn, surname, firstname, ppn = mk_person(person)
+                persons.add((fppn, surname, firstname, ppn))
                 
-                directed.append((docid, ppn))
+                directed.append((docid, fppn, ppn))
 
 
             for person in entry['rapporteurs']:
-                ppn, surname, firstname = mk_person(person)
-                persons.add((ppn, surname, firstname))
+                fppn, surname, firstname, ppn = mk_person(person)
+                persons.add((fppn, surname, firstname,ppn))
                 
-                reviewed.append((docid, ppn))
+                reviewed.append((docid, fppn, ppn))
 
             for person in entry['examinateurs']:
-                ppn, surname, firstname = mk_person(person)
-                persons.add((ppn, surname, firstname))                
-                jury.append((docid, ppn))
+                fppn, surname, firstname, ppn= mk_person(person)
+                persons.add((fppn, surname, firstname, ppn))                
+                jury.append((docid, fppn, ppn))
 
     data=list(persons)
     print("saving")
-    cur.executemany("INSERT OR IGNORE INTO persons VALUES(?, ?, ?)", data)
+    cur.executemany("INSERT OR IGNORE INTO persons VALUES(?, ?, ?, ?)", data)
 
-    cur.executemany("INSERT OR IGNORE INTO thesis VALUES(?, ?, ?)", thesis)
+    cur.executemany("INSERT OR IGNORE INTO thesis VALUES(?, ?, ?, ?)", thesis)
     
-    cur.executemany("INSERT OR IGNORE INTO directed VALUES(?, ?)", directed)
-    cur.executemany("INSERT OR IGNORE INTO jury VALUES(?, ?)", jury)
-    cur.executemany("INSERT OR IGNORE INTO reviewed VALUES(?, ?)", reviewed)        
+    cur.executemany("INSERT OR IGNORE INTO directed VALUES(?, ?, ?)", directed)
+    cur.executemany("INSERT OR IGNORE INTO jury VALUES(?, ?, ?)", jury)
+    cur.executemany("INSERT OR IGNORE INTO reviewed VALUES(?, ?, ?)", reviewed)        
     con.commit()
     
 def init_db():
@@ -254,8 +259,8 @@ def print_total_users():
     tot = cur.execute("SELECT COUNT(fullname) from persons").fetchall()[0][0]
     print("We have in store (assumed) %i female and %i male persons, for a total of %i. (out of %i persons)" % (f, h, f+h, tot))
 
-    reviews=cur.execute("SELECT COUNT(*) from jury").fetchall()[0][0]
-    print(f"We have {reviews}")
+    # reviews=cur.execute("SELECT COUNT(*) from jury").fetchall()[0][0]
+    # print(f"We have {reviews} thesis review")
 
 
 
@@ -397,57 +402,49 @@ def load_cnu(f, allow_dup, year, section):
                 rank='MCF'
             else:
                 rank='Other'
-            surname=unidecode(row[5].lower())
+            surname=unidecode(row[3].lower())
             firstname=unidecode(row[7].lower())
             college=row[11]
             fullname=firstname + " " + surname
             fn = fullname.replace("'","''")
             if allow_dup or (not cur.execute(f"SELECT * from cnu where cnu.fullname='{fn}'").fetchall()):
-                data.append( (gender,firstname + " " + surname,firstname,surname, rank, section))
+                data.append( (gender,firstname + " " + surname,firstname,surname, rank, section, None))
 
-    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?, ?, ?)", data)
+    cur.executemany("INSERT OR IGNORE INTO cnu VALUES(?, ?, ?, ?, ?, ?, ?)", data)
     con.commit()
-
-load_cnu('cnu_27_2023.csv', False, 2023, 27)
-load_cnu('cnu_26_2023.csv', False, 2023, 26)
-load_cnu('cnu_25_2023.csv', False, 2023, 25)
-
-
-load_cnu('cnu_27_2019.csv', False, 2019, 27)
-load_cnu('cnu_26_2019.csv', False, 2019, 26)
-load_cnu('cnu_25_2019.csv', False, 2019, 25)
-
 
 
 def link_cnu(domain):
     # after running load cnu, cnu.fullname jsut contains the full name, while persons.fullname might contain in addition the thesis.fr ppn identifier
     cnu = [p[0] for p in cur.execute("SELECT cnu.fullname from cnu").fetchall()]
 
-    info_jury= cur.execute(f"SELECT persons.fullname, COUNT(jury.fullname) as jnum from persons \
+    info_jury= cur.execute(f"SELECT persons.fullname, persons.ppn, COUNT(jury.fullname) as jnum from persons \
     JOIN jury ON persons.fullname=jury.fullname \
     RIGHT JOIN thesis ON thesis.id=jury.id \
     WHERE LOWER(thesis.domain) LIKE '%{domain}%' \
     GROUP BY persons.fullname ORDER BY jnum ").fetchall()
 
 
-    rev_jury= cur.execute(f"SELECT persons.fullname, COUNT(reviewed.fullname) as jnum from persons \
+    rev_jury= cur.execute(f"SELECT persons.fullname, persons.ppn, COUNT(reviewed.fullname) as jnum from persons \
     JOIN reviewed ON persons.fullname=reviewed.fullname \
     RIGHT JOIN thesis ON thesis.id=reviewed.id \
     WHERE LOWER(thesis.domain) LIKE '%{domain}%' \
     GROUP BY persons.fullname ORDER BY jnum ").fetchall()
 
 
-    dir_jury= cur.execute(f"SELECT persons.fullname, COUNT(directed.fullname) as jnum from persons \
+    dir_jury= cur.execute(f"SELECT persons.fullname, persons.ppn, COUNT(directed.fullname) as jnum from persons \
     JOIN directed ON persons.fullname=directed.fullname \
     RIGHT JOIN thesis ON thesis.id=directed.id \
     WHERE LOWER(thesis.domain) LIKE '%{domain}%' \
     GROUP BY persons.fullname ORDER BY jnum ").fetchall()
     
     cs_pers = {}
-
+    ppn_pers = {}
+    
     for p in info_jury+rev_jury+dir_jury:
         name = p[0]
-        score = p[1]
+        score = p[2]
+        ppn_pers[name] = p[1]
         if name in cs_pers:
             cs_pers[name] += score
         else:
@@ -468,10 +465,10 @@ def link_cnu(domain):
 
     for pers in data:
         old = pers[0].replace("'", "''")
-        target = pers[1].replace("'", "''")
+        target = ppn_pers[pers[1]]
         print(old)
         print(target)
-        cur.execute(f"UPDATE cnu set fullname='{target}' where cnu.fullname='{old}'")
+        cur.execute(f"UPDATE cnu set ppn='{target}' where cnu.fullname='{old}'")
 
     con.commit()    
 
@@ -479,17 +476,23 @@ def link_cnu(domain):
 
 
 
-    
-link_cnu("informatique")
-link_cnu("mathématiques")
 
+def link_manual_cnu():
+ 
+    # name list from INSEE
+    with open("manual_links.csv", 'r', encoding='utf-8', newline='') as name_file:
+        name_reader = csv.reader(name_file, delimiter=',')
+        for row in name_reader:
+            old = row[0]
+            target = row[1]
+            cur.execute(f"UPDATE cnu set ppn='{target}' where cnu.fullname='{old}'")            
+        con.commit()
 
 # get_all_pers= cur.execute("SELECT * from persons \
 #     JOIN jury ON persons.fullname=jury.fullname \
 #     JOIN reviewed ON persons.fullname=reviewed.fullname \
 #     JOIN directed ON directed.fullname=reviewed.fullname \
 #     WHERE persons.fullname=").fetchall()
-
 
 
 
@@ -568,7 +571,26 @@ def link_op_poste_cnu():
             #     print(f"{c} is in {com[0]}")
             
 
-link_op_poste_cnu()    
+# link_op_poste_cnu()    
     
 
+
+
+
+
+# load_cnu('cnu_27_2023.csv', False, 2023, 27)
+# load_cnu('cnu_26_2023.csv', False, 2023, 26)
+# load_cnu('cnu_25_2023.csv', False, 2023, 25)
+
+
+# load_cnu('cnu_27_2019.csv', False, 2019, 27)
+# load_cnu('cnu_26_2019.csv', False, 2019, 26)
+# load_cnu('cnu_25_2019.csv', False, 2019, 25)
+
+    
+# link_cnu("informatique")
+# link_cnu("mathématiques")
+
+
+# link_manual_cnu()
 
