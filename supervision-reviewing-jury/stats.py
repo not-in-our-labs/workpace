@@ -750,7 +750,7 @@ def print_info_per_year_cnu(section):
 # print_info_per_year_cnu(26)
 # print_info_per_year_cnu(25)
 
-def print_info_cnu_ppn(rank, sec):
+def print_info_cnu_ppn(rank, sec, print_missing):
 
     f_pu = cur.execute(f"SELECT COUNT(cnu.fullname) from cnu\
         where cnu.gender='F' and rank='{rank}' and cnu.section={sec}").fetchall()[0][0]
@@ -767,9 +767,16 @@ def print_info_cnu_ppn(rank, sec):
 
     print(f"We have {f_pu_no_ppn/f_pu:.1%} of women {rank} sec {sec} without ppn, vs {h_pu_no_ppn/h_pu:.1%} for men ")
 
-# print_info_cnu_ppn("PU", 27)
-# print_info_cnu_ppn("MCF", 27)
-# print_info_cnu_ppn("PU", 26)
-# print_info_cnu_ppn("MCF", 26)
-# print_info_cnu_ppn("PU", 25)
-# print_info_cnu_ppn("MCF", 25)
+    if print_missing:
+        f_pu_no_ppn= cur.execute(f"SELECT cnu.fullname from cnu\
+        where cnu.gender='F' and rank='{rank}' and cnu.section={sec} and   (cnu.ppn is null or not cnu.ppn)").fetchall()
+        
+        for f in f_pu_no_ppn:
+            print(f[0])
+            
+# print_info_cnu_ppn("PU", 27, False)
+# print_info_cnu_ppn("MCF", 27, False)
+# print_info_cnu_ppn("PU", 26, False)
+# print_info_cnu_ppn("MCF", 26, False)
+# print_info_cnu_ppn("PU", 25, False)
+# print_info_cnu_ppn("MCF", 25, False)
