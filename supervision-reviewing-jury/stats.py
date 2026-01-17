@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import re
 
+plt.rcParams['figure.dpi'] = 200
 
 import sqlite3
 con = sqlite3.connect('file:test.db?mode=ro', uri=True)
@@ -75,47 +76,58 @@ def print_total_users():
 print_total_users()
 
 
-# def get_main_domains():
-#     domains =  [i[0].split(".")[0] for i in cur.execute("SELECT DISTINCT(domain) from author").fetchall()]
-#     print(set(domains))
 
-#     domains_fullnames={}
+def trim(counts,bins,tmax,tmin):
+    nc = []
+    nb = []
+    found_non_small = False
+    co = list(counts)
+    bi = list(bins)[:-1]
+    co.reverse()
+    bi.reverse()
+          
+    for c,b in zip(co,bi):
+        if not(found_non_small) and c/tmax < tmin:
+            continue
+        found_non_small = True
+        nc.append(c)
+        nb.append(b)
+    nc.reverse()
+    nb.reverse()
+    nb.append(nb[-1:][0]+1)
+    return(nc,nb)
 
-#     for dom in set(domains):    
-#         domains_fullnames[dom]=get_full_name(dom)
-#     print(domains_fullnames)    
-#     print(len(domains_fullnames))
+male_color = "purple"
+female_color = "orange"
+
+def do_hist(h_data, f_data, mrange=None):
+    hist_alpha=0.4
+
+    trim_min=0.005
+    
+    h_bins=range(min(h_data), max(h_data) + 1, 1)
+    h_counts, h_bins = np.histogram(h_data, bins=h_bins, density=True,range=mrange)
+
+
+    f_bins=range(min(f_data), max(f_data) + 1, 1)
+    f_counts, f_bins = np.histogram(f_data, bins=f_bins, density=True,range=mrange)
+
+
+    maximum = max([max(h_counts),max(f_counts)])
+    
+    h_ncounts, h_nbins = trim(h_counts,h_bins,maximum, trim_min)
+    f_ncounts, f_nbins = trim(f_counts,f_bins,maximum, trim_min)   
 
     
-# with open('domains.json', 'r') as file:
-#     domains_fullnames = json.load(file)
-
-
-# def get_full_name(dom):
-#     if dom in domains_fullnames:
-#         return(domains_fullnames[dom])
-#     else:
-#         print("Need to fetch full domain name for" + dom)
-#         url="https://api.archives-ouvertes.fr/search/?q=*:*&fq=docType_s:THESE&fq=primaryDomain_s:%s&fl=en_domainAllCodeLabel_fs&row=1" % dom
-#         api_response = json.load(BytesIO(requests.get(url).content))
-#         entry = api_response['response']['docs'][0]
-#         return(entry['en_domainAllCodeLabel_fs'][0].split("_")[2])
+    plt.stairs(np.array(h_ncounts),np.array(h_nbins), fill=True,color=f"tab:{male_color}", alpha=hist_alpha, label="male")
+    plt.stairs(np.array(f_ncounts),np.array(f_nbins), fill=True,color=f"tab:{female_color}", alpha=hist_alpha, label="female")    
 
     
-# # print(len(domains_fullnames))
-# # get_main_domains()
-
-# def get_full_domains():
-#     domains =  [i[0] for i in cur.execute("SELECT DISTINCT(domain) from author").fetchall()]
-
-#     # mdomains =  [i[0].split(".")[0] for i in cur.execute("SELECT DISTINCT(domain) from author").fetchall()]
-#     # for d in mdomains:
-#     #     if d not in domains:
-#     #         print(d)
-#     return(set(domains))
 
 
-def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range, action):    
+
+def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range, action):
+    line_alpha=0.6
     f_av = statistics.mean(f_list)
     h_av = statistics.mean(h_list)
     total_av = statistics.mean(h_list+f_list)
@@ -124,13 +136,13 @@ def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range, acti
 
     # print("Successfully loaded %i female page counts and %i male page counts" % (len(f_list),len(h_list)))    
     # print("Average of %i female page counts and %i male page counts" % (f_av,h_av))
-    ks_test = stats.ks_2samp(h_list, f_list)
-    # print(ks_test)
+    ad_test = stats.anderson_ksamp([h_list, f_list]) 
     # if p < 0.05, we reject the null hypothesis, that is, the hypothesis that the distributions are the same.
-    # we only keep domains/subdomains with enough data point
+    # also, we only keep domains/subdomains with enough data point
     # We generate corresponding figures
-    print(ks_test.pvalue)
-    if force_pic or (ks_test.pvalue < 0.05 and len(h_list + f_list) > 500):
+
+    print(ad_test)        
+    if force_pic or (ad_test.pvalue < 0.05 and len(h_list + f_list) > 500):
 
         print(long_name)
 
@@ -138,7 +150,7 @@ def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range, acti
 
         plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female ({len(f_list)/len(f_list+h_list):.0%} females), France, 2015 to 2025\n \
 Total of {sum(h_list)} male {action} vs {sum(f_list)} female ({sum(f_list)/sum(f_list+h_list):.0%} females)\n \
-Kolmogorov-Smirnov test with pvalue {ks_test.pvalue:.5f} \n \
+ Anderson-Darling test with pvalue {ad_test.pvalue:.5f} \n \
 Female average {f_av:.2f}, male average {h_av:.2f}, f-h normalized difference : {abs_diff:.1%} \
 ", size="small")
 
@@ -148,25 +160,20 @@ Female average {f_av:.2f}, male average {h_av:.2f}, f-h normalized difference : 
         
         plt.xlabel(f"Number of {action}")
         plt.ylabel("Density")
-        plt.hist(h_list,bins="auto",color="tab:purple",
-                 range=with_range,
-                 density=True,histtype="step", label="male")            
+        
                 # add vertical line at median
         median = statistics.median(h_list)
         last_decile = np.percentile(h_list, 90)
-        plt.axvline(median, color='tab:purple', linestyle='--',label="median")
-        plt.axvline(last_decile, color='tab:purple', linestyle='--',label="last decile")
+        plt.axvline(median, color=f"tab:{male_color}", alpha=line_alpha, linestyle='--',label="male median")
+        plt.axvline(last_decile, color=f"tab:{male_color}", alpha=line_alpha, linestyle=(0, (5, 5)),label="male last decile")
 
-        
-        plt.hist(f_list,bins="auto",color="tab:red",
-                 range=with_range,
-                 density=True,histtype="step", label="female")
+        do_hist(h_list, f_list, with_range)        
 
         # add vertical line at median
         median = statistics.median(f_list)
         last_decile = np.percentile(f_list, 90)        
-        plt.axvline(median, color='tab:red', linestyle='--')
-        plt.axvline(last_decile, color='tab:red', linestyle='--')        
+        plt.axvline(median, color=f"tab:{female_color}", alpha=line_alpha, linestyle='--',label="female median")
+        plt.axvline(last_decile,  color=f"tab:{female_color}",alpha=line_alpha,linestyle=(0, (5, 5)),label="female last decile")
         
         plt.legend()
         plt.tight_layout()
@@ -358,7 +365,7 @@ def print_domain(dom):
     #     return
 
     
-    make_graph(h_directed, f_directed, True, dom, "supervised."+sdom, None, "thesis supervision")
+    make_graph(h_directed, f_directed, False, dom, "supervised."+sdom, None, "thesis supervision")
 
 
 
@@ -385,7 +392,7 @@ def print_domain(dom):
     #     return
 
 
-    make_graph(h_jury, f_jury, True, dom, "examiner."+sdom, None, "thesis examination")
+    make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
 
 
 
@@ -420,8 +427,8 @@ def print_domain(dom):
 domains =  [p[0] for p in cur.execute("SELECT domain, COUNT(id) as num_t from thesis GROUP BY domain ORDER BY num_t DESC ").fetchall() if p[1] > 400]
 
 # for domain in domains:
-#     if domain != 'Informatique':
-#         continue
+#     # if domain != 'Informatique':
+#     #     continue
 #     print_domain(domain)
 
 
@@ -487,6 +494,8 @@ def print_cnu(section):
     where cnu.gender='F' and cnu.rank='MCF' and cnu.section IN {section}").fetchall()
     print(f"Number of female MCF: {len(f_cnu_mcf)}")
 
+
+    
     h_directed= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
     JOIN directed ON cnu.fullname=directed.fullname \
     where cnu.gender='H'  and cnu.section IN {section} \
@@ -507,6 +516,47 @@ def print_cnu(section):
     
     make_graph(h_directed, f_directed, False, dom, "supervised."+sdom, None, "thesis supervision")
 
+        
+    h_directed_mcf= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
+    JOIN directed ON cnu.fullname=directed.fullname \
+    where cnu.gender='H'  and cnu.rank='MCF'  and cnu.section IN {section} \
+    GROUP BY directed.fullname").fetchall()]
+    
+    f_directed_mcf= [ p[1] for p in cur.execute(f"SELECT directed.fullname, COUNT(*) from directed \
+    JOIN cnu ON cnu.fullname=directed.fullname \
+    where cnu.gender='F' and cnu.rank='MCF'  and cnu.section IN {section} \
+    GROUP BY directed.fullname").fetchall()]
+    
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+    h_directed_mcf += [0 for i in range(0,len(h_cnu_mcf) - len(h_directed_mcf))]
+    f_directed_mcf += [0 for i in range(0,len(f_cnu_mcf) - len(f_directed_mcf))]        
+
+    
+    make_graph(h_directed_mcf, f_directed_mcf, False, dom, "supervised.mcf."+sdom, None, "thesis supervision from MCF")
+
+
+    h_directed_pu= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(directed.fullname) from cnu \
+    JOIN directed ON cnu.fullname=directed.fullname \
+    where cnu.gender='H'  and cnu.rank='PU'  and cnu.section IN {section} \
+    GROUP BY directed.fullname").fetchall()]
+    
+    f_directed_pu= [ p[1] for p in cur.execute(f"SELECT directed.fullname, COUNT(*) from directed \
+    JOIN cnu ON cnu.fullname=directed.fullname \
+    where cnu.gender='F' and cnu.rank='PU'  and cnu.section IN {section} \
+    GROUP BY directed.fullname").fetchall()]
+    
+    
+    # if h_list==[] or f_list==[]:
+    #     print("empty")
+    #     return
+    h_directed_pu += [0 for i in range(0,len(h_cnu_pu) - len(h_directed_pu))]
+    f_directed_pu += [0 for i in range(0,len(f_cnu_pu) - len(f_directed_pu))]        
+
+    
+    make_graph(h_directed_pu, f_directed_pu, False, dom, "supervised.pu."+sdom, None, "thesis supervision from PU")    
 
 
     h_jury= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
@@ -532,8 +582,8 @@ def print_cnu(section):
     
     make_graph(h_jury, f_jury, False, dom, "examiner."+sdom, None, "thesis examination")
 
-    make_graph(h_jury, f_jury, False, dom, "examiner.zoom1."+sdom, (0,25), "thesis examination")
-    make_graph(h_jury, f_jury, False, dom, "examiner.zoom2."+sdom, (25,60), "thesis examination")    
+    # make_graph(h_jury, f_jury, False, dom, "examiner.zoom1."+sdom, (0,25), "thesis examination")
+    # make_graph(h_jury, f_jury, False, dom, "examiner.zoom2."+sdom, (25,60), "thesis examination")    
 
 
     h_jury_pu= [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(jury.fullname) from cnu \
@@ -563,8 +613,9 @@ def print_cnu(section):
     f_jury_mcf += [0 for i in range(0,len(f_cnu_mcf) - len(f_jury_mcf))]        
     
 
-    make_graph(h_jury_pu, f_jury_pu, False, dom, "examiner.pu."+sdom, None, "thesis examination from PU")
-    make_graph(h_jury_mcf, f_jury_mcf, False, dom, "examiner.mcf."+sdom, None, "thesis examination from MCF")        
+    make_graph(h_jury_pu, f_jury_pu, True, dom, "examiner.pu."+sdom, None, "thesis examination from PU")
+
+    make_graph(h_jury_mcf, f_jury_mcf, True, dom, "examiner.mcf."+sdom, None, "thesis examination from MCF")        
     
     h_reviewed=  [ p[1] for p in cur.execute(f"SELECT cnu.fullname, COUNT(reviewed.fullname) from cnu \
     JOIN reviewed ON cnu.fullname=reviewed.fullname \
@@ -637,8 +688,8 @@ def print_cnu(section):
     h_jury_poste_mcf += [0 for i in range(0,len(h_cnu_mcf) - len(h_jury_poste_mcf))]
     f_jury_poste_mcf += [0 for i in range(0,len(f_cnu_mcf) - len(f_jury_poste_mcf))]            
     
-    make_graph(h_jury_poste_pu, f_jury_poste_pu, False, dom, "jury_poste.pu."+sdom, None, "hiring committee participation from PU")
-    make_graph(h_jury_poste_mcf, f_jury_poste_mcf, False, dom, "jury_poste.mcf."+sdom, None, "hiring committee participation from MCF")
+    make_graph(h_jury_poste_pu, f_jury_poste_pu, True, dom, "jury_poste.pu."+sdom, None, "hiring committee \n participation from PU")
+    make_graph(h_jury_poste_mcf, f_jury_poste_mcf, True, dom, "jury_poste.mcf."+sdom, None, "hiring committee \n participation from MCF")
     
 
 def eval_gender_guessing():

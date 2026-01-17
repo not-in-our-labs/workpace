@@ -111,28 +111,84 @@ def get_full_domains():
     return(set(domains))
 
 
-def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range):    
+
+def trim(counts,bins,tmax,tmin):
+    nc = []
+    nb = []
+    found_non_small = False
+    co = list(counts)
+    bi = list(bins)[:-1]
+    co.reverse()
+    bi.reverse()
+          
+    for c,b in zip(co,bi):
+        if not(found_non_small) and c/tmax < tmin:
+            last =b
+            continue
+        if not(found_non_small):
+            nb.append(b)            
+            found_non_small = True
+        nc.append(c)
+        nb.append(b)
+    nc.reverse()
+    nb.reverse()    
+
+    return(nc,nb)
+
+male_color = "purple"
+female_color = "orange"
+
+def do_hist(h_data, f_data, mrange=None):
+    hist_alpha=0.4
+
+    trim_min=0.005
+    
+    h_bins=range(min(h_data), max(h_data) + 1, 1)
+    h_counts, h_bins = np.histogram(h_data, bins='auto', density=True,range=mrange)
+
+
+    f_bins=range(min(f_data), max(f_data) + 1, 1)
+    f_counts, f_bins = np.histogram(f_data, bins='auto', density=True,range=mrange)
+
+
+    maximum = max([max(h_counts),max(f_counts)])
+    
+    h_ncounts, h_nbins = trim(h_counts,h_bins,maximum, trim_min)
+    f_ncounts, f_nbins = trim(f_counts,f_bins,maximum, trim_min)   
+
+    
+    plt.stairs(np.array(h_ncounts),np.array(h_nbins), fill=True,color=f"tab:{male_color}", alpha=hist_alpha, label="male")
+    plt.stairs(np.array(f_ncounts),np.array(f_nbins), fill=True,color=f"tab:{female_color}", alpha=hist_alpha, label="female")    
+
+
+
+def make_graph(h_list, f_list, force_pic, long_name, short_name,with_range):
+    line_alpha=0.6
+    
     f_av = statistics.mean(f_list)
     h_av = statistics.mean(h_list)
     total_av = statistics.mean(h_list+f_list)
     abs_diff = (f_av-h_av)/total_av
     print(abs_diff)
 
+
+    if not(force_pic) and len(h_list + f_list) < 500:
+        return
     # print("Successfully loaded %i female page counts and %i male page counts" % (len(f_list),len(h_list)))    
     # print("Average of %i female page counts and %i male page counts" % (f_av,h_av))
-    ks_test = stats.ks_2samp(h_list, f_list)
+    ad_test = stats.anderson_ksamp([h_list, f_list]) 
     # print(ks_test)
     # if p < 0.05, we reject the null hypothesis, that is, the hypothesis that the distributions are the same.
     # we only keep domains/subdomains with enough data point
     # We generate corresponding figures
-    if force_pic or (ks_test.pvalue < 0.05 and len(h_list + f_list) > 500):
+    if force_pic or (ad_test.pvalue < 0.05 and len(h_list + f_list) > 500):
 
         print(long_name)
 
         plt.suptitle("Density function for PhD thesis length in pages\n %s" % (long_name))
 
         plt.title(f"Dataset of {len(h_list)} male vs {len(f_list)} female PhD authors ({len(f_list)/len(f_list+h_list):.0%} females), France, 2015 to 2025\n \
-Kolmogorov-Smirnov test with pvalue {ks_test.pvalue:.5f} \n \
+ Anderson-Darling test with pvalue {ad_test.pvalue:.5f} \n \
 Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized difference : {abs_diff:.1%} \
 ", size="small")
 
@@ -142,25 +198,20 @@ Female page average {f_av:.0f}, male average {h_av:.0f}, f-h normalized differen
         
         plt.xlabel("Page length")
         plt.ylabel("Density")
-        plt.hist(h_list,bins="auto",color="tab:purple",
-                 range=with_range,
-                 density=True,histtype="step", label="male")            
+
                 # add vertical line at median
         median = statistics.median(h_list)
         last_decile = np.percentile(h_list, 90)
-        plt.axvline(median, color='tab:purple', linestyle='--',label="median")
-        plt.axvline(last_decile, color='tab:purple', linestyle='--',label="last decile")
+        plt.axvline(median, color=f"tab:{male_color}", alpha=line_alpha, linestyle='--',label="male median")
+        plt.axvline(last_decile, color=f"tab:{male_color}", alpha=line_alpha, linestyle=(0, (5, 5)),label="male last decile")
 
-        
-        plt.hist(f_list,bins="auto",color="tab:red",
-                 range=with_range,
-                 density=True,histtype="step", label="female")
+        do_hist(h_list, f_list, with_range)                
 
         # add vertical line at median
         median = statistics.median(f_list)
         last_decile = np.percentile(f_list, 90)        
-        plt.axvline(median, color='tab:red', linestyle='--')
-        plt.axvline(last_decile, color='tab:red', linestyle='--')        
+        plt.axvline(median, color=f"tab:{female_color}", alpha=line_alpha, linestyle='--',label="female median")
+        plt.axvline(last_decile,  color=f"tab:{female_color}",alpha=line_alpha,linestyle=(0, (5, 5)),label="female last decile")
         
         plt.legend()
         plt.tight_layout()
@@ -200,27 +251,6 @@ def print_domain(sql_cond, short_name, long_name, force_pic, with_range):
 
     make_graph(h_list, f_list, force_pic, long_name, short_name, with_range)
 
-    # first_decile = np.percentile(h_list+f_list, 15)
-    # last_decile =  np.percentile(h_list+f_list, 85)
-
-    # h_list_first = [i for i in h_list if i <= first_decile]
-    # h_list_middle = [i for i in h_list if  first_decile <= i and i <= last_decile]
-    # h_list_end = [i for i in h_list if  last_decile <= i]
-
-    # f_list_first = [i for i in f_list if i <= first_decile]
-    # f_list_middle = [i for i in f_list if  first_decile <= i and i <= last_decile]
-    # f_list_end = [i for i in f_list if  last_decile <= i]
-
-    # if h_list_first!=[] and f_list_first!=[]:        
-    #     make_graph(h_list_first, f_list_first, force_pic, long_name + " (only first decile of lengths)", "1-first-decile."+ short_name)
-        
-    # if h_list_end!=[] and f_list_end!=[]:        
-    #     make_graph(h_list_end, f_list_end, force_pic, long_name + " (only last decile of lengths)", "2-last-decile."+ short_name)
-    
-    # if h_list_middle!=[] and f_list_middle!=[]:            
-    #     make_graph(h_list_middle, f_list_middle, force_pic, long_name + " (without first and last decile of lengths)", "3-without-extrem-deciles."+ short_name)    
-    
-        # plt.show()            
 
 # print_domain("shs")
 
@@ -247,8 +277,8 @@ def print_zoom(dom, rang):
     sql_cond = "AND author.domain LIKE '" + dom + "%'"
     print_domain(sql_cond, dom+".zoom", dom_fullname, False,rang)
 
-print_zoom('info', (0,400))
-print_zoom('shs', (0,1000))
+# print_zoom('info', (0,400))
+# print_zoom('shs', (0,1000))
 
 def print_info_per_year():
     for i in range(2015,2026):
