@@ -50,7 +50,7 @@ if cur.execute("SELECT name FROM sqlite_master where name='years'").fetchone() i
 if cur.execute("SELECT name FROM sqlite_master where name='jury_poste'").fetchone() is None:
     cur.execute("CREATE TABLE jury_poste(rank, section, year, committee)")
 
-# cur.execute("DROP TABLE is_in_jury_poste")     
+cur.execute("DROP TABLE is_in_jury_poste")     
 if cur.execute("SELECT name FROM sqlite_master where name='is_in_jury_poste'").fetchone() is None:
     cur.execute("CREATE TABLE is_in_jury_poste(fullname, committee, FOREIGN KEY (fullname) REFERENCES cnu(fullname), FOREIGN KEY (committee) REFERENCES jury_poste(committee),   CONSTRAINT UC_in_jury UNIQUE (fullname,committee))")
     
@@ -571,7 +571,7 @@ def link_op_poste_cnu():
             #     print(f"{c} is in {com[0]}")
             
 
-# link_op_poste_cnu()    
+
     
 
 
@@ -594,3 +594,5 @@ def link_op_poste_cnu():
 
 # link_manual_cnu()
 
+
+# link_op_poste_cnu()    
