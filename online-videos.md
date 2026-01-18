@@ -1228,24 +1228,239 @@ Anti-bias training programs don't solve everything! (some programs have adverse 
 
 ### gender and power in young children representation
 
+(when) do gender expect gender hierarchy?
+
+-> many things are linked with hierarchy
+Beliefs: personality steroeotypes (boy=smart, strong; girl=shy, soft). 
+         Bian et al, 2017. After 6, children think men are smart, and women are nice.
+		                   Before 6, children attributes both to their own-gender bias.
+						   Then, the shift plays on the choice of activites (girl start avoiding "hard" activities at 6)
+		 
+
+12 y-o but not 6-y o attribute higher status to masculine jobs. (Liben at al 2001)
+own gender bias in elections at 5-6 y o, but only for boys as 7-8. (Santhanagopalan et al, 2022)
+
+But, do 5-6 years old understand power relations? 
+ Yes! Many studies, they understand w,r,t physical cues (size Thomsen et al 2011, posture Mascaro &Csibra 2012, Terrizi et al 2019, strength, Charafeddine et al 2015), and social cues (history of interactions)
+ 
+But all studies on representation of power disreguard gender!
+
+Experiments: where we first show children gender neutral pictures  but with clear power relation, and then ask children to assign gender to the people.
+
+
+children assign power position to boy (How Preschoolers Associate Power with Gender in Male-Female Interactions: A Cross-Cultural Investigation)
+
+
+experiment "2 minutes to draw a leader!" 5-10 y-o, 69% of children drew a man, not one boy drew a women (santhanagopalan et al 2022)
+
+conc: powerful=male for third party relations since 4 y-i, no own gender bias in three cultures.
+
+pay attention to how children self stereotype when they enter relationships, don't act the same when interacting with boy or girl.
+
+
 
 ### deconstructing gender biases in tv and radio
+
+many factirs ti look at: presence rate, expression rate, identification rate, roles, interruptions.
+Hard to do, trade-off between manual vs automatic methods
+
+sample bias: amount of women depicted during first covid pandemic varies between 10 and 55% depending on the day on france 2
+
+development of automated softwate for gender detection in speech/face.  (to note, hard to do ML because underrepresented people we want to detect are also underrepresented in ML data sets)
+
 
 
 ### gender imbalance in editorial process of scientific publishing
 
+Children associate "Scientist" with "men".
+
+
+Illustration of leaky pipeline for women in science research.  (from 50% at bachelor degree to ~30% as researchers, where women drop out/are pushed out)
+
+
+In this talk, focus on scientific publishing.
+
+Peer reviewed publication mattesL
+	For scientits, the most common metric of scientific excellence. Editorial role = a mark of esteem, networking.
+	for science also: resgitrstation, certification, dissemniation, preservation.
+	
+	
+skewed representation of women in publishing: underepresetend as senior authors, in editorial boards, and invited to do peer-reviews.
+
+gender imbalance in editorial interactions in the journal eLife, between senior editor and reviewing editors.
+In triage, women respond slightly less often and later (7 hours later) -> men reviewing ediots provide their opinion first and set the tone.
+  women reviewing editors handl 9% less manuscripts.
+  
+Same gebnder editor effect: (homophily) women senior editors assign more manuscripts to women reviewing editors, and similar for men.
+ (replicable accross all eLife scientific domains)
+ 
+Conc: Women's  participation in editorial process is smaller than actual numbers tell.
+
+All-men reviewing teams tend to accept more men-led manuscript. Murray et al 2019.
+
+Risk of homophilly in how we conduct research, similar people think alike
+
+How to do better
+
+Increase representation, but also increase inclusion (make sure that women who are there can actually be active).
+
 
 ### gender quotes in hiring committes
 
+in place for long times, many debates
+2 q: are gender quotas efficient, and do they trickle down?
+
+efficient?
+
+in general yes.
+  for board gender quotas, no effect on firm performances or returns. (Eckbo et al 2018, Ferrari et al, Burrow et al, Norway, Italy, Germany)
+  political gnder quotas: they drive out mediocre male politicians (Besley et al.), but don't lead to more electoral success (Bagues-Campa)
+
+
+trickle down?  rather mixed result
+  do gender quotas hel women, beyond those who benefit from them? In general, no. (Bertrand et al, board gender quotas don't impact women lower down)
+  
+  
+=In Academia?  
+
+two dimensions, vertical and horizontal segragation, quotas in hiring committes are better?
+
+picture: gender gaps, SHE data, all disciplines. (leaky pipeline everywhere, with the rank increasing)
+High amount of vertical segregation
+
+the gap start earlier for STEM.
+
+
+
+French hiring committees, since 2015, 40% gender quotas.  
+
+Data from 3 univ, 2009 to 2028, 455 committees with detailled data, complemented with scrapeed data.
+
+Effect of the reform: the share of women in recruitment committees clearly increased. (share actually closer to ~50%)
+
+
+Effects summary:
+Negative effect on how women are evaluated in committees, their ranking and hiring (around 7%).
+no change in applicant pool
+more admin work for women
+change in the "quality" of jury no
+no more women committee presidents
+
+
+Queen Bee effect? NO
+entire effect is driven by *male jury presidents*
+  men must have changed their behaviour as a result of the reform. (similar result in Bagues et al 2017 who looked at randomly assigned hiring committees, where men became more negative toward women with too many women in the room.)
+
+
+
+rk: tenure clock stopping policites have a positive effect only if gender based, negative if gender neutral ! (Antecol et al 2018)
+
+difference in recognition of work (Hengel & Moon 2021, paper written with men are counted as 0 because must have been written by men Sarson 2017, Koffi 2021), 
+
+some success: role model in highschool/undergrade works (Breda et al 2021, Porter & Serra 2020),
+
+and on improving publication prospects and in turn tenure. (Ginther et al 2020), a recruit worked
+    
 
 ### fixing the leaky pipeline
+
+= what doesn't work?
+
+Most diversity initiatives.
+  in the private sector, companies have experimented with implicit bias training, diversity programs, job tests, performance reviews, grievance systems. Dobbin and Kalev, 2016, most type of training have negative impact?
+  
+-> Why?
+
+
+People in managing positions don't like to be told what to do, nor that what they have been doing is wrong.
+
+	positive effects of implicit bias training usually last a day or two. Mandatory effects often result in anger and backlash. Job testing tends to penalize women and minorities. People using grievance systems are punished.
+
+Emphasis on diversity increases saliance of gender and group boundaries, and evokes identity-based threat: to minorities who start under performing, and for majorities who start fighting back.
+   the more we talk about diversity, the more we start seeing people as member of a group
+   
+
+
+= what works?
+
+What is inclusion? "the individual's sense of being part of the organizational system in both formal and informal processes". In theory, should work better as puts focus on individuals, broader change in norms/values: permanent shift, and target everybody.
+
+
+Masculinity norms:
+
+a masculinity contest culture value 4 attributes (Glick et al, 2018)
+   no weakness, strengh and stamina, work over family, ruthless competition
+   
+adaemica as dominant "masculine" norms. (Dupas et al 2020, Wu 2021)   
+
+
+
+
+Retaining talent in organizations Masculinity, Inclusion and Norms, Maria Guadalupe, Daisy Pollenne, Kaisa Snellman
+INSEAD
+PRELIMINARY AND INCOMPLETE
+Please do not cite, post or circulat
+
+"We find that women perceive their environments as being more stereotypically masculine, less inclusive and
+less supportive of gender equality than men. Similarly, faculty perceive their work environment
+as more masculine, less inclusive and less supportive of gender equality. Moreover, we find
+that women and faculty have a higher turnover intention on average. However, both gaps
+disappear when controlling for perceptions of norms in the workplace. Importantly, we find that
+a masculinity contest culture generates no beneficial outcomes for anyone; it consistently
+lowers well-being and increase turnover intentions for both men and women. Similarly,
+perceptions of inclusion increases well-being and lowers turnover intentions for both men and
+women, suggesting that there are no trade-offs for promoting a less masculine and more
+inclusive workplace climate. Our findings suggest, however, that promoting equality might
+have unintended consequences: the focus on gender equality benefits men more than women in
+terms of their workplace well-being"
+
+
+emphasis on brilliance fosters masculinity-contest cultures (Vial et al 2022)
 
 
 ### behavioral insights & gender equality
 
+Our brain lies to us, optical illusions. square A and B same color.
+Of course, gender stereotypes are not as simple as such illusions, but it is a good metaphore.
 
 
+nudge: slight change in possible choices to change behaviour without coercion
 
+examples of nudge: 
+  too many accidents on chicago lake shore drive
+  -> make it look like people are going faster than they are by putting line on the ground becoming closer and closer, reduced accidents by 36%
+  
+  -> by addind a line reminding the norm "nine out of ten people pay their tax on time" in a tax query letter (so, reminding that a behaviour is a minority), increased the number of payments.
+  -> giving feedback on their own electric consumption compared to neighbours help reduce it (but also increase the consumption of the lowerest one, need to tailor the thing)
+  -> sending feedback to doctors on where they are compared to others in term of antibiotic prescription helps
+  
+
+
+in public policies, research on bejaviour is not often used.
+ e.g. putting a fine on late-coming parent at school pick up, increased lateness, make the shame disappear, and make it seem like it is a payed service.
+ 
+ in sweden, starting giving money to blood donors reduce the number of donors.
+ 
+ 
+ The speaker: part of a inter ministerial unit trying to apply and make research on such behavioral insights, help public decisions.
+ 
+Produced a report on mixity in workplaces.
+
+To counter gender bias, the devil is in the details: have to work on representation in scientific manuals, in algorithms, "it's crazy that women are number 2 in French carte vitale".
+Beware of counter intuitive effects.
+
+Two examples:
+  How to improve gender equality in the workplace (BIT Behaviourial insight team GABI program)
+  Iris Bonnet What works gender equality by design
+  
+
+BIT: On CVs, having unexplained gap reduces chances. 
+	Presenting previous roles in numbers of years of experience rather than  dates increased positive callbacks by 14.6%
+	
+
+Anonymous CVs prevent discrimination in early stages.	(but mostly works in high discrimination context, may simply postpone discrimnation to later stages, + disadventageous if recruiter cannot correct things like load from having children, or use migration status to explain and ignore weak language skills)
+	
+	
 	
 	
 ##  Discriminations systémiques et universités 

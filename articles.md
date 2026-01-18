@@ -240,3 +240,117 @@ Field-specific ability belief picture, "brillance"-focused field lead to less wo
 
 
 "If the practitioners of fields with gender gaps made a concerted effort to highlight the role of sustained, long-term effort in achievement, the gender gaps in these fields may correspondingly be diminished."
+
+## An Emphasis on Brilliance Fosters Masculinity-Contest Cultures
+Andrea C. Vial https://orcid.org/0000-0001-9367-2081 andrea.vial@nyu.edu, Melis Muradoglu https://orcid.org/0000-0002-5162-8741, […], and Andrei Cimpian https://orcid.org/0000-0002-3553-6097
+
+Women are underrepresented in fields in which success is believed to require brilliance, but the reasons for this pattern are poorly understood. We investigated perceptions of a “masculinity-contest culture,” an organizational environment of ruthless competition, as a key mechanism whereby a perceived emphasis on brilliance discourages female participation. Across three preregistered correlational and experimental studies involving adult lay participants online (N = 870) and academics from more than 30 disciplines (N = 1,347), we found a positive association between the perception that a field or an organization values brilliance and the perception that this field or organization is characterized by a masculinity-contest culture. This association was particularly strong among women. In turn, perceiving a masculinity-contest culture predicted lower interest and sense of belonging as well as stronger impostor feelings. Experimentally reducing the perception of a masculinity-contest culture eliminated gender gaps in interest and belonging in a brilliance-oriented organization, suggesting possible avenues for intervention.
+
+
+
+
+
+## When Two Bodies Are (Not) a Problem: Gender and Relationship Status Discrimination in Academic Hiring
+Lauren A. Rivera
+
+"Drawing from gendered scripts of career and family that present men’s
+careers as taking precedence over women’s, committee members assumed that heterosexual
+women whose partners held academic or high-status jobs were not “movable,” and excluded
+such women from offers when there were viable male or single female alternatives.
+Conversely, committees infrequently discussed male applicants’ relationship status and
+saw all female partners as movable. Consequently, I show that the “two-body problem” is a
+gendered phenomenon embedded in cultural stereotypes and organizational practices that
+can disadvantage women in academic hiring."
+
+
+## Does the Gender Composition of Scientific Committees Matter?
+    Manuel Bagues
+    Mauro Sylos-Labini
+    Natalia Zinovyeva
+	
+"We analyze how a larger presence of female evaluators affects committee decision-making using information on 100,000 applications to associate and full professorships in Italy and Spain. These applications were assessed by 8,000 randomly selected evaluators. A larger number of women in evaluation committees does not increase either the quantity or the quality of female candidates who qualify. Information from individual voting reports suggests that female evaluators are not significantly more favorable toward female candidates. At the same time, male evaluators become less favorable toward female candidates as soon as a female evaluator joins the committee. "
+
+
+## Gender Quotas in Hiring Committees: A Boon or a Bane for Women?
+
+law of 2015,  40% gender quotas.  
+
+"Contrary to the objectives of the law, I show that the reform backfired and significantly lowered women’s probability of being hired. Because the negative effect of the reform is concentrated in committees headed by men, this result seems driven by the reaction of men to the reform.  I find little evidence that the reform affects supply-side characteristics, such as the likelihood of women applying. The results suggest that the underrepresentation of women is unlikely to be solved by simply increasing the share of women in hiring committees or interview panels."
+
+
+## The Development of Children’s Gender Stereotypes About STEM and Verbal Abilities: A Preregistered Meta-Analytic Review of 98 Studies
+David I. Miller email the author, Jillian E. Lauer, Courtney Tanenbaum, Lauren Burr
+
+"This quantitative review of nearly 100 studies shows that, by age 6, children already think that boys are better than girls at computer science and engineering. With age, girls increasingly believe in male superiority in these technical fields—a stereotype that could potentially limit girls’ future aspirations. In contrast, children hold far more gender-neutral beliefs about math ability. Children also think that girls are much better in verbal domains like reading and writing, which could contribute to boys’ underachievement in those domains."
+
+
+"Several recent studies have found “brilliance” stereotypes about exceptional intelligence favoring male targets among both child and adult participants in multiple cultures (Bian et al., 2017; Jaxon et al., 2019; Okanda et al., 2022; Shu et al., 2022; Storage et al., 2020; S. Zhao et al., 2022). "
+
+(Bian et al,m2017 also shows that this impact the activites choosed)
+
+"Young children are eager to find, remember, and construct positive information about their gender, driven by in-group gender bias as early as ages 3–5 (Dunham et al., 2016; Halim et al., 2017; Kurtz-Costes, Defreitas, et al., 2011). "
+
+## How Preschoolers Associate Power with Gender in Male-Female Interactions: A Cross-Cultural Investigation
+    Rawan Charafeddine, Imac Maria Zambrana, Benoit Triniol, Hugo Mercier, Fabrice Clément, Laurence Kaufmann, Anne Reboul, Francisco Pons & Jean-Baptiste Van der Henst 
+	
+In France, Lebannon and Norway, for 4-6 y-o children, children assign the boy role to a dominant gender neutral character. (not so much for 3 y-o)
+
+
+## SHE FIGURES 2024
+
+https://projects.research-and-innovation.ec.europa.eu/en/knowledge-publications-tools-and-data/interactive-reports/she-figures-2024
+
+(chapter six for leaky pipeline)
+
+
+## Gendered Citations at Top Economic Journals
+    Marlène Koffi
+	
+	 This paper investigates how women's works are perceived among their peers. I construct a dataset using bibliographic data from articles published in top journals in economics and granular information on the articles that cite them. I find that female-authored papers in top economic journals are (i) more likely to be cited outside economics, (ii) less likely to be cited by top-tier journals, and (iii) less likely to be cited by men. I conclude with a discussion on those results and their implications for females in economics. 
+
+## Recognition for Group Work: Gender Differences in Academia
+    Heather Sarsons
+	
+ How is credit for group work allocated when individual contributions are not observed? I use data on academics' publication records to test whether demographic traits like gender influence how credit is allocated under such uncertainty. While solo-authored papers send a clear signal about ability, coauthored papers are noisy, providing no specific information about each contributor's skills. I find that men are tenured at roughly the same rate regardless of coauthoring choices. Women, however, are less likely to receive tenure the more they coauthor. The result is much less pronounced among women who coauthor with other women. 	
+
+
+## CAN MENTORING HELP FEMALE ASSISTANT PROFESSORS IN ECONOMICS? AN EVALUATION BY RANDOMIZED TRIAL
+Donna K. Ginther
+Janet Currie
+Francine D. Blau
+Rachel Croson
+
+eMENT mentoring workshop to support women in research careers.
+The program was designed as a randomized controlled trial. This study evaluates differences
+between the treatment and control groups in career outcomes. Results indicate that relative to
+women in the control group, treated women are more likely to stay in academia and more likely
+to have received tenure in an institution ranked in the top 30 or 50 in economics in the world
+
+
+RK: thing not discussed in the paper: it is a single-sex workshop...
+
+
+
+
+The CSWEP CeMENT workshop provides mentoring for women and nonbinary faculty in tenure-track positions at economics departments and similar institutions across North America. 
+Participants are grouped with mentors based on research interests to discuss research projects and career goals. The program also features sessions on publishing, teaching, tenure preparation, grant writing, networking, and work/life balance.
+
+
+
+## Facilitating return to the labour market with a novel CV format intervention
+Research report 
+
+displaying experience in terms of the number of years rather than dates led to a 4.8 percentage point (14.6%) increase in the positive callback rate.
+
+It made no difference to the callback rate whether the gap was explained for childcare or left unexplained. Qualitative research finds that HR professionals express a preference for an explanation in interviews, but this does not translate to recruitment behaviour.
+
+The difference in callback rates for CVs with and without gaps was not significant. These results do not replicate findings from previous studies in the unemployment literature and may be due to specific contextual factors of this trial. 
+
+
+## Reducing discrimination against job seekers with and without employment gaps
+Ariella S. Kristal, Leonie Nicks, Jamie L. Gloor & Oliver P. Hauser 
+
+
+"Past research shows that decision-makers discriminate against applicants with career breaks. Career breaks are common due to caring responsibilities, especially for working mothers, thereby leaving job seekers with employment gaps on their résumés."
+
+"Rewriting a résumé so that previously held jobs are listed with the number of years worked (instead of employment dates) increases callbacks from real employers compared to résumés without employment gaps by approximately 8%, and with employment gaps by 15%."
